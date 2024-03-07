@@ -1,0 +1,209 @@
+﻿HRT_update_candidati_sgui = {
+	scope = character
+
+	effect = {
+		HRT_update_window_effect = yes
+	}
+}
+
+HRT_abort_sgui = {
+	scope = character
+
+	effect = {
+		HRT_clear_variables_effect = yes
+	}
+}
+
+HRT_formed_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_formed_gui
+	}
+}
+
+HRT_open_election_sgui = {
+	scope = character
+
+	effect = {
+		title:e_hre = {
+			open_view_data = {
+				view = title_election
+			}
+		}
+	}
+}
+
+HRT_missing_1_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_missing_1_gui
+	}
+}
+HRT_missing_2_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_missing_2_gui
+	}
+}
+HRT_missing_3_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_missing_3_gui
+	}
+}
+HRT_expectatus_sgui = {
+    scope = character
+	is_shown = {
+		NOT = { has_variable = HRT_missing_expectatus_gui }
+	}
+}
+HRT_missing_expectatus_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_missing_expectatus_gui
+	}
+}
+HRT_imperator_sgui = {
+    scope = character
+	is_shown = {
+		NOT = { has_variable = HRT_missing_imperator_gui }
+	}
+}
+HRT_missing_imperator_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_missing_imperator_gui
+	}
+}
+HRT_show_player_score_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_show_player_score
+	}
+}
+HRT_show_player_score_invalid_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_show_player_score_invalid
+	}
+}
+
+#Edicts
+HRT_edict_legal_unification_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0001
+	}
+}
+HRT_edict_chivalric_excellence_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0002
+	}
+}
+HRT_edict_diplomatic_corps_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0003
+	}
+}
+HRT_edict_consular_taxation_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0004
+	}
+}
+HRT_edict_levy_conscription_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0005
+	}
+}
+HRT_edict_urban_rights_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0006
+	}
+}
+HRT_edict_border_defense_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0007
+	}
+}
+HRT_edict_scholastic_advancement_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0008
+	}
+}
+HRT_edict_imperial_works_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0009
+	}
+}
+HRT_edict_ecclesiastical_patronage_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.0010
+	}
+}
+
+HRT_edict_proclaim_directive_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_edicts.1001
+	}
+}
+#HRT_edict_enact_resolution_sgui= {
+#	scope = character
+#
+#	effect = {
+#		trigger_event = HRT_edicts.1002
+#	}
+#}
+HRT_dismantle_hre_sgui = {
+	scope = character
+
+	effect = {
+		if = {
+			limit = {
+				exists = title:e_hre.holder
+			}
+			title:e_hre = {
+				open_view_data = {
+					view = title_view_window
+				}
+			}
+		}
+		else = {
+			trigger_event = HRT.0003
+		}
+	}
+}
+
+## Misc
+#Manages Display of HRT Button in Realm View
+HRT_is_involved_sgui = {
+	scope = character
+	is_shown = {
+		HRT_is_involved_trigger = yes
+		NOT = {
+			title:c_aachen = {
+				has_variable = HRT_dismantled
+			}
+		}
+	}
+}

@@ -1,0 +1,361 @@
+﻿HRT_initialize_succession = {
+	#Succession if HRE is formed
+	if = {
+		limit = { exists = title:e_hre.holder }
+		every_living_character = {
+			if = {
+				limit = {
+					title:e_hre = {
+						place_in_line_of_succession = {
+							target = prev
+							value == 1
+						}
+					}
+				}
+				create_story = HRT_emperor_story
+				trigger_event = {
+					id = HRT.1001
+					days = { 7 14 }
+				}
+			}
+		}
+	}
+	#Succession before HRE is formed
+	else = {
+		ordered_HRT_candidati = {
+			order_by = HRT_imperator_score
+			position = 0
+			create_story = HRT_emperor_story
+			trigger_event = {
+				id = HRT.1001
+				days = { 7 14 }
+			}
+		}
+	}
+	#if = { TODO Fallback in case no candidate exists
+}
+
+#GUI
+HRT_update_window_effect = {
+	if = {
+		limit = { exists = title:e_hre.holder }
+		set_variable = { #Don't display certain gui elements when Elector voting is active
+			name = HRT_formed_gui
+			value = yes
+		}
+
+		title:e_hre = {
+			# Imperator
+			holder = { save_scope_as = imperator }
+			# Electors
+			if = {
+				limit = {
+					has_title_law = princely_elective_succession_law
+				}
+				every_elector = {
+					limit = {
+						NOT = { this = scope:imperator }
+					}
+					root = {
+						add_to_variable_list = {
+							name = HRT_electors
+							target = prev
+						}
+					}
+				}
+			}
+		}
+		# Candidati ordered by Vote score
+		every_living_character = {
+			if = {
+				limit = {
+					title:e_hre = {
+						place_in_line_of_succession = {
+							target = prev
+							value == 1
+						}
+					}
+				}
+				save_scope_as = 0
+			}
+			else_if = {
+				limit = {
+					title:e_hre = {
+						place_in_line_of_succession = {
+							target = prev
+							value == 2
+						}
+					}
+				}
+				save_scope_as = 1
+			}
+			else_if = {
+				limit = {
+					title:e_hre = {
+						place_in_line_of_succession = {
+							target = prev
+							value == 3
+						}
+					}
+				}
+				save_scope_as = 2
+			}
+			else_if = {
+				limit = {
+					title:e_hre = {
+						place_in_line_of_succession = {
+							target = prev
+							value == 4
+						}
+					}
+				}
+				save_scope_as = 3
+			}
+		}
+	}
+
+	else = {
+		# Imperator
+		title:c_aachen.var:HRT_emperor = {
+			save_scope_as = imperator
+		}
+		# Imperator's Primary Heir
+		scope:imperator = {
+			primary_heir ?= {
+				set_variable = {
+					name = HRT_prince_var
+					value = yes
+				}
+			}
+		}
+		# Expectatus (highest scoring Candidatus)
+		ordered_HRT_candidati = {
+			order_by = HRT_imperator_score
+			position = 0
+			save_scope_as = 0
+		}
+		# 3 highest scoring Candidati
+		ordered_HRT_candidati = {
+			order_by = HRT_imperator_score
+			position = 1
+			save_scope_as = 1
+		}
+		ordered_HRT_candidati = {
+			order_by = HRT_imperator_score
+			position = 2
+			save_scope_as = 2
+		}
+		ordered_HRT_candidati = {
+			order_by = HRT_imperator_score
+			position = 3
+			save_scope_as = 3
+		}
+	}
+
+	##Set gui variables
+	#Imperator
+	if = {
+		limit = {
+			scope:imperator = {
+				exists = this
+				is_alive = yes
+			}
+		}
+		set_variable = {
+			name = HRT_imperator_gui
+			value = scope:imperator
+		}
+		set_variable = {
+			name = HRT_authority_prestige_gui
+			value = title:c_aachen.var:HRT_emperor.prestige
+		}
+		set_variable = {
+			name = HRT_authority_dread_gui
+			value = title:c_aachen.var:HRT_emperor.dread
+		}
+		set_variable = {
+			name = HRT_authority_years_reigned_gui
+			value = title:c_aachen.var:HRT_emperor.var:HRT_authority_years_reigned
+		}
+	}
+	else = {
+		set_variable = {
+			name = HRT_missing_imperator_gui
+			value = yes
+		}
+	}
+	#Expectatus
+	if = {
+		limit = {
+			exists = scope:0
+		}
+		set_variable = {
+			name = HRT_expectatus_gui
+			value = scope:0
+		}
+	}
+	else = {
+		set_variable = {
+			name = HRT_missing_expectatus_gui
+			value = yes
+		}
+	}
+	#Candidati
+	if = {
+		limit = {
+			exists = scope:1
+			NOT = {
+				scope:1 = scope:0
+			}
+		}
+		add_to_variable_list = {
+			name = HRT_candidati_gui
+			target = scope:1
+		}
+	}
+	else = {
+		set_variable = {
+			name = HRT_missing_1_gui
+			value = yes
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:2
+			NOR = {
+				scope:2 = scope:0
+				scope:2 = scope:1
+			}
+		}
+		add_to_variable_list = {
+			name = HRT_candidati_gui
+			target = scope:2
+		}
+	}
+	else = {
+		set_variable = {
+			name = HRT_missing_2_gui
+			value = yes
+		}
+	}
+	if = {
+		limit = {
+			exists = scope:3
+			NOR = {
+				scope:3 = scope:0
+				scope:3 = scope:1
+				scope:3 = scope:2
+			}
+		}
+		add_to_variable_list = {
+			name = HRT_candidati_gui
+			target = scope:3
+		}
+	}
+	else = {
+		set_variable = {
+			name = HRT_missing_3_gui
+			value = yes
+		}
+	}
+
+	#Display of Player Score
+	if = {
+		limit = {
+			NOR = {
+				exists = title:e_hre.holder
+				this ?= scope:0
+				this ?= scope:1
+				this ?= scope:2
+				this ?= scope:3
+			}
+		}
+		set_variable = {
+			name = HRT_show_player_score
+			value = yes
+		}
+	}
+	if = {
+		limit = {
+			has_variable = HRT_show_player_score
+			NOT = { HRT_is_emperor_trigger = yes }
+			HRT_is_eligible_candidatus = no
+		}
+		set_variable = {
+			name = HRT_show_player_score_invalid
+			value = yes
+		}
+	}
+
+	#GUI
+	set_global_variable = {
+		name = HRT_window_is_open
+		value = yes
+	}
+}
+
+#HRT window on state hide
+HRT_clear_variables_effect = {
+	every_HRT_candidati = {
+		limit = { has_variable = HRT_prince_var }
+		remove_variable = HRT_prince_var
+	}
+	if = {
+		limit = {
+			exists = this
+			is_alive = yes
+		}
+		remove_variable = HRT_imperator_gui
+		remove_variable = HRT_expectatus_gui
+		clear_variable_list = HRT_candidati_gui
+		remove_variable = HRT_missing_1_gui
+		remove_variable = HRT_missing_2_gui
+		remove_variable = HRT_missing_3_gui
+		remove_variable = HRT_missing_expectatus_gui
+		remove_variable = HRT_missing_imperator_gui
+		remove_variable = HRT_show_player_score
+		remove_variable = HRT_show_player_score_invalid
+		clear_variable_list = HRT_electors
+	}
+	#GUI
+	remove_global_variable = HRT_window_is_open
+	if = {
+		limit = { exists = global_var:HRT_close_window_temp_var }
+		remove_global_variable = HRT_close_window_temp_var
+	}
+}
+
+#Close HRT Window if open
+HRT_close_window = {
+	if = {
+		limit = { exists = global_var:HRT_window_is_open }
+		set_global_variable = {
+			name = HRT_close_window_temp_var
+			value = yes
+		}
+	}
+}
+
+### Italienzug ###
+HRT_italienzug_completed_log_entry_effect = {
+	scope:activity = {
+		add_activity_log_entry = {
+			key = HRT_italienzug_completed_log
+			tags = { completed }
+			# this line below adds the entry to the Effects section of the conclusion UI
+			show_in_conclusion = yes
+			character = root
+			custom_tooltip = HRT_italienzug_result_gained_piety
+			custom_tooltip = HRT_italienzug_result_gained_prestige
+			custom_tooltip = HRT_italienzug_result_gained_dynasty_prestige
+			show_as_tooltip = {
+				every_attending_character = {
+					limit = { NOT = { this = scope:host } }
+					custom = EVERY_ACTIVITY_PARTICIPANT_EFFECT
+					custom_tooltip = HRT_italienzug_result_gained_piety
+					custom_tooltip = HRT_italienzug_result_gained_prestige
+				}
+			}
+		}
+	}
+}

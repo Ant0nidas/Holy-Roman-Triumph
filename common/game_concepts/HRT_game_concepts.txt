@@ -1,0 +1,34 @@
+﻿HRT_imperial_authority = { }
+
+HRT_imperial_authority_change = { }
+
+HRT_imperial_territory = { }
+
+HRT_imperial_edict = {
+	#texture = "gfx/interface/icons/message_feed/titles.dds"
+	alias = { HRT_imperial_edicts }
+}
+
+HRT_imperial_directive = {
+	alias = { HRT_imperial_directives }
+}
+
+#HRT_imperial_resolution = {
+#	alias = { HRT_imperial_resolutions }
+#}
+
+HRT_real_emperor_score = { }
+
+HRT_constrained_reach = { }
+
+HRT_vassal_count = { }
+
+HRT_uncrowned = { }
+
+HRT_italienzug = { }
+
+HRT_king_of_the_romans = { }
+
+HRT_princely_elective = { }
+
+HRT_investiture_controversy = { }

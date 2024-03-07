@@ -1,0 +1,464 @@
+﻿on_game_start = {
+	on_actions = {
+		HRT_setup_on_actions
+	}
+}
+
+HRT_setup_on_actions = {
+	effect = {
+		set_global_variable = {
+			name = HRT_is_loaded
+			value = yes
+		}
+		if = { #Error Destroyer 4000
+			limit = {
+				exists = global_var:HRT_is_loaded
+			}
+			# Do nothing
+		}
+
+		# Giveth Crowns
+		every_ruler = {
+			limit = {
+				NOR = {
+					this = character:30228 # Louis II of Italy
+					this = character:1316 # Heinrich IV
+					this = character:762 # Boleslaw I Chrobry of Poland
+				}
+				is_alive = yes
+				is_adult = yes
+				is_landed = yes
+				exists = capital_province
+				highest_held_title_tier >= tier_kingdom
+				faith = faith:catholic
+				government_has_flag = government_is_feudal
+			}
+			add_trait = COR_crowned_by_bishop
+		}
+		character:214 ?= { # Philippe Ier de France
+			add_trait = COR_crowned_by_bishop
+		}
+
+		#Set variable
+		every_ruler = {
+			limit = {
+				highest_held_title_tier >= tier_kingdom
+				faith = faith:catholic
+				government_has_flag = government_is_feudal
+				NOR = {
+					has_trait = COR_crowned_by_priest
+					has_trait = COR_crowned_by_bishop
+					has_trait = COR_crowned_by_pope
+					has_trait = COR_crowned_by_myself
+					has_trait = HRT_emperor
+					this = character:30228 #Louis II of Italy (gets his trait in starting event)
+				}
+			}
+			set_variable = {
+				name = COR_years_reigned
+				value = 0
+			}
+			# Taketh Crowns
+			if = {
+				limit = { has_game_rule = COR_crowns_taketh }
+				add_character_flag = sold_crown_charmod
+				every_spouse = {
+					limit = {
+						NOR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+							has_trait = HRT_emperor
+						}
+					}
+					add_character_flag = sold_crown_charmod
+				}
+			}
+		}
+	}
+}
+
+on_game_start_after_lobby = {
+	on_actions = {
+		HRT_setup_after_game_start_on_actions
+	}
+}
+
+HRT_setup_after_game_start_on_actions = {
+	effect = {
+		if = {
+			limit = { game_start_date = 867.1.1 }
+			character:30228 ?= { # Louis II of Italy Introduction Event
+				set_variable = {
+					name = COR_coronator
+					value = character:7855 # Pope Leo IV
+				}
+				create_story = HRT_emperor_story
+				trigger_event = HRT.0001 # Louis Introduction Event
+			}
+		}
+		else_if = {
+			limit = { exists = title:e_hre.holder }
+			title:e_hre.holder = {
+				add_character_flag = HRT_italienzug
+				create_story = HRT_emperor_story
+				trigger_event = HRT.0002 # Generic Introduction Event
+			}
+		}
+
+		#TODO HRT_grant_roman_kingship = yes #after creation of HRE
+
+		# Get Total Count of Heartland Counties
+		title:c_aachen = {
+			set_variable = {
+				name = HRT_core_territory
+				value = 0
+			}
+			every_county_in_region = {
+				region = HRT_core_territory
+				prev = {
+					change_variable = {
+						name = HRT_core_territory
+						add = 1
+					}
+				}
+			}
+		}
+	}
+}
+
+# Called every Jan 1st
+# Root does not exist
+yearly_global_pulse = {
+	on_actions = {
+		HRT_yearly_maintenance_pulse
+	}
+}
+
+HRT_yearly_maintenance_pulse = {
+	trigger = {
+		title:c_aachen = {
+			NOT = { has_variable = HRT_dismantled }
+		}
+		OR = {
+			AND = {
+				exists = title:e_hre.holder
+				title:e_hre.holder = {
+					HRT_is_emperor_trigger = no
+				}
+			}
+			title:c_aachen.var:HRT_emperor = {
+				is_alive = no
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { exists = title:e_hre.holder }
+			title:e_hre.holder = {
+				create_story = HRT_emperor_story
+				if = {
+					limit = {
+						NOR = {
+							has_trait = HRT_emperor
+							has_trait = COR_crowned_by_myself
+							this = character:1316 # Heinrich IV
+						}
+					}
+					trigger_event = {
+						id = HRT.1001
+						days = { 7 14 }
+					}
+				}
+			}
+		}
+		else = {
+			ordered_HRT_candidati = {
+				order_by = HRT_imperator_score
+				position = 0
+				save_temporary_scope_as = HRT_new_emperor
+				create_story = HRT_emperor_story
+				if = {
+					limit = {
+						NOR = {
+							has_trait = HRT_emperor
+							has_trait = COR_crowned_by_myself
+						}
+					}
+					trigger_event = {
+						id = HRT.1001
+						days = { 7 14 }
+					}
+				}
+			}
+		}
+		HRT_close_window = yes
+	}
+}
+
+# Called from code once a year for "playable" (count+) characters.
+# Root is the character
+yearly_playable_pulse = {
+	events = {
+		COR_e.1001 # Maintenace & Uncrowned Malus
+	}
+}
+
+# character just about to die in root scope
+on_death = {
+	on_actions = {
+		HRT_on_death
+	}
+	events = {
+		COR_ceremony.0002 # Notify ruler of coronator's death
+	}
+}
+
+#Close HRT window if open and you die
+HRT_on_death = {
+	trigger = {
+		is_ai = no
+		exists = global_var:HRT_window_is_open
+	}
+	effect = {
+		HRT_close_window = yes
+	}
+}
+
+# A title is destroyed
+# root = the holder before destruction
+# scope:landed_title = the title that is being destroyed
+# Does *not* provide scope:transfer_type
+on_title_destroyed = {
+	events = {
+		HRT.0006 # HRE title is destroyed
+	}
+}
+
+# A title is lost by a character
+# root = the old holder
+# scope:title = the title that changes hands
+# scope:new_holder = new holder.
+on_title_lost = {
+	events = {
+		HRT.0008 # Emperor holds no kingdom pre HRE-formation
+	}
+}
+
+# A title is transferred to a new character
+# root = the new holder
+# scope:title = the title that changes hands
+# scope:previous_holder = previous holder. Might be dead
+on_title_gain = {
+	events = {
+		HRT.0007 # HRE restored but not by current emperor
+		COR_e.0001
+	}
+}
+
+## A title is inherited by a character
+## root = the new holder
+## scope:title = the title that changes hands
+## scope:previous_holder = previous holder. Should be dead
+#on_title_gain_inheritance = {
+#	events = {
+#		COR_e.0002
+#	}
+#}
+#
+## A title is usurped by a character
+## root = the new holder
+## scope:title = the title that changes hands
+## scope:previous_holder = previous holder. Shouldn't be dead
+#on_title_gain_usurpation = {
+#	events = {
+#		COR_e.0003
+#	}
+#}
+
+##############
+# Italienzug #
+##############
+
+on_travel_plan_complete = {
+	on_actions = {
+		HRT_on_travel_plan_complete
+	}
+}
+
+HRT_on_travel_plan_complete = {
+	trigger = {
+		current_travel_plan = { has_variable = HRT_italienzug }
+	}
+	effect = {
+		current_travel_plan = {
+			every_entourage_character = {
+				if = {
+					limit = {
+						is_alive = yes
+						has_variable = wear_armor
+					}
+					remove_character_flag = wear_armor
+				}
+			}
+		}
+	}
+}
+
+
+on_travel_plan_abort = {
+	on_actions = {
+		HRT_on_travel_plan_abort
+	}
+}
+
+HRT_on_travel_plan_abort = {
+	trigger = {
+		current_travel_plan = { has_variable = HRT_italienzug }
+	}
+	effect = {
+		current_travel_plan = {
+			every_entourage_character = {
+				if = {
+					limit = {
+						is_alive = yes
+						has_variable = wear_armor
+					}
+					remove_character_flag = wear_armor
+				}
+			}
+		}
+	}
+}
+
+# called for armies whenever they enter a province
+# root is the owner of the army
+# scope:army is the army
+on_army_enter_province = {
+	on_actions = {
+		HRT_on_army_enter_province
+	}
+}
+
+HRT_on_army_enter_province = {
+	events = {
+		HRT.1101
+	}
+}
+
+# Coronation Ceremony
+COR_ceremony_ongoing_event_pulse = {
+	trigger = {
+		NOT = { has_character_flag = busy_in_ceremony_event }
+		scope:activity = {
+			OR = {
+				has_activity_type = activity_HRT_italienzug
+				AND = {
+					has_activity_type = COR_activity_coronation_ceremony
+					NOT = {
+						has_activity_option = {
+							category = COR_ceremony_type
+							option = COR_ceremony_type_private
+						}
+					}
+				}
+				AND = {
+					has_activity_type = COR_activity_coronation_ceremony_hof
+					NOT = {
+						has_activity_option = {
+							category = COR_ceremony_type
+							option = COR_ceremony_type_private
+						}
+					}
+				}
+			}
+		}
+	}
+	random_events = {
+		chance_to_happen = 100
+		#200 = 0
+
+		120 = COR_ceremony.0330 # Gatecrashers
+		100 = COR_ceremony.0340 # The Parade
+		100 = COR_ceremony.0350 # Political talk with a fellow ruler
+		100 = COR_ceremony.0360 #King has chance to befriend ruler.
+		100 = COR_ceremony.0361 #King has chance to befriend vassal.
+		125 = COR_ceremony.0370 #King talks with guests, chance to gain diplomacy or stewardship.
+		125 = COR_ceremony.0371 #King talks with guests, chance to gain intrigue or learning.
+		400 = COR_ceremony.0380 #King shows off with guests, chance to improve opinion.
+		50 = COR_ceremony.0390 #King galvanized by upcoming coronation, chance to trade content->ambitious or lazy->diligent.
+	}
+}
+
+COR_ceremony_ending_event_pulse = {
+	on_actions = { }
+	events = {
+		COR_ceremony.0322
+		COR_ceremony.0323
+	}
+}
+
+COR_ceremony_banquet_ongoing_event_pulse = {
+	trigger = {
+		NOT = { has_character_flag = busy_in_banquet_event }
+		scope:activity = {
+			OR = {
+				has_activity_type = activity_HRT_italienzug
+				AND = {
+					has_activity_type = COR_activity_coronation_ceremony
+					NOT = {
+						has_activity_option = {
+							category = COR_ceremony_type
+							option = COR_ceremony_type_private
+						}
+					}
+				}
+				AND = {
+					has_activity_type = COR_activity_coronation_ceremony_hof
+					NOT = {
+						has_activity_option = {
+							category = COR_ceremony_type
+							option = COR_ceremony_type_private
+						}
+					}
+				}
+			}
+		}
+	}
+	random_events = {
+		chance_to_happen = 100
+		250 = 0
+
+		25 = COR_ceremony.0402			# You make a new friend
+		100 = COR_ceremony.0403			# A Fiery Dance
+		220 = ep2_wedding.2000 			# Diplomatic Intent: Befriend your target's friend
+		220 = COR_ceremony.0404 		# Host - Diplomatic Intent: Bring a cool animal to show off
+		100 = COR_ceremony_ewan.0001	# Quite the Spectacle - Connect with various types of characters over the entertainment.
+		100 = COR_ceremony_ewan.0011	# Food Fit for a... - Connect with various types of characters over the food.
+		100 = COR_ceremony_ewan.0021	# Shimmering, Shining - Connect with various types of characters over the venue & its decorations.
+		100 = COR_ceremony_ewan.0031	# A Sociable Supper - Meet one of your #neighbouring rulers and form a fast friendship.
+		100 = COR_ceremony_ewan.0041	# Speech! Speech! - Make a speech to the ruler, adjusting the meaning to your intent.
+		100 = ep2_wedding_ewan.0051		# And Another Thing - Someone is pitching #questionable ideas at you, but they keep coming at you.
+		# Transferred feast events
+		50 = feast_events_ewan.0001		# Clear your Head - Ambush your target when they go out for a walk.
+		50 = feast_events_ewan.0601		# A Mere Jest - Stuff a gross item (e.g., dead #rat) in a refined foodstuff (e.g., jug of wine).
+		50 = feast_events_ewan.0801		# A Pleasing Atmosphere - Sit back and enjoy the vibes.
+		#Generic
+		20 = COR_ceremony.0405			# Enjoying Magnificent Food
+		10 = feast_default.2005			#Drunk guest throws up
+		10 = feast_default.5001 #Hosts dread freaks you out
+		10 = feast_default.5002 #Host is a lunatic
+		10 = feast_default.5003 #host is sadistic
+		10 = feast_default.5004 #Host is a reveller
+		10 = feast_default.1001 # A guest is impressed with your high learning!
+		10 = feast_default.1005 #I am shy and this is not fun
+		10 = feast_default.1006 #Reveller likes to revel
+		5 = feast_default.1007 #Two gluttons eat immensely
+		5 = feast_default.1008 #Accidentaly spill secrets
+		5 = feast_default.6003 #Guests Fighting
+		5 = feast_default.6101 #Shy guest
+		5 = feast_default.1002 #Gluttonous
+		3 = feast_default.5005 #You just love Garum
+	}
+}

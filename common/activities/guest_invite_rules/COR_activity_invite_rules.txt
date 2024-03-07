@@ -1,0 +1,8 @@
+﻿# Officiant
+COR_activity_invite_rule_officiant = {
+	effect = {
+		root.var:COR_coronator ?= {
+			add_to_list = characters
+		}
+	}
+}

@@ -1,0 +1,10 @@
+﻿COR_base_ceremony_cost = {
+	# Base cost
+	value = 50
+	if = {
+		limit = {
+			highest_held_title_tier = tier_empire
+		}
+		multiply = 3
+	}
+}

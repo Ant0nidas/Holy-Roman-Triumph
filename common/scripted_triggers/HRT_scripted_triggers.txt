@@ -1,0 +1,60 @@
+﻿HRT_is_eligible_candidatus = {
+	HRT_is_emperor_trigger = no
+	is_male = yes
+	exists = dynasty
+	faith = { religion_tag = christianity_religion }
+	NOR = {
+		has_trait = HRT_decline_succession
+		has_trait = excommunicated
+		has_trait = disinherited
+		has_trait = eunuch
+		has_trait = crusader_king
+		has_trait = devoted
+		has_trait = order_member
+		AND = {
+			exists = faith:catholic.religious_head
+			is_at_war_with = faith:catholic.religious_head
+		}
+	}
+	OR = {
+		is_close_or_extended_family_of = title:c_aachen.var:HRT_emperor
+		has_variable = HRT_prince_var
+		has_claim_on = title:e_hre
+		AND = {
+			is_landed = yes
+			highest_held_title_tier >= tier_duchy
+			any_realm_province = { geographical_region = HRT_core_territory }
+			government_has_flag = government_is_feudal
+			NOT = { this = faith:catholic.religious_head } #Nice try, Mr. Pope
+		}
+	}
+}
+
+HRT_is_emperor_trigger = {
+	any_owned_story = {
+		story_type = HRT_emperor_story
+	}
+	#this = title:c_aachen.var:HRT_emperor
+	#any_held_title = title:e_hre
+}
+
+HRT_is_involved_trigger = {
+	is_landed = yes
+	OR = {
+		HRT_is_emperor_trigger = yes
+		any_realm_province = { geographical_region = HRT_core_territory }
+		AND = {
+			exists = title:e_hre.holder
+			is_vassal_of = title:e_hre.holder
+		}
+		any_neighboring_top_liege_realm_owner = {
+			OR = {
+				any_realm_province = { geographical_region = HRT_core_territory }
+				AND = {
+					exists = title:e_hre.holder
+					is_vassal_of = title:e_hre.holder
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,203 @@
+types HRT_stuff {
+type HRT_window_special_character = widget { #For showing the Imperator and Expectatus
+    allow_outside = yes
+    size = {150 213}
+    block "icon" {
+		icon = {
+			texture = "gfx/interface/icons/HRT_laurel_wreath.dds"
+			size = { 180 180 }
+			position = { -17 25 }
+			alpha = 0.7
+		}
+	}
+    icon = {
+        parentanchor = hcenter|top
+        texture = "gfx/interface/HRT/papacy_nameplate_large_bg.dds"
+        position = {-12 -10} #don't fucking change
+        text_single = {
+            block "text" {}
+            parentanchor = hcenter|vcenter
+            default_format = "#light_background"
+            using = Font_Type_Flavor
+            block "fontsize" { fontsize = 24 }
+            position = {0 -4}
+        }
+    }
+    block "portrait" {portrait_head = {parentanchor = hcenter|vcenter position = {0 5} }}
+    text_single = {
+        parentanchor = bottom|hcenter
+        position = {0 -20}
+        text = "HRT_WINDOW_NAME"
+		fontsize = 18
+    }
+}
+
+type HRT_window_candidatus_griditem = widget{ # Contains all the information of a single entry in the candidati grid
+    size = {299 210} 
+    datacontext = "[Scope.GetCharacter]"
+    HRT_window_candidati = {}
+    HRT_window_imperator_score = {}
+}
+
+type HRT_window_candidati = widget { # Lists character's name and portrait
+    allow_outside = yes
+    size = {150 150}
+    vbox = {
+        margin_top = -0
+        icon = {
+            texture = "gfx/interface/HRT/papacy_nameplate_small_bg.dds"
+            text_single = {
+                block "text" {text = HRT_CANDIDATUS }
+                parentanchor = hcenter|vcenter
+                default_format = "#light_background"
+                using = Font_Type_Flavor
+                fontsize = 22
+                position = {0 -4}
+            }
+        }
+        portrait_head = {}
+        text_single = {
+            text = "HRT_WINDOW_NAME"
+        }
+    }
+}
+
+type HRT_no_candidatus = widget {
+    allow_outside = yes
+    size = {150 213}
+
+    icon = {
+        parentanchor = hcenter|top
+        texture = "gfx/interface/HRT/papacy_nameplate_small_bg.dds"
+        text_single = {
+			text = HRT_CANDIDATUS_MISSING
+            parentanchor = hcenter|vcenter
+            default_format = "#light_background"
+            using = Font_Type_Flavor
+            fontsize = 22
+            position = {0 -4}
+        }
+    }
+}
+
+type HRT_no_special_character = widget { #when there is no imperator or expectatus
+    allow_outside = yes
+    size = {150 213}
+	
+    icon = {
+        parentanchor = hcenter|top
+        texture = "gfx/interface/HRT/papacy_nameplate_large_bg.dds"
+        position = {-12 -10}
+        text_single = {
+            block "text" {}
+            parentanchor = hcenter|vcenter
+            default_format = "#light_background"
+            using = Font_Type_Flavor
+            block "fontsize" { fontsize = 26 }
+            position = {0 -4}
+        }
+    }
+}
+
+type HRT_window_imperator_score = widget { # Show score for the upcoming election (Bishop-to-cardinal or cardinal-to-pope)
+visible = "[Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+	size = {100 100}
+    parentanchor = hcenter|vcenter
+    position = { 40 15 }
+    icon = {
+        texture = "gfx/interface/HRT/ImperatorScore.png"
+        position = {30 -15}
+    }
+    text_single = {
+        position = { 64 70 }
+        block "score" {text = "[GuiScope.SetRoot(Character.MakeScope).ScriptValue('HRT_imperator_score')|0]"}
+        fontsize = 25
+    }
+    tooltipwidget = {HRT_imperator_score_breakdown_tooltip = {}}
+}
+
+types HRT_button_authority_types {
+	type HRT_button_authority = button {
+		size = { 90 160 }
+		position = { 880 620 }
+		block "effect_name"
+		{
+			effectname = "NoHighlight"
+		}
+	
+		state = {
+			name = _mouse_hierarchy_enter
+			on_start = "[PdxGuiWidget.FindChild('authority_hover').TriggerAnimation('show')]"
+		}
+		state = {
+			name = _mouse_hierarchy_leave
+			on_start = "[PdxGuiWidget.FindChild('authority_hover').TriggerAnimation('hide')]"
+		}
+	
+		widget = {
+			name = "authority_value"
+			position = { 0 -75 }
+
+			text_label_center = {
+				visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)100' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)10' ))]"
+				position = { 3 63 }
+				text = "[GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value')|L]"
+				fontsize = 36
+				using = Font_Size_Big
+				default_format = "#high"
+			}
+			
+			text_label_center = {
+				visible = "[LessThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'),'(CFixedPoint)10')]"
+				position = { 11 63 }
+				text = "[GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value')|L]"
+				fontsize = 36
+				using = Font_Size_Big
+				default_format = "#high"
+			}
+
+		}
+		widget = {
+			name = "authority_hover"
+			alpha = 0
+			
+			state = {
+				name = "show"
+				alpha = 1
+			}
+			
+			state = {
+				name = "hide"
+				alpha = 0
+			}
+			
+			text_label_center = {
+				visible = "[EqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'),'(CFixedPoint)100')]"
+				position = { 19 63 }
+				text = "[GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value')|0]"
+				fontsize = 36
+				using = Font_Size_Big
+				default_format = "#high"
+			}
+		}
+	}
+	
+}
+
+#Edict Button
+type HRT_button_edict = button_normal
+    {
+		size = { 78 60 }
+		using = tooltip_nw
+	}
+
+type HRT_button_edict_framed = button_normal
+    {
+		size = { 78 60 }
+		using = tooltip_nw
+
+		gfxtype = togglepushbuttongfx
+        effectname = "NoHighlight"
+	}
+
+}

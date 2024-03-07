@@ -1,0 +1,20 @@
+﻿HRT_unification_authority_value = {
+	value = 60
+	if = {
+		limit = { NOT = { exists = title:e_hre.holder } }
+		multiply = 0.5
+	}
+}
+
+HRT_demand_fealty_interaction_authority_value = {
+	value = 80
+	if = {
+		limit = { NOT = { exists = title:e_hre.holder } }
+		value = 50
+	}
+}
+
+#HRT_authority_half_value = {
+#	value = title:c_aachen.var:HRT_emperor.var:HRT_authority
+#	multiply = 0.5
+#}

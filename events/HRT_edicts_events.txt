@@ -1,0 +1,1332 @@
+﻿namespace = HRT_edicts
+#################################
+#
+# Holy Roman Triumph - Imperial Edicts
+# 0001 - 0010	Edicts (not really sorted sorry)
+# 0011 - 0016	Edict Vassal Notification
+# 1001			Proclaim Imperial Directive
+# 1002			Enact Imperial Resolution
+#
+#################################
+
+HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
+	type = character_event
+	title = HRT_edict_legal_unification
+	desc = HRT_edicts.0001.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 40
+		prestige > major_prestige_value		
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_legal_unification_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_chancellor
+			}
+			cp:councillor_chancellor = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0001.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_legal_unification
+			years = 5
+		}
+		every_vassal = {
+			trigger_event = HRT_edicts.0011 # Notification Event
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 40
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_legal_unification_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0001.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
+	type = character_event
+	title = HRT_edict_chivalric_excellence
+	desc = HRT_edicts.0002.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		has_variable = HRT_authority
+		var:HRT_authority >= 100
+		prestige >= massive_prestige_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_chivalric_excellence_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_marshal
+			}
+			cp:councillor_marshal = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0002.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_chivalric_excellence
+			years = 5
+		}
+		add_prestige = {
+			value = massive_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 100
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_chivalric_excellence_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0002.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
+	type = character_event
+	title = HRT_edict_diplomatic_corps
+	desc = HRT_edicts.0003.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		has_variable = HRT_authority
+		var:HRT_authority >= 60
+		prestige >= medium_prestige_value
+		piety >= medium_piety_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_diplomatic_corps_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_chancellor
+			}
+			cp:councillor_chancellor = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0003.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_diplomatic_corps
+			years = 5
+		}
+		faith:catholic.religious_head = {
+			add_opinion = {
+				target = root
+				modifier = HRT_edict_diplomatic_corps_opinion
+			}
+		}
+		add_prestige = {
+			value = medium_prestige_value
+			multiply = -1
+		}
+		add_piety = {
+			value = medium_piety_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 60
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_diplomatic_corps_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0003.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
+	type = character_event
+	title = HRT_edict_consular_taxation
+	desc = HRT_edicts.0004.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 80
+		prestige >= major_prestige_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_consular_taxation_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_steward
+			}
+			cp:councillor_steward = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0004.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_consular_taxation
+			years = 5
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 80
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_consular_taxation_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0004.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
+	type = character_event
+	title = HRT_edict_levy_conscription
+	desc = HRT_edicts.0005.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 100
+		prestige >= massive_prestige_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_levy_conscription_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_marshal
+			}
+			cp:councillor_marshal = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0005.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_levy_conscription
+			years = 5
+		}
+		add_prestige = {
+			value = massive_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 100
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_levy_conscription_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0005.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
+	type = character_event
+	title = HRT_edict_urban_rights
+	desc = HRT_edicts.0006.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 75
+		prestige >= major_prestige_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_urban_rights_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_steward
+			}
+			cp:councillor_steward = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0006.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_urban_rights
+			years = 5
+		}
+		every_sub_realm_county = {
+			limit = {
+				tier = county
+				any_county_province = {
+					has_holding_type = city_holding
+				}
+			}
+			add_county_modifier = {
+				modifier = HRT_edict_urban_rights_county
+				years = 5
+			}
+			change_county_control = -5
+		}
+		every_vassal = {
+			limit = { is_ai = no }
+			trigger_event = HRT_edicts.0012
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 75
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_urban_rights_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0006.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
+	type = character_event
+	title = HRT_edict_border_defense
+	desc = HRT_edicts.0007.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 100
+		prestige >= massive_prestige_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_border_defense_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_marshal
+			}
+			cp:councillor_marshal = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0007.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_border_defense
+			years = 5
+		}
+		every_sub_realm_county = {
+			limit = {
+				tier = county
+				any_neighboring_county = {
+					holder = {
+						NOT = { this = root }
+						liege = { NOT = { this = root } }
+					}
+				}
+			}
+			add_county_modifier = {
+				modifier = HRT_edict_border_defense_county
+				years = 5
+			}
+		}
+		every_vassal = {
+			limit = { is_ai = no }
+			trigger_event = HRT_edicts.0013
+		}
+		add_prestige = {
+			value = massive_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 100
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_border_defense_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0007.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
+	type = character_event
+	title = HRT_edict_scholastic_advancement
+	desc = HRT_edicts.0008.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 50
+		prestige >= minor_prestige_value
+		piety >= major_piety_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_scholastic_advancement_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_court_chaplain
+			}
+			cp:councillor_court_chaplain = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0008.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_scholastic_advancement
+			years = 5
+		}
+		every_vassal = {
+			trigger_event = HRT_edicts.0014
+		}
+		add_prestige = {
+			value = minor_prestige_value
+			multiply = -1
+		}
+		add_piety = {
+			value = major_piety_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 50
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_scholastic_advancement_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0008.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
+	type = character_event
+	title = HRT_edict_imperial_works
+	desc = HRT_edicts.0009.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 50
+		prestige >= major_prestige_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_imperial_works_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_steward
+			}
+			cp:councillor_steward = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0009.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_imperial_works
+			years = 5
+		}
+		every_sub_realm_county = {
+			add_county_modifier = {
+				modifier = HRT_edict_imperial_works_county
+				years = 5
+			}
+		}
+		every_vassal = {
+			trigger_event = HRT_edicts.0015
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 50
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_imperial_works_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0009.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
+	type = character_event
+	title = HRT_edict_ecclesiastical_patronage
+	desc = HRT_edicts.0010.desc
+	theme = crown
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_2
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 40
+		piety >= major_piety_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			title:c_aachen = { has_variable = HRT_edict_ecclesiastical_patronage_var }
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		if = {
+			limit = {
+				exists = cp:councillor_court_chaplain
+			}
+			cp:councillor_court_chaplain = { save_scope_as = councillor }
+		}
+		else = {
+			random_councillor = {
+				limit = {
+					is_available_ai_adult = yes
+				}
+				save_scope_as = councillor
+			}
+		}
+	}
+
+	option = {
+		name = HRT_edicts.0010.a
+		add_internal_flag = special
+		add_character_modifier = {
+			modifier = HRT_edict_ecclesiastical_patronage
+			years = 5
+		}
+		every_sub_realm_county = {
+			add_county_modifier = {
+				modifier = HRT_edict_ecclesiastical_patronage_county
+				years = 5
+			}
+		}
+		every_vassal = {
+			trigger_event = HRT_edicts.0016
+		}
+		add_piety = {
+			value = major_piety_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 40
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_edict_ecclesiastical_patronage_var
+					value = yes
+					years = 5
+				}
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0010.b
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+# Notification Events
+HRT_edicts.0011 = { # Edict of Legal Unification
+	title = HRT_edict_legal_unification
+	desc = HRT_edicts.0011.desc
+	theme = crown
+
+	right_portrait = {
+		character = scope:emperor
+		animation = idle
+	}
+
+	option = {
+		name = HRT_edicts.ok # ok
+		add_character_modifier = {
+			modifier = HRT_edict_legal_unification_vassal
+			years = 5
+		}
+	}
+}
+
+HRT_edicts.0012 = { # Edict of Urban Rights and Privileges
+	title = HRT_edict_urban_rights
+	desc = HRT_edicts.0012.desc
+	theme = crown
+
+	right_portrait = {
+		character = scope:emperor
+		animation = idle
+	}
+
+	option = {
+		name = HRT_edicts.ok
+	}
+}
+
+HRT_edicts.0013 = { # Border Defense Temporary Directive
+	title = HRT_edict_border_defense
+	desc = HRT_edicts.0013.desc
+	theme = crown
+
+	right_portrait = {
+		character = scope:emperor
+		animation = idle
+	}
+
+	option = {
+		name = HRT_edicts.ok
+	}
+}
+
+HRT_edicts.0014 = { # Edict of Scholastic Advancement
+	title = HRT_edict_scholastic_advancement
+	desc = HRT_edicts.0014.desc
+	theme = crown
+
+	right_portrait = {
+		character = scope:emperor
+		animation = idle
+	}
+
+	option = {
+		name = HRT_edicts.ok
+		add_character_modifier = {
+			modifier = HRT_edict_scholastic_advancement_vassal
+			years = 5
+		}
+	}
+}
+
+HRT_edicts.0015 = { # Edict of Imperial Works
+	title = HRT_edict_imperial_works
+	desc = HRT_edicts.0015.desc
+	theme = crown
+
+	right_portrait = {
+		character = scope:emperor
+		animation = idle
+	}
+
+	option = {
+		name = HRT_edicts.ok
+		add_character_modifier = {
+			modifier = HRT_edict_imperial_works_vassal
+			years = 5
+		}
+	}
+}
+
+HRT_edicts.0016 = { # Edict of Ecclesiastical Patronage
+	title = HRT_edict_ecclesiastical_patronage
+	desc = HRT_edicts.0016.desc
+	theme = crown
+
+	right_portrait = {
+		character = scope:emperor
+		animation = idle
+	}
+
+	option = {
+		name = HRT_edicts.ok
+	}
+}
+
+# Proclaim Imperial Directive
+HRT_edicts.1001 = {
+	type = character_event
+	title = HRT_edicts.1001.t
+	desc = HRT_edicts.1001.desc
+	theme = crown
+	
+	left_portrait = {
+		character = scope:councillor
+		animation = throne_room_conversation_1
+	}
+	right_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 60
+		prestige >= major_prestige_value
+		NOR = {
+			has_character_flag = HRT_edict_open
+			has_variable = HRT_edict_proclaim_directive
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_edict_open
+		random_councillor = {
+			limit = {
+				is_available_ai_adult = yes
+			}
+			save_scope_as = councillor
+		}
+	}
+
+	option = {
+		name = HRT_edicts.1001.a
+		skill = diplomacy
+
+		custom_tooltip = HRT_edicts.1001.a.tt
+
+		add_character_modifier = {
+			modifier = HRT_edict_proclaim_directive_diplomacy
+			years = 3
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 60
+			}
+			set_variable = {
+				name = HRT_edict_proclaim_directive
+				value = yes
+				years = 3
+			}
+		}
+
+		ai_chance = { base = 20 }
+	}
+	option = {
+		name = HRT_edicts.1001.b
+		skill = martial
+
+		custom_tooltip = HRT_edicts.1001.b.tt
+
+		add_character_modifier = {
+			modifier = HRT_edict_proclaim_directive_martial
+			years = 3
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 60
+			}
+			set_variable = {
+				name = HRT_edict_proclaim_directive
+				value = yes
+				years = 3
+			}
+		}
+
+		ai_chance = { base = 20 }
+	}
+	option = {
+		name = HRT_edicts.1001.c
+		skill = stewardship
+
+		custom_tooltip = HRT_edicts.1001.c.tt
+
+		add_character_modifier = {
+			modifier = HRT_edict_proclaim_directive_stewardship
+			years = 3
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 60
+			}
+			set_variable = {
+				name = HRT_edict_proclaim_directive
+				value = yes
+				years = 3
+			}
+		}
+
+		ai_chance = { base = 20 }
+	}
+	option = {
+		name = HRT_edicts.1001.d
+		skill = intrigue
+
+		custom_tooltip = HRT_edicts.1001.d.tt
+
+		add_character_modifier = {
+			modifier = HRT_edict_proclaim_directive_intrigue
+			years = 3
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 60
+			}
+			set_variable = {
+				name = HRT_edict_proclaim_directive
+				value = yes
+				years = 3
+			}
+		}
+
+		ai_chance = { base = 20 }
+	}
+	option = {
+		name = HRT_edicts.1001.e
+		skill = learning
+
+		custom_tooltip = HRT_edicts.1001.e.tt
+
+		add_character_modifier = {
+			modifier = HRT_edict_proclaim_directive_learning
+			years = 3
+		}
+		add_prestige = {
+			value = major_prestige_value
+			multiply = -1
+		}
+		hidden_effect = {
+			change_variable = {
+				name = HRT_authority
+				subtract = 60
+			}
+			set_variable = {
+				name = HRT_edict_proclaim_directive
+				value = yes
+				years = 3
+			}
+		}
+
+		ai_chance = { base = 20 }
+	}
+	option = {
+		name = HRT_edicts.1001.f
+	}
+
+	after = {
+		remove_character_flag = HRT_edict_open
+	}
+}
+
+## Enact Imperial Resolution
+#HRT_edicts.1002 = {
+#	type = character_event
+#	title = HRT_edicts.1002.t
+#	desc = HRT_edicts.1002.desc
+#	theme = crown
+#
+#	left_portrait = {
+#		character = scope:councillor
+#		animation = throne_room_conversation_1
+#	}
+#	right_portrait = {
+#		character = root
+#		animation = thinking
+#	}
+#
+#	trigger = {
+#		HRT_is_emperor_trigger = yes
+#		var:HRT_authority >= 10
+#		prestige >= major_prestige_value
+#		NOR = {
+#			has_character_flag = HRT_edict_open
+#			#has_variable = HRT_edict_enact_resolution
+#		}
+#	}
+#
+#	immediate = {
+#		save_scope_as = emperor
+#		add_character_flag = HRT_edict_open
+#		random_councillor = {
+#			limit = {
+#				is_available_ai_adult = yes
+#			}
+#			save_scope_as = councillor
+#		}
+#	}
+#
+#	option = { #Patronage of Arts
+#		name = HRT_edicts.1002.a
+#		#add_internal_flag = special
+#
+#		custom_tooltip = HRT_edicts.1002.a.tt
+#
+#		remove_short_term_gold = {
+#			value = major_gold_value
+#		}
+#		add_prestige = {
+#			value = major_prestige_value
+#			multiply = -1
+#		}
+#		add_piety = {
+#			value = minor_piety_value
+#			multiply = -1
+#		}
+#
+#		hidden_effect = {
+#			change_variable = {
+#				name = HRT_authority
+#				add = 20
+#			}
+#			set_variable = {
+#				name = HRT_edict_enact_resolution
+#				value = yes
+#				years = 10
+#			}
+#		}
+#	}
+#	option = { #Prepare for War
+#		name = HRT_edicts.1002.b
+#		#add_internal_flag = dangerous
+#
+#		custom_tooltip = HRT_edicts.1002.b.tt
+#
+#		remove_short_term_gold = {
+#			value = medium_gold_value
+#		}
+#		add_prestige = {
+#			value = major_prestige_value
+#			multiply = -1
+#		}
+#
+#		random_list = {
+#			# 200
+#			50 = {
+#				spawn_army = {
+#					levies = 100
+#					men_at_arms = {
+#						type = pikemen_unit
+#						stacks = 2
+#					}
+#					location = root.capital_province
+#					uses_supply = yes
+#					inheritable = no
+#					name = HRT_edicts_event_troops
+#				}
+#			}
+#			# 400
+#			35 = {
+#				spawn_army = {
+#					levies = 200
+#					men_at_arms = {
+#						type = pikemen_unit
+#						stacks = 2
+#					}
+#					men_at_arms = {
+#						type = bowmen
+#						stacks = 1
+#					}
+#					location = root.capital_province
+#					uses_supply = yes
+#					inheritable = no
+#					name = HRT_edicts_event_troops
+#				}
+#			}
+#			# 600
+#			10 = {
+#				spawn_army = {
+#					levies = 300
+#					men_at_arms = {
+#						type = pikemen_unit
+#						stacks = 2
+#					}
+#					men_at_arms = {
+#						type = bowmen
+#						stacks = 1
+#					}
+#					men_at_arms = {
+#						type = armored_footmen
+#						stacks = 1
+#					}
+#					location = root.capital_province
+#					uses_supply = yes
+#					inheritable = no
+#					name = HRT_edicts_event_troops
+#				}
+#			}
+#			# 800
+#			5 = {
+#				spawn_army = {
+#					levies = 400
+#					men_at_arms = {
+#						type = pikemen_unit
+#						stacks = 2
+#					}
+#					men_at_arms = {
+#						type = bowmen
+#						stacks = 1
+#					}
+#					men_at_arms = {
+#						type = armored_footmen
+#						stacks = 1
+#					}
+#					men_at_arms = {
+#						type = light_horsemen
+#						stacks = 1
+#					}
+#					location = root.capital_province
+#					uses_supply = yes
+#					inheritable = no
+#					name = HRT_edicts_event_troops
+#				}
+#			}
+#		}
+#
+#		hidden_effect = {
+#			change_variable = {
+#				name = HRT_authority
+#				subtract = 85
+#			}
+#			set_variable = {
+#				name = HRT_edict_enact_resolution
+#				value = yes
+#				years = 10
+#			}
+#		}
+#	}
+#	option = {
+#		name = HRT_edicts.1002.c
+#	}
+#
+#	after = {
+#		remove_character_flag = HRT_edict_open
+#	}
+#}

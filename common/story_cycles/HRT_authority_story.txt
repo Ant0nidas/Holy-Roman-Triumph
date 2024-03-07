@@ -1,0 +1,625 @@
+﻿HRT_emperor_story = {
+
+	on_setup = {
+		story_owner = {
+			#To scope to emperor
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_emperor
+					value = scope:story.story_owner
+				}
+			}
+			set_variable = {
+				name = HRT_authority
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_prestige
+				value = prestige
+			}
+			set_variable = {
+				name = HRT_authority_dread
+				value = dread
+			}
+			set_variable = {
+				name = HRT_authority_years_reigned
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_vassals_var
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_vassals_bonus_var
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_vassals_war_var
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_infidels_var
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_territory
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_unheld_heartlands
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_military_strength
+				value = max_military_strength
+			}
+			set_variable = {
+				name = HRT_authority_ally_military_strength
+				value = 0
+			}
+			set_variable = {
+				name = HRT_authority_artifacts
+				value = 0
+			}
+			if = {
+				limit = { exists = global_var:Trinity_is_loaded }
+				set_variable = {
+					name = HRT_authority_cardinals
+					value = 0
+				}
+			}
+			
+			#Become Independent
+			if = {
+				limit = { is_independent_ruler = no }
+				create_title_and_vassal_change = {
+					type = independency
+					save_scope_as = change
+					add_claim_on_loss = yes
+				}
+				becomes_independent = {
+					change = scope:change
+				}
+				resolve_title_and_vassal_change = scope:change
+			}
+
+			#Coronation
+			if = {
+				limit = { has_variable = COR_coronator }
+				remove_variable = COR_coronator
+			}
+			if = {
+				limit = {
+					NOT = { has_variable = COR_years_reigned }
+				}
+				set_variable = {
+					name = COR_years_reigned
+					value = 0
+				}
+			}
+			if = {
+				limit = { has_game_rule = COR_crowns_taketh }
+				add_character_flag = sold_crown_charmod
+				every_spouse = {
+					limit = {
+						NOR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+							has_trait = HRT_emperor
+						}
+					}
+					add_character_flag = sold_crown_charmod
+				}
+			}
+		}
+	}
+	
+	on_owner_death = {
+		HRT_close_window = yes
+		title:c_aachen = {
+			set_variable = {
+				name = HRT_deceasedemperor
+				value = scope:story.story_owner
+			}
+		}
+		story_owner = {
+			primary_heir ?= {
+				set_variable = {
+					name = HRT_prince_var
+					value = yes
+					days = 1
+				}
+			}
+			player_heir ?= {
+				trigger_event = { id = HRT.0009 days = 1 }
+			}
+			HRT_initialize_succession = yes
+		}
+		end_story = yes
+	}
+
+	on_end = {
+		remove_variable = HRT_authority
+		remove_variable = HRT_authority_prestige
+		remove_variable = HRT_authority_dread
+		remove_variable = HRT_authority_years_reigned
+		remove_variable = HRT_authority_vassals_var
+		remove_variable = HRT_authority_vassals_bonus_var
+		remove_variable = HRT_authority_vassals_war_var
+		remove_variable = HRT_authority_infidels_var
+		remove_variable = HRT_authority_territory
+		remove_variable = HRT_authority_unheld_heartlands
+		remove_variable = HRT_authority_military_strength
+		remove_variable = HRT_authority_ally_military_strength
+		remove_variable = HRT_authority_artifacts
+		remove_variable = HRT_authority_cardinals
+	}
+
+	effect_group = {
+		months = 1
+		triggered_effect = {
+			trigger = {
+				always = yes
+			}
+			effect = {
+				story_owner = {
+					#Reset Variables
+					change_variable = {
+						name = HRT_authority_vassals_var
+						multiply = 0
+					}
+					change_variable = {
+						name = HRT_authority_vassals_bonus_var
+						multiply = 0
+					}
+					change_variable = {
+						name = HRT_authority_vassals_war_var
+						multiply = 0
+					}
+					change_variable = {
+						name = HRT_authority_infidels_var
+						multiply = 0
+					}
+					change_variable = {
+						name = HRT_authority_territory
+						multiply = 0
+					}
+					change_variable = {
+						name = HRT_authority_unheld_heartlands
+						multiply = 0
+					}
+					change_variable = {
+						name = HRT_authority_ally_military_strength
+						multiply = 0
+					}
+					change_variable = {
+						name = HRT_authority_artifacts
+						multiply = 0
+					}
+					if = {
+						limit = { exists = var:HRT_authority_cardinals }
+						change_variable = {
+							name = HRT_authority_cardinals
+							multiply = 0
+						}
+					}
+
+
+					#Prestige Bonus
+					set_variable = {
+						name = HRT_authority_prestige
+						value = prestige
+					}
+					#Dread Bonus
+					set_variable = {
+						name = HRT_authority_dread
+						value = dread
+					}
+					#Vassal Values
+					every_vassal = {
+						#Total Vassal Count
+						prev = {
+							change_variable = {
+								name = HRT_authority_vassals_var
+								add = 1
+							}
+						}
+						#Vassal Bonus per Tier
+						if = {
+							limit = { highest_held_title_tier = tier_kingdom }
+							prev = {
+								change_variable = {
+									name = HRT_authority_vassals_bonus_var
+									add = authority_gain_per_vassal_kingdom_bonus
+								}
+							}
+						}
+						else_if = {
+							limit = { highest_held_title_tier = tier_duchy }
+							prev = {
+								change_variable = {
+									name = HRT_authority_vassals_bonus_var
+									add = authority_gain_per_vassal_duchy_bonus
+								}
+							}
+						}
+						#Vassals Waging War Malus
+						if = {
+							limit = { is_at_war = yes }
+							prev = {
+								change_variable = {
+									name = HRT_authority_vassals_war_var
+									add = authority_loss_per_waged_vassal_war
+								}
+							}
+						}
+						#Infidel Vassal Malus
+						if = {
+							limit = { NOT = { faith = prev.faith } }
+							prev = {
+								change_variable = {
+									name = HRT_authority_infidels_var
+									add = 1
+								}
+							}
+						}
+					}
+					#Territory Bonus
+					every_sub_realm_county = {
+						prev = {
+							change_variable = {
+								name = HRT_authority_territory
+								add = 1
+							}
+						}
+					}
+					#Unheld Heartlands Malus
+					every_county_in_region = {
+						region = HRT_core_territory
+						limit = {
+							holder.top_liege = {
+								NOT = { this = scope:story.story_owner }
+							}
+						}
+						prev = {
+							change_variable = {
+								name = HRT_authority_unheld_heartlands
+								add = 1
+							}
+						}
+					}
+					#Ally Bonus
+					set_variable = {
+						name = HRT_authority_military_strength
+						value = max_military_strength
+					}
+					every_ally = {
+						save_temporary_scope_as = ally
+						prev = {
+							change_variable = {
+								name = HRT_authority_ally_military_strength
+								add = scope:ally.max_military_strength
+							}
+						}
+					}
+					#Artifact Bonus
+					every_character_artifact = {
+						limit = { rarity = illustrious }
+						prev = {
+							change_variable = {
+								name = HRT_authority_artifacts
+								add = 0.1
+							}
+						}
+					}
+					#Cardinals Bonus
+					if = {
+						limit = { exists = var:HRT_authority_cardinals }
+						every_living_cardinal = {
+							limit = { is_vassal_or_below_of = prev }
+							prev = {
+								change_variable = {
+									name = HRT_authority_cardinals
+									add = 1
+								}
+							}
+						}
+					}
+
+
+					#Prevent exceeding authority range (0-100)
+					if = {
+						limit = { HRT_authority_limiter_value <= 0 }
+						set_variable = {
+							name = HRT_authority
+							value = 0
+						}
+					}
+					else_if = {
+						limit = { HRT_authority_limiter_value >= 100 }
+						set_variable = {
+							name = HRT_authority
+							value = 100
+						}
+					}
+					#Apply Monthly Authority Change
+					else = {
+						change_variable = {
+							name = HRT_authority
+							add = HRT_authority_change_value
+						}
+					}
+				}
+
+
+				#Pope opinion of candidati parked here to prevent errors, sorry
+				every_HRT_candidati = {
+					save_scope_as = HRT_candidatus
+					faith:catholic.religious_head ?= {
+						if = {
+							limit = {
+								save_temporary_opinion_value_as = {
+									name = popinion
+									target = scope:HRT_candidatus
+								}
+								exists = scope:popinion
+							}
+							scope:HRT_candidatus = {
+								set_variable = {
+									name = HRT_popinion
+									value = scope:popinion
+								}
+							}
+						}
+					}
+				}
+
+
+			}
+		}
+	}
+
+	#AI enacting edicts (top notch AI decision making)
+	effect_group = {
+		months = 3
+		triggered_effect = {
+			trigger = {
+				story_owner = {
+					is_ai = yes
+					HRT_authority_progressbar_value >= 100
+					prestige > major_prestige_value
+				}
+			}
+			effect = {
+				story_owner = {
+					if = {
+						limit = {
+							culture = { has_cultural_era_or_later = culture_era_late_medieval }
+						}
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							10 = {
+								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
+							}
+							10 = {
+								trigger_event = HRT_edicts.0002 # Imperial Decree of Chivalric Excellence
+							}
+							10 = {
+								trigger_event = HRT_edicts.0009 # Edict of Imperial Works
+							}
+							10 = {
+								trigger_event = HRT_edicts.0008 # Edict of Scholastic Advancement
+							}
+							10 = {
+								trigger_event = HRT_edicts.0010 # Edict of Ecclesiastical Patronage
+							}
+							10 = {
+								trigger_event = HRT_edicts.0003 # Diplomatic Corps Activation Edict
+							}
+							10 = {
+								trigger_event = HRT_edicts.0006 # Edict of Urban Rights and Privileges
+							}
+							10 = {
+								trigger_event = HRT_edicts.0005 # Imperial Levy Conscription Order
+							}
+							10 = {
+								trigger_event = HRT_edicts.0007 # Border Defense Temporary Directive
+							}
+							#9 = {
+							#	trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
+							#}
+						}
+					}
+					else_if = {
+						limit = {
+							culture = { has_cultural_era_or_later = culture_era_high_medieval }
+						}
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							10 = {
+								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
+							}
+							10 = {
+								trigger_event = HRT_edicts.0002 # Imperial Decree of Chivalric Excellence
+							}
+							10 = {
+								trigger_event = HRT_edicts.0009 # Edict of Imperial Works
+							}
+							10 = {
+								trigger_event = HRT_edicts.0008 # Edict of Scholastic Advancement
+							}
+							10 = {
+								trigger_event = HRT_edicts.0010 # Edict of Ecclesiastical Patronage
+							}
+							#14 = {
+							#	trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
+							#}
+						}
+					}
+					else_if = {
+						limit = {
+							culture = { has_cultural_era_or_later = culture_era_early_medieval }
+						}
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							10 = {
+								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
+							}
+							10 = {
+								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
+							}
+						}
+					}
+					else = { trigger_event = HRT_edicts.1001 } # Proclamation of Imperial Directive
+				}
+			}
+		}
+	}
+
+	effect_group = {
+		years = 2
+		triggered_effect = {
+			trigger = {
+				story_owner = {
+					is_ai = yes
+					HRT_authority_progressbar_value >= 75
+					prestige > major_prestige_value
+				}
+			}
+			effect = {
+				story_owner = {
+					if = {
+						limit = {
+							culture = { has_cultural_era_or_later = culture_era_late_medieval }
+						}
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							10 = {
+								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
+							}
+							10 = {
+								trigger_event = HRT_edicts.0009 # Edict of Imperial Works
+							}
+							10 = {
+								trigger_event = HRT_edicts.0008 # Edict of Scholastic Advancement
+							}
+							10 = {
+								trigger_event = HRT_edicts.0010 # Edict of Ecclesiastical Patronage
+							}
+							10 = {
+								trigger_event = HRT_edicts.0003 # Diplomatic Corps Activation Edict
+							}
+							10 = {
+								trigger_event = HRT_edicts.0006 # Edict of Urban Rights and Privileges
+							}
+							5 = {
+								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							culture = { has_cultural_era_or_later = culture_era_high_medieval }
+						}
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							10 = {
+								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
+							}
+							10 = {
+								trigger_event = HRT_edicts.0009 # Edict of Imperial Works
+							}
+							10 = {
+								trigger_event = HRT_edicts.0008 # Edict of Scholastic Advancement
+							}
+							10 = {
+								trigger_event = HRT_edicts.0010 # Edict of Ecclesiastical Patronage
+							}
+							5 = {
+								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
+							}
+						}
+					}
+					else_if = {
+						limit = {
+							culture = { has_cultural_era_or_later = culture_era_early_medieval }
+						}
+						random_list = {
+							20 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							20 = {
+								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
+							}
+							5 = {
+								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
+							}
+						}
+					}
+					else = { trigger_event = HRT_edicts.1001 } # Proclamation of Imperial Directive
+				}
+			}
+		}
+	}
+
+	effect_group = {
+		years = 3
+		triggered_effect = {
+			trigger = {
+				story_owner = {
+					is_ai = yes
+					HRT_authority_progressbar_value >= 40
+					prestige > major_prestige_value
+					culture = { has_cultural_era_or_later = culture_era_late_medieval }
+				}
+			}
+			effect = {
+				story_owner = {
+					if = {
+						limit = {
+							culture = { has_cultural_era_or_later = culture_era_high_medieval }
+						}
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							10 = {
+								trigger_event = HRT_edicts.0010 # Edict of Ecclesiastical Patronage
+							}
+						}
+					}
+					else = {
+						trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+					}
+				}
+			}
+		}
+	}
+
+	effect_group = {
+		years = 1
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = {
+					change_variable = {
+						name = HRT_authority_years_reigned
+						add = 1
+					}
+				}
+			}
+		}
+	}
+}

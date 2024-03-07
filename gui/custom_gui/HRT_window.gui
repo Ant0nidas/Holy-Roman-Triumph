@@ -1,0 +1,719 @@
+﻿window = {
+	name = "HRT_window"
+	datacontext = "[GetVariableSystem]"
+	datacontext = "[GetPlayer]"
+	parentanchor = center
+    layer = middle
+	size = { 1100 960 }
+	visible = "[And(GetVariableSystem.HasValue('HRT_window_open', 'yes'),Not(GetGlobalVariable('HRT_close_window_temp_var').IsSet))]"
+	using = Window_Background
+	using = Window_Decoration_Spike
+
+	state = {
+		name = _show
+		position_x = 85
+		using = Animation_FadeIn_Quick
+        using = Sound_WindowShow_Standard
+		# Populate Candidati List
+		on_start = "[GetVariableSystem.Set('HRT_window_open', 'yes')]"
+		on_start = "[GetScriptedGui('HRT_update_candidati_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+	}
+
+	state = {
+		name = _hide
+		position_x = 570
+		using = Animation_FadeOut_Quick
+        using = Sound_WindowHide_Standard
+		# Clear Candidati List
+		on_start = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+		on_finish = "[GetScriptedGui('HRT_abort_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+	}
+
+	container = {
+		widget = {
+			size = { 1017 581 } #1.75:1
+			position = { 41 10 }
+			background = {
+				texture = "gfx/interface/HRT/background.png"
+				spriteborder = { 6 6 }
+				shaderfile = "gfx/FX/pdxgui_default.shader"
+				alpha = 0.3
+			}
+
+			vbox = {
+				using = Window_Margins
+			
+				header_pattern = {
+					layoutpolicy_horizontal = expanding
+					minimumsize = { 100% 0 }
+
+					blockoverride "header_text"
+					{
+						raw_text = "HRT_Imperial_Succession"
+					}
+
+					button = {
+						parentanchor = right
+						size = { 35 35 }
+						position = { -45 5 }
+						texture = "gfx/interface/icons/flat_icons/replace.dds"
+						tooltip = "HRT_window_refresh_tt"
+						using = Master_Button_Modify_Texture
+						onclick = "[GetScriptedGui('HRT_abort_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+						onclick = "[GetScriptedGui('HRT_update_candidati_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+					}
+
+					button = {
+						visible = "[GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+						parentanchor = right
+						size = { 35 35 }
+						position = { -90 5 }
+						texture = "gfx/interface/icons/flat_icons/election_window.dds"
+						tooltip = "HRT_window_election_tt"
+						using = Master_Button_Modify_Texture
+						onclick = "[GetScriptedGui('HRT_open_election_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+					}
+
+					blockoverride "button_close"
+					{
+						onclick = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+					}
+
+					#LEFT
+					button = {
+						visible = "[And( Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)), GetScriptedGui('HRT_show_player_score_invalid_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End) )]"
+						parentanchor = left
+						size = { 25 25 }
+						position = { 220 11 }
+						texture = "gfx/interface/icons/symbols/icon_warning.dds"
+						tooltip = "HRT_player_not_eligible_tt"
+
+						effectname = "NoHighlight"
+					}
+				}
+				expand = {}
+			}
+
+			hbox = {
+				position = {-800 -465}
+				widget = {
+					visible = "[And( Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)), GetScriptedGui('HRT_show_player_score_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End) )]"
+					size = {100 100}
+					parentanchor = hcenter|vcenter
+					icon = {
+						texture = "gfx/interface/HRT/ImperatorScore.png"
+						position = {30 -15}
+						size = {75% 75%}
+					}
+					text_single = {
+						position = { -65 7 }
+						text = "HRT_player_score"
+						fontsize = 20
+					}
+					text_single = {
+						position = { 95 7 }
+						block "score" {text = "[GuiScope.SetRoot(Character.MakeScope).ScriptValue('HRT_imperator_score')|0]"}
+						fontsize = 20
+					}
+					tooltipwidget = {HRT_imperator_score_breakdown_tooltip = {}}
+				}
+			}
+
+			widget = {
+				parentanchor = top|hcenter
+				size = {80% 30%}
+				hbox = {
+					position = { 11 85 }
+					parentanchor = top|hcenter
+					#Imperator
+					HRT_window_special_character = {
+						datacontext = "[GetPlayer.MakeScope.Var('HRT_imperator_gui').GetCharacter]"
+						blockoverride "text" { raw_text = HRT_IMPERATOR}
+						visible = "[GetScriptedGui('HRT_imperator_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+					}
+					HRT_no_special_character = {
+						blockoverride "icon" {}
+						blockoverride "text"	{	raw_text = HRT_IMPERATOR_MISSING}
+						visible = "[GetScriptedGui('HRT_missing_imperator_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+					}
+					#Expectatus
+					HRT_window_special_character = {
+						blockoverride "icon" {}
+						datacontext = "[GetPlayer.MakeScope.Var('HRT_expectatus_gui').GetCharacter)]"
+						blockoverride "text"    {   raw_text = HRT_EXPECTATUS}
+						blockoverride "portrait" {  portrait_head = { parentanchor = hcenter|vcenter position = { -13 3 } } } 
+						HRT_window_imperator_score      = {position = { 40 0 }}
+						visible = "[GetScriptedGui('HRT_expectatus_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+					}
+					HRT_no_special_character = {
+						blockoverride "icon" {}
+						blockoverride "text"	{	raw_text = HRT_EXPECTATUS_MISSING}
+						visible = "[GetScriptedGui('HRT_missing_expectatus_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+					}
+				}
+			}
+
+			#Candidati
+			dynamicgridbox = {
+				position = { 55 300 }
+				datamodel = "[GetPlayer.MakeScope.GetList('HRT_candidati_gui')]"
+				flipdirection = yes
+
+				item = {
+					HRT_window_candidatus_griditem = { }
+				}
+			}
+
+			widget = {
+				HRT_no_candidatus = {
+					name = HRT_no_candidatus_1
+					size = { 100% 32 }
+					position = { 197 299 }
+					visible = "[GetScriptedGui('HRT_missing_1_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+				}
+				HRT_no_candidatus = {
+					name = HRT_no_candidatus_2
+					size = { 100% 32 }
+					position = { 497 299 }
+					visible = "[GetScriptedGui('HRT_missing_2_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+				}
+				HRT_no_candidatus = {
+					name = HRT_no_candidatus_3
+					size = { 100% 32 }
+					position = { 797 299 }
+					visible = "[GetScriptedGui('HRT_missing_3_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+				}
+			}
+		}
+
+	}
+
+	
+
+
+	vbox = {
+		using = Window_Margins
+
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+
+				vbox = {
+					layoutpolicy_horizontal = expanding
+					layoutpolicy_vertical = expanding
+
+					vbox = {
+						layoutpolicy_vertical = expanding
+						minimumsize = { 0 237 }
+						alpha = 0
+					}
+					header_pattern = {
+						layoutpolicy_horizontal = expanding
+						minimumsize = { 100% 0 }
+		
+						blockoverride "header_text"
+						{
+							raw_text = HRT_Imperial_Edicts
+						}
+		
+						blockoverride "button_close"
+						{
+							visible = no
+						}
+						hbox = {
+							position = { -350 -7 }
+							text_single = {
+					
+								raw_text = HRT_Prince_Electors
+					
+								using = Font_Type_Flavor
+								using = Font_Size_Big
+							}
+						}
+						hbox = {
+							position = { 378 -7 }
+							text_single = {
+					
+								raw_text = HRT_Imperial_Authority
+					
+								using = Font_Type_Flavor
+								using = Font_Size_Big
+							}
+						}
+					}
+					
+					hbox = {
+						layoutpolicy_horizontal = expanding
+						layoutpolicy_vertical = expanding
+						margin = { 0 -250 }
+
+						background = {
+							using = Background_Area_Dark
+							alpha = 0.6
+						}
+
+						vbox = {
+
+							text_multi = {
+								text = "HRT_EDICTS_WINDOW_DESC"
+								default_format = "#weak"
+								autoresize = yes
+								max_width = 430
+								#max_width = 616
+								#margin_bottom = 12
+							}
+
+							hbox = {
+								margin = { 0 6 }
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Edict of Legal Unification
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)1')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_legal_unification_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_legal_unification.dds"
+										onclick = "[GetScriptedGui('HRT_edict_legal_unification_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_legal_unification_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)40'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)1') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_legal_unification_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_legal_unification_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_legal_unification_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_legal_unification_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Imperial Decree of Chivalric Excellence
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_chivalric_excellence_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_chivalric_excellence.dds"
+										onclick = "[GetScriptedGui('HRT_edict_chivalric_excellence_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_chivalric_excellence_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)100'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_chivalric_excellence_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_chivalric_excellence_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_chivalric_excellence_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_chivalric_excellence_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Edict of Scholastic Advancement
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_scholastic_advancement_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_scholastic_advancement.dds"
+										onclick = "[GetScriptedGui('HRT_edict_scholastic_advancement_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_scholastic_advancement_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)50'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_scholastic_advancement_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_scholastic_advancement_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_scholastic_advancement_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_scholastic_advancement_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Diplomatic Corps Activation Edict
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_diplomatic_corps_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_diplomatic_corps.dds"
+										onclick = "[GetScriptedGui('HRT_edict_diplomatic_corps_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_diplomatic_corps_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)60'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_diplomatic_corps_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_diplomatic_corps_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_diplomatic_corps_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_diplomatic_corps_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Imperial Levy Conscription Order
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_levy_conscription_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_levy_conscription.dds"
+										onclick = "[GetScriptedGui('HRT_edict_levy_conscription_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_levy_conscription_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)100'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_levy_conscription_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_levy_conscription_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_levy_conscription_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_levy_conscription_tt"
+									}
+								}
+							}
+							hbox = {
+								margin = { 0 6 }
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Consular Taxation Directive
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)1')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_consular_taxation_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_consular_taxation.dds"
+										onclick = "[GetScriptedGui('HRT_edict_consular_taxation_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_consular_taxation_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)60'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)1') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_consular_taxation_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_consular_taxation_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_consular_taxation_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_consular_taxation_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Edict of Imperial Works
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_imperial_works_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_imperial_works.dds"
+										onclick = "[GetScriptedGui('HRT_edict_imperial_works_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_imperial_works_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)50'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_imperial_works_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_imperial_works_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_imperial_works_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_imperial_works_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Edict of Ecclesiastical Patronage
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_ecclesiastical_patronage_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_ecclesiastical_patronage.dds"
+										onclick = "[GetScriptedGui('HRT_edict_ecclesiastical_patronage_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_ecclesiastical_patronage_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)40'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)2') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_ecclesiastical_patronage_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_ecclesiastical_patronage_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_ecclesiastical_patronage_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_ecclesiastical_patronage_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Edict of Urban Rights and Privileges
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_urban_rights_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_urban_rights.dds"
+										onclick = "[GetScriptedGui('HRT_edict_urban_rights_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_urban_rights_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)75'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_urban_rights_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_urban_rights_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_urban_rights_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_urban_rights_tt"
+									}
+								}
+								hbox = {
+									margin = { 5 0 }
+									HRT_button_edict = { # Border Defense Temporary Directive
+										enabled = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3')]"
+										visible = "[Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_border_defense_value'), '(CFixedPoint)0'))]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_border_defense.dds"
+										onclick = "[GetScriptedGui('HRT_edict_border_defense_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_border_defense_tt"
+										glow = {
+											visible = "[And( GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)100'), GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_era_value'), '(CFixedPoint)3') )]"
+											glow_radius = 8
+											using = Glow_Standard
+											using = Color_Bright_Yellow
+										}
+									}
+									HRT_button_edict_framed = {
+										visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_border_defense_value'), '(CFixedPoint)0')]"
+										texture = "gfx/interface/icons/HRT_edicts/HRT_edict_border_defense_framed.dds"
+										onclick = "[GetScriptedGui('HRT_edict_border_defense_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "HRT_edict_border_defense_tt"
+									}
+								}
+							}
+							
+							
+						}
+					}
+				}
+
+			# Low Buttons
+			vbox = {
+				layoutpolicy_horizontal = expanding
+				spacing = 10
+				margin = { 0 10}
+
+				hbox = {
+					spacing = 20
+
+					button_standard = {
+						raw_text = HRT_Dismantle_HRE
+						enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_prestige_value'), '(CFixedPoint)11400')]"
+						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
+						onclick = "[GetScriptedGui('HRT_dismantle_hre_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						tooltip = HRT_dismantle_hre_tt
+						using = tooltip_nw
+					}
+					button_standard = {
+						alpha = 0
+						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
+					}
+					button_standard = {
+						raw_text = HRT_Close
+						onclick = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+					}
+					button_standard = {
+						alpha = 0
+						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
+					}
+					#button_primary = {
+					#	size = { 170 35 }
+					#	
+					#	enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)10')]"
+					#	visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
+					#	
+					#	raw_text = "HRT_Enact_Resolution"
+					#	onclick = "[GetScriptedGui('HRT_edict_enact_resolution_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					#	tooltip = "HRT_edicts_enact_resolution_tt"
+					#	using = tooltip_nw
+					#}
+					button_primary = {
+						size = { 170 35 }
+						
+						enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)60')]"
+						visible = "[And( GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'), Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_proclaim_directive_value'), '(CFixedPoint)0')) )]"
+						
+						raw_text = HRT_Proclaim_Directive
+						onclick = "[GetScriptedGui('HRT_edict_proclaim_directive_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						tooltip = "HRT_edicts_proclaim_directive_tt"
+						using = tooltip_nw
+					}
+					button_primary = {
+						size = { 170 35 }
+						
+						enabled = no
+						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_proclaim_directive_value'), '(CFixedPoint)0')]"
+						
+						raw_text = HRT_Proclaim_Directive
+						tooltip = "HRT_edicts_proclaim_directive_cooldown_tt"
+						using = tooltip_nw
+					}
+				}
+			}
+		}
+	}
+
+	container = {
+		name = HRT_authority_buttons
+		visible = "[GetScriptedGui('HRT_imperator_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+		icon = {
+			visible = "[EqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'),'(CFixedPoint)100')]"
+			size = { 57 46 }
+			position = { 896 614 }
+			texture = "gfx/interface/HRT/Authority/HRT_authority_crown.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_9"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)100' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)90' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_9.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_8"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)90' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)80' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_8.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_7"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)80' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)70' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_7.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_6"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)70' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)60' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_6.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_5"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)60' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)50' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_5.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_4"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)50' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)40' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_4.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_3"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)40' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)30' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_3.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_2"
+			visible = "[And(LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)30' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)20' ))]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_2.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_1"
+			visible = "[LessThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)20' )]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_1.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_0"
+			visible = "[LessThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)10' )]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_0.dds"
+		}
+		HRT_button_authority = {
+			name = "HRT_button_authority_10"
+			visible = "[EqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'),'(CFixedPoint)100')]"
+			texture = "gfx/interface/HRT/Authority/HRT_authority_10.dds"
+			glow = {
+				glow_radius = 6
+				using = Glow_Standard
+				using = Color_Bright_Yellow
+			}
+		}
+	}
+
+	hbox = {
+		position = { 378 330 }
+		text_multi = {
+			text = "HRT_AUTHORITY_MONTHLY_CHANGE"
+			visible = "[GetScriptedGui('HRT_imperator_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+			fontsize = 18
+			autoresize = yes
+			using = Font_Size_Big
+			default_format = "#high"
+			tooltipwidget = {HRT_authority_breakdown_tooltip = {}}
+		}
+	}
+	hbox = {
+		position = { 378 360 }
+		text_label_center = {
+			text = "[GetPlayer.MakeScope.ScriptValue('HRT_authority_change_value_gui')|L=+]"
+			visible = "[GetScriptedGui('HRT_imperator_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+			fontsize = 24
+			using = Font_Size_Big
+			autoresize = yes
+			default_format = "#high"
+			tooltipwidget = {HRT_authority_breakdown_tooltip = {}}
+		}
+		
+	}
+
+	#Prince-Electors
+	vbox = {
+		position = { -362 262 }
+
+		fixedgridbox = {
+			datamodel = "[GetPlayer.MakeScope.GetList('HRT_electors')]"
+			addcolumn = 90
+			addrow = 90
+			setitemsizefromcell = yes
+			datamodel_wrap = 3
+			maxhorizontalslots = 4
+			flipdirection = yes
+
+			item = {
+				widget = {
+					hbox = {
+						datacontext = "[Scope.GetCharacter]"
+						portrait_head_small = { }
+					}
+				}
+			}
+		}
+	}
+	#Before Restoration
+	vbox = {
+		position = { -360 185 }
+	
+		icon = {
+			visible = "[Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+			size = { 100 100 }
+			texture = "gfx/interface/icons/faith/catholic.dds"
+		}
+	}
+	vbox = {
+		position = { -362 300 }
+
+		text_multi = {
+			visible = "[Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+			text = "HRT_ELECTORS_DESC"
+			default_format = "#weak"
+			autoresize = yes
+			max_width = 250
+		}
+	}
+
+	#Divider
+	hbox = {
+		position = { -134 323 }
+		divider_light = {
+			size = { 5 130 }
+		}
+	}
+	hbox = {
+		position = { 43 323 }
+		divider_light = {
+			size = { 5 130 }
+		}
+	}
+}
