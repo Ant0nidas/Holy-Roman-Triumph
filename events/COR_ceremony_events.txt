@@ -6,6 +6,7 @@
 # 0101 - 0200 Priest & Powerful Theocrat
 # 0201 - 0300 Pope & Antipope
 # 0301 - 0500 Coronation Activity Events
+# 9000 - 9999 Mechanical
 # by Kaepora Gaebora
 # 
 #################################
@@ -383,15 +384,6 @@ COR_ceremony.0001 = {
 		ai_chance = {
 			base = 20
 			modifier = {
-				scope:COR_pope = {
-					has_opinion_modifier = {
-						modifier = COR_opinion_requested_papal_investiture
-						target = scope:COR_ruler
-					}
-				}
-				factor = 0.1
-			}
-			modifier = {
 				highest_held_title_tier = tier_empire
 				add = 50
 			}
@@ -457,6 +449,15 @@ COR_ceremony.0001 = {
 					}
 				}
 				factor = 1.25
+			}
+			modifier = {
+				scope:COR_pope = {
+					has_opinion_modifier = {
+						modifier = COR_opinion_requested_papal_investiture
+						target = scope:COR_ruler
+					}
+				}
+				factor = 0.1
 			}
 		}
 	}
@@ -1842,6 +1843,10 @@ COR_ceremony.0201 = {
 				factor = 2
 			}
 			modifier = {
+				factor = 0.5
+				has_trait = TCT_antipope
+			}
+			modifier = {
 				factor = 1.5
 				has_title = title:k_papal_state
 			}
@@ -1895,17 +1900,10 @@ COR_ceremony.0201 = {
 		add_internal_flag = special
 
 		trigger = {
-			trigger_if = {
-				limit = {
-					exists = global_var:Trinity_is_loaded
-				}
-				scope:COR_ruler = {
-					is_independent_ruler = yes
-					has_realm_law_flag = free_enacted
-				}
-			}
-			trigger_else = {
-				always = no
+			NOT = { has_trait = TCT_antipope }
+			scope:COR_ruler = {
+				is_independent_ruler = yes
+				has_realm_law_flag = free_enacted
 			}
 		}
 
@@ -1935,7 +1933,6 @@ COR_ceremony.0201 = {
 				scope:COR_ruler = {
 					OR = {
 						has_title = title:e_hre
-						#HRT
 						HRT_is_emperor_trigger = yes
 					}
 				}
@@ -2310,7 +2307,7 @@ COR_ceremony.0203 = {
 			remove_realm_law = free_investiture_early
 			add_realm_law_skip_effects = papal_investiture_early
 		}
-		if = {
+		else_if = {
 			limit = {
 				has_realm_law = free_investiture_late
 			}
@@ -6816,5 +6813,379 @@ COR_ceremony.0500 = {
 
 	option = {
 		name = COR_ceremony.0500.a
+	}
+}
+
+##############
+# MECHANICAL #
+##############
+
+COR_ceremony.9000 = { # A title is transferred to a new character (on_title_gain)
+	hidden = yes
+	
+	trigger = {
+		scope:title = { tier >= tier_kingdom }
+		faith = faith:catholic
+		government_has_flag = government_is_feudal
+		OR = {
+			NOR = {
+				has_trait = COR_crowned_by_priest
+				has_trait = COR_crowned_by_bishop
+				has_trait = COR_crowned_by_pope
+				has_trait = COR_crowned_by_myself
+				has_trait = HRT_emperor
+			}
+		}
+	}
+	
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_variable = COR_years_reigned }
+			}
+			set_variable = {
+				name = COR_years_reigned
+				value = 0
+			}
+		}
+		if = {
+			limit = { has_game_rule = COR_crowns_taketh }
+			add_character_flag = sold_crown_charmod
+			every_spouse = {
+				limit = {
+					NOR = {
+						has_trait = COR_crowned_by_priest
+						has_trait = COR_crowned_by_bishop
+						has_trait = COR_crowned_by_pope
+						has_trait = COR_crowned_by_myself
+						has_trait = HRT_emperor
+					}
+				}
+				add_character_flag = sold_crown_charmod
+			}
+		}
+	}
+}
+
+#COR_e.0002 = { # A title is inherited by a character (on_title_gain_inheritance)
+#	hidden = yes
+#	
+#	trigger = {
+#		scope:title = { tier >= tier_kingdom }
+#		faith = faith:catholic
+#		government_has_flag = government_is_feudal
+#		NOR = {
+#			has_trait = COR_crowned_by_priest
+#			has_trait = COR_crowned_by_bishop
+#			has_trait = COR_crowned_by_pope
+#			has_trait = COR_crowned_by_myself
+#			has_trait = HRT_emperor
+#			has_variable = COR_years_reigned
+#		}
+#	}
+#	
+#	immediate = {
+#		add_character_flag = sold_crown_charmod
+#		set_variable = {
+#			name = COR_years_reigned
+#			value = 0
+#		}
+#		every_spouse = {
+#			limit = {
+#				NOR = {
+#					has_trait = COR_crowned_by_priest
+#					has_trait = COR_crowned_by_bishop
+#					has_trait = COR_crowned_by_pope
+#					has_trait = COR_crowned_by_myself
+#					has_trait = HRT_emperor
+#				}
+#			}
+#			add_character_flag = sold_crown_charmod
+#		}
+#	}
+#}
+#
+#COR_e.0003 = { # A title is usurped by a character (on_title_gain_usurpation)
+#	hidden = yes
+#	
+#	trigger = {
+#		scope:title = { tier >= tier_kingdom }
+#		faith = faith:catholic
+#		government_has_flag = government_is_feudal
+#		NOR = {
+#			has_trait = COR_crowned_by_priest
+#			has_trait = COR_crowned_by_bishop
+#			has_trait = COR_crowned_by_pope
+#			has_trait = COR_crowned_by_myself
+#			has_trait = HRT_emperor
+#			has_variable = COR_years_reigned
+#		}
+#	}
+#	
+#	immediate = {
+#		add_character_flag = sold_crown_charmod
+#		set_variable = {
+#			name = COR_years_reigned
+#			value = 0
+#		}
+#		every_spouse = {
+#			limit = {
+#				NOR = {
+#					has_trait = COR_crowned_by_priest
+#					has_trait = COR_crowned_by_bishop
+#					has_trait = COR_crowned_by_pope
+#					has_trait = COR_crowned_by_myself
+#					has_trait = HRT_emperor
+#				}
+#			}
+#			add_character_flag = sold_crown_charmod
+#		}
+#	}
+#}
+
+COR_ceremony.9100 = { # Maintenace & Uncrowned Malus (yearly_playable_pulse)
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			has_variable = COR_years_reigned
+			has_character_modifier = COR_uncrowned_modifier
+			AND = {
+				NOT = { has_nickname = nick_the_crownless }
+				has_character_flag = sold_crown_charmod
+			}
+			AND = {
+				highest_held_title_tier >= tier_kingdom
+				faith = faith:catholic
+				government_has_flag = government_is_feudal
+				OR = {
+					AND = {
+						HRT_is_emperor_trigger = no
+						NOR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+						}
+					}
+					AND = {
+						HRT_is_emperor_trigger = yes
+						NOR = {
+							has_trait = HRT_emperor
+							has_trait = COR_crowned_by_myself
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		if = {
+			limit = {
+				AND = {
+					highest_held_title_tier >= tier_kingdom
+					faith = faith:catholic
+					government_has_flag = government_is_feudal
+					OR = {
+						AND = {
+							HRT_is_emperor_trigger = no
+							NOR = {
+								has_trait = COR_crowned_by_priest
+								has_trait = COR_crowned_by_bishop
+								has_trait = COR_crowned_by_pope
+								has_trait = COR_crowned_by_myself
+							}
+						}
+						AND = {
+							HRT_is_emperor_trigger = yes
+							NOR = {
+								has_trait = HRT_emperor
+								has_trait = COR_crowned_by_myself
+							}
+						}
+					}
+				}
+			}
+			#set variable if missing
+			if = {
+				limit = {
+					NOT = { has_variable = COR_years_reigned }
+				}
+				set_variable = {
+					name = COR_years_reigned
+					value = 0
+				}
+			}
+			if = {
+				limit = { has_game_rule = COR_crowns_taketh }
+				#remove crown if still wearing
+				if = {
+					limit = {
+						NOT = { has_character_flag = sold_crown_charmod }
+					}
+					add_character_flag = sold_crown_charmod
+				}
+				#increase uncrowned malus for adult rulers
+				if = {
+					limit = {
+						is_adult = yes
+					}
+					if = {
+						limit = {
+							var:COR_years_reigned < 30
+						}
+						change_variable = {
+							name = COR_years_reigned
+							add = 1
+						}
+						add_character_modifier = {
+							modifier = COR_uncrowned_modifier
+						}
+					}
+				}
+				#remove spouses crowns
+				every_spouse = {
+					limit = {
+						NOR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+							has_trait = HRT_emperor
+							has_character_flag = sold_crown_charmod
+						}
+					}
+					add_character_flag = sold_crown_charmod
+				}
+			}
+			else = {
+				remove_all_character_modifier_instances = COR_uncrowned_modifier
+				if = {
+					limit = {
+						NOT = { has_nickname = nick_the_crownless }
+					}
+					remove_character_flag = sold_crown_charmod
+				}
+				every_spouse = {
+					limit = {
+						NOT = { has_nickname = nick_the_crownless }
+						has_character_flag = sold_crown_charmod
+					}
+					remove_character_flag = sold_crown_charmod
+				}
+			}
+
+			#check if officiant is valid (COR_coronator)
+			if = {
+				limit = {
+					has_variable = COR_coronator
+					NOR = {
+						has_trait = COR_crowned_by_priest
+						has_trait = COR_crowned_by_bishop
+						has_trait = COR_crowned_by_pope
+						has_trait = COR_crowned_by_myself
+						has_trait = HRT_emperor
+					}
+					var:COR_coronator = {
+						NOR = {
+							is_alive = yes
+							is_imprisoned = no
+							faith = faith:catholic
+							OR = {
+								has_trait = TCT_antipope
+								is_cardinal = yes
+								this = faith:catholic.religious_head
+								is_theocratic_lessee = yes
+								has_council_position = councillor_court_chaplain
+							}
+						}
+					}
+				}
+				save_scope_as = COR_coronator
+				send_interface_toast = {
+					type = event_toast_effect_bad
+					left_icon = var:COR_coronator
+					title = COR_officiant_invalidated.toast.t
+					custom_tooltip = COR_officiant_invalidated.toast
+				}
+				remove_character_flag = COR_flag_preparing_coronation
+				remove_variable = COR_coronation_request_cooldown
+				remove_variable = COR_coronator_rank
+				var:COR_coronator = {
+					remove_list_variable = {
+						name = COR_coronation_targets
+						target = root
+					}
+				}
+				remove_variable = COR_coronator
+			}
+		}
+
+		#give back crowns and remove modifiers if you fail to meet the criteria
+		if = {
+			limit = {
+				OR = {
+					NAND = {
+						highest_held_title_tier >= tier_kingdom
+						faith = faith:catholic
+						government_has_flag = government_is_feudal
+					}
+					AND = {
+						HRT_is_emperor_trigger = no
+						OR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+						}
+					}
+					AND = {
+						HRT_is_emperor_trigger = yes
+						OR = {
+							has_trait = HRT_emperor
+							has_trait = COR_crowned_by_myself
+						}
+					}
+				}
+			}
+			remove_character_flag = COR_flag_preparing_coronation
+			remove_variable = COR_years_reigned
+			remove_variable = COR_coronation_request_cooldown
+			remove_variable = COR_coronator_rank
+			remove_all_character_modifier_instances = COR_uncrowned_modifier
+			var:COR_coronator ?= {
+				remove_list_variable = {
+					name = COR_coronation_targets
+					target = root
+				}
+			}
+			if = {
+				limit = {
+					has_variable = COR_coronator
+					NOR = {
+						has_trait = COR_crowned_by_priest
+						has_trait = COR_crowned_by_bishop
+						has_trait = COR_crowned_by_pope
+						has_trait = COR_crowned_by_myself
+						has_trait = HRT_emperor
+					}
+				}
+				remove_variable = COR_coronator
+			}
+			if = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+				}
+				remove_character_flag = sold_crown_charmod
+			}
+			every_spouse = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+					has_character_flag = sold_crown_charmod
+				}
+				remove_character_flag = sold_crown_charmod
+			}
+		}
 	}
 }

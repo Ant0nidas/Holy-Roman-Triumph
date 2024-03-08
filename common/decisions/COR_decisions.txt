@@ -6,7 +6,10 @@
 
 	is_shown = {
 		has_variable = COR_years_reigned
-		highest_held_title_tier >= tier_kingdom
+		OR = {
+			highest_held_title_tier >= tier_kingdom
+			HRT_is_emperor_trigger = yes
+		}
 		faith = faith:catholic
 		government_has_flag = government_is_feudal
 		is_landed = yes

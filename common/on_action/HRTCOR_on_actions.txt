@@ -201,7 +201,7 @@ HRT_yearly_maintenance_pulse = {
 # Root is the character
 yearly_playable_pulse = {
 	events = {
-		COR_e.1001 # Maintenace & Uncrowned Malus
+		COR_ceremony.9100 # Maintenace & Uncrowned Malus
 	}
 }
 
@@ -253,7 +253,7 @@ on_title_lost = {
 on_title_gain = {
 	events = {
 		HRT.0007 # HRE restored but not by current emperor
-		COR_e.0001
+		COR_ceremony.9000
 	}
 }
 
