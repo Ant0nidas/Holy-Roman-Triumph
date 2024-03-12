@@ -19,7 +19,12 @@
 				is_ai = yes
 			}
 			OR = {
-				is_at_war = no
+				NOT = {
+					any_character_war ?= {
+						is_war_leader = root
+						is_defender = root
+					}
+				}
 				var:COR_years_reigned ?= 30
 			}
 		}
@@ -28,7 +33,12 @@
 	can_start_showing_failures_only = {
 		is_capable_adult = yes
 		OR = {
-			is_at_war = no
+			NOT = {
+				any_character_war ?= {
+					is_war_leader = root
+					is_defender = root
+				}
+			}
 			custom_tooltip = {
 				text = COR_maxed_uncrowned_tooltip
 				var:COR_years_reigned ?= 30
@@ -1499,7 +1509,7 @@
 	}
 
 	host_intents = {
-		intents = { HRT_glory_intent HRT_submission_intent diplomatic_intent reduce_stress_intent legitimacy_intent }
+		intents = { HRT_submission_intent HRT_glory_intent diplomatic_intent legitimacy_intent }
 		default = HRT_submission_intent
 	}
 

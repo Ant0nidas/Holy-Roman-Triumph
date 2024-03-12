@@ -383,6 +383,14 @@ COR_ceremony.0001 = {
 
 		ai_chance = {
 			base = 20
+			modifier = { #TODO temporary investiture solution
+				HRT_is_emperor_trigger = yes
+				OR = {
+					has_realm_law = free_investiture_early
+					has_realm_law = free_investiture_late
+				}
+				factor = 0
+			}
 			modifier = {
 				highest_held_title_tier = tier_empire
 				add = 50
@@ -467,10 +475,14 @@ COR_ceremony.0001 = {
 		trigger = {
 			NOT = { has_trait = excommunicated }
 			OR = {
-				highest_held_title_tier < tier_empire
-				trigger_if = {
-					limit = {
-						exists = global_var:Trinity_is_loaded
+				AND = {
+					HRT_is_emperor_trigger = no
+					highest_held_title_tier < tier_empire
+				}
+				AND = {
+					OR = {
+						HRT_is_emperor_trigger = yes
+						highest_held_title_tier = tier_empire
 					}
 					has_realm_law_flag = free_enacted
 				}
@@ -516,10 +528,14 @@ COR_ceremony.0001 = {
 		name = COR_ceremony.0001.d
 		trigger = {
 			OR = {
-				highest_held_title_tier < tier_empire
-				trigger_if = {
-					limit = {
-						exists = global_var:Trinity_is_loaded
+				AND = {
+					HRT_is_emperor_trigger = no
+					highest_held_title_tier < tier_empire
+				}
+				AND = {
+					OR = {
+						HRT_is_emperor_trigger = yes
+						highest_held_title_tier = tier_empire
 					}
 					has_realm_law_flag = free_enacted
 				}
@@ -1486,6 +1502,14 @@ COR_ceremony.0106 = {
 	
 		ai_chance = {
 			base = 0
+			modifier = {
+				HRT_is_emperor_trigger = yes
+				OR = {
+					has_realm_law = free_investiture_early
+					has_realm_law = free_investiture_late
+				}
+				add = 1
+			}
 		}
 	}
 }
@@ -3554,7 +3578,7 @@ COR_ceremony.0324 = {
 	}
 	right_portrait = {
 		character = scope:COR_ruler
-		animation = personality_bold
+		animation = war_attacker
 	}
 
 	immediate = { }
@@ -5045,7 +5069,10 @@ COR_ceremony.0370 = {
 					this = scope:host
 					this = scope:activity.special_guest:COR_coronator
 				}
-				is_ruler = yes
+				OR = {
+					is_ruler = yes
+					is_councillor = yes
+				}
 				diplomacy > excellent_skill_level
 			}
 			any_attending_character = {
@@ -5053,7 +5080,10 @@ COR_ceremony.0370 = {
 					this = scope:host
 					this = scope:activity.special_guest:COR_coronator
 				}
-				is_ruler = yes
+				OR = {
+					is_ruler = yes
+					is_councillor = yes
+				}
 				stewardship > excellent_skill_level
 			}
 		}
@@ -5068,7 +5098,10 @@ COR_ceremony.0370 = {
 						this = scope:host
 						this = scope:activity.special_guest:COR_coronator
 					}
-					is_ruler = yes
+					OR = {
+						is_ruler = yes
+						is_councillor = yes
+					}
 					diplomacy > excellent_skill_level
 				}
 				order_by = diplomacy
@@ -5081,7 +5114,10 @@ COR_ceremony.0370 = {
 						this = scope:activity.special_guest:COR_coronator
 						this = scope:COR_diplomat
 					}
-					is_ruler = yes
+					OR = {
+						is_ruler = yes
+						is_councillor = yes
+					}
 					learning > excellent_skill_level
 				}
 				order_by = stewardship
@@ -5421,6 +5457,13 @@ COR_ceremony.0381 = {
 						this = scope:host
 						this = scope:activity.special_guest:COR_coronator
 					}
+					is_ruler = yes
+				}
+				alternative_limit = {
+					NOR = {
+						this = scope:host
+						this = scope:activity.special_guest:COR_coronator
+					}
 				}
 				save_scope_as = COR_auditor
 			}
@@ -5514,6 +5557,13 @@ COR_ceremony.0383 = {
 		scope:activity = {
 			random_attending_character = {
 				limit = {
+					NOR = {
+						this = scope:host
+						this = scope:activity.special_guest:COR_coronator
+					}
+					is_ruler = yes
+				}
+				alternative_limit = {
 					NOR = {
 						this = scope:host
 						this = scope:activity.special_guest:COR_coronator
@@ -6955,7 +7005,10 @@ COR_ceremony.9100 = { # Maintenace & Uncrowned Malus (yearly_playable_pulse)
 				has_character_flag = sold_crown_charmod
 			}
 			AND = {
-				highest_held_title_tier >= tier_kingdom
+				OR = {
+					HRT_is_emperor_trigger = yes
+					highest_held_title_tier >= tier_kingdom
+				}
 				faith = faith:catholic
 				government_has_flag = government_is_feudal
 				OR = {
@@ -6984,7 +7037,10 @@ COR_ceremony.9100 = { # Maintenace & Uncrowned Malus (yearly_playable_pulse)
 		if = {
 			limit = {
 				AND = {
-					highest_held_title_tier >= tier_kingdom
+					OR = {
+						HRT_is_emperor_trigger = yes
+						highest_held_title_tier >= tier_kingdom
+					}
 					faith = faith:catholic
 					government_has_flag = government_is_feudal
 					OR = {
@@ -7127,7 +7183,10 @@ COR_ceremony.9100 = { # Maintenace & Uncrowned Malus (yearly_playable_pulse)
 			limit = {
 				OR = {
 					NAND = {
-						highest_held_title_tier >= tier_kingdom
+						OR = {
+							HRT_is_emperor_trigger = yes
+							highest_held_title_tier >= tier_kingdom
+						}
 						faith = faith:catholic
 						government_has_flag = government_is_feudal
 					}

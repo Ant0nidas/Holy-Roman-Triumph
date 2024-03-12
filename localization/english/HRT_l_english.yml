@@ -178,7 +178,7 @@
 
  HRT_submission_intent_header: "Submission:"
  HRT_submission_intent: "Submission"
- HRT_submission_intent_desc: "Your attendance signifies a humble acknowledgment of the Pope's spiritual authority. Gain more [piety_i|E] [piety|E]. Lose extra [stress_loss_i|E][stress|E] if you are [GetTrait('humble').GetName( GetNullCharacter )] or [GetTrait('zealous').GetName( GetNullCharacter )]."
+ HRT_submission_intent_desc: "Your attendance signifies a humble acknowledgment of the spiritual authority. Gain more [piety_i|E] [piety|E]. Lose extra [stress_loss_i|E][stress|E] if you are [GetTrait('humble').GetName( GetNullCharacter )] or [GetTrait('zealous').GetName( GetNullCharacter )]."
  HRT_glory_intent_header: "Display of Might:"
  HRT_glory_intent: "Display of Might"
  HRT_glory_intent_desc: "Your presence is a testament to your power and grandeur for all to behold. Gain more [prestige_i|E] [prestige|E]. Lose extra [stress_loss_i|E][stress|E] if you are [GetTrait('arrogant').GetName( GetNullCharacter )] or [GetTrait('ambitious').GetName( GetNullCharacter )]."

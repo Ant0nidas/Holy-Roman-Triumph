@@ -95,11 +95,12 @@
 			}
 
 			hbox = {
-				position = {-800 -465}
+				#position = {-800 -465}
+				position = { -350 -222 }
 				widget = {
 					visible = "[And( Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)), GetScriptedGui('HRT_show_player_score_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End) )]"
 					size = {100 100}
-					parentanchor = hcenter|vcenter
+					#parentanchor = hcenter|vcenter
 					icon = {
 						texture = "gfx/interface/HRT/ImperatorScore.png"
 						position = {30 -15}
@@ -122,8 +123,8 @@
 			widget = {
 				parentanchor = top|hcenter
 				size = {80% 30%}
+				position = { 11 85 }
 				hbox = {
-					position = { 11 85 }
 					parentanchor = top|hcenter
 					#Imperator
 					HRT_window_special_character = {

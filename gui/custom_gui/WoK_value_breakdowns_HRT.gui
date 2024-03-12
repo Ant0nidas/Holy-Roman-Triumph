@@ -81,7 +81,7 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "value"    {text = "[TopScope.ScriptValue('emperor_is_imperial_dynasty_bonus')|0=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('emperor_culture_malus'),'(CFixedPoint)0')]"
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('emperor_culture_malus'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_candidatus_culture_bonus} 
                     blockoverride "value"    {text = "[TopScope.ScriptValue('emperor_culture_malus')|0=+]"}
 				}
