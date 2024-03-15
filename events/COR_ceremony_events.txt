@@ -359,6 +359,11 @@ COR_ceremony.0001 = {
 				}
 				factor = 2
 			}
+			modifier = {
+				this = character:1316
+				has_realm_law_flag = free_enacted
+				add = 1000
+			}
 		}
 	}
 
@@ -383,14 +388,6 @@ COR_ceremony.0001 = {
 
 		ai_chance = {
 			base = 20
-			modifier = { #TODO temporary investiture solution
-				HRT_is_emperor_trigger = yes
-				OR = {
-					has_realm_law = free_investiture_early
-					has_realm_law = free_investiture_late
-				}
-				factor = 0
-			}
 			modifier = {
 				highest_held_title_tier = tier_empire
 				add = 50
@@ -467,6 +464,11 @@ COR_ceremony.0001 = {
 				}
 				factor = 0.1
 			}
+			modifier = {
+				this = character:1316
+				has_realm_law_flag = free_enacted
+				factor = 0
+			}
 		}
 	}
 
@@ -521,6 +523,11 @@ COR_ceremony.0001 = {
 			modifier = {
 				highest_held_title_tier = tier_empire
 				add = -50
+			}
+			modifier = {
+				this = character:1316
+				has_realm_law_flag = free_enacted
+				factor = 0
 			}
 		}
 	}
@@ -656,6 +663,11 @@ COR_ceremony.0001 = {
 				gold < minor_gold_value
 				add = 30
 			}
+			modifier = {
+				this = character:1316
+				has_realm_law_flag = free_enacted
+				factor = 0
+			}
 		}
 	}
 
@@ -670,6 +682,11 @@ COR_ceremony.0001 = {
 
 		ai_chance = {
 			base = 0
+			modifier = {
+				this = character:1316
+				has_realm_law_flag = free_enacted
+				add = 10
+			}
 		}
 	}
 }
@@ -1502,14 +1519,6 @@ COR_ceremony.0106 = {
 	
 		ai_chance = {
 			base = 0
-			modifier = {
-				HRT_is_emperor_trigger = yes
-				OR = {
-					has_realm_law = free_investiture_early
-					has_realm_law = free_investiture_late
-				}
-				add = 1
-			}
 		}
 	}
 }

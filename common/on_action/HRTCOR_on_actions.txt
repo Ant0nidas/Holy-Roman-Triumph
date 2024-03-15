@@ -1,10 +1,10 @@
 ﻿on_game_start = {
 	on_actions = {
-		HRT_setup_on_actions
+		HRTCOR_setup_on_actions
 	}
 }
 
-HRT_setup_on_actions = {
+HRTCOR_setup_on_actions = {
 	effect = {
 		set_global_variable = {
 			name = HRT_is_loaded
@@ -440,14 +440,13 @@ COR_ceremony_banquet_ongoing_event_pulse = {
 		100 = COR_ceremony_ewan.0001	# Quite the Spectacle - Connect with various types of characters over the entertainment.
 		100 = COR_ceremony_ewan.0011	# Food Fit for a... - Connect with various types of characters over the food.
 		100 = COR_ceremony_ewan.0021	# Shimmering, Shining - Connect with various types of characters over the venue & its decorations.
-		100 = COR_ceremony_ewan.0031	# A Sociable Supper - Meet one of your #neighbouring rulers and form a fast friendship.
+		100 = COR_ceremony_ewan.0031	# A Sociable Supper - Meet one of your neighbouring rulers and form a fast friendship.
 		100 = COR_ceremony_ewan.0041	# Speech! Speech! - Make a speech to the ruler, adjusting the meaning to your intent.
-		100 = ep2_wedding_ewan.0051		# And Another Thing - Someone is pitching #questionable ideas at you, but they keep coming at you.
-		# Transferred feast events
 		50 = feast_events_ewan.0001		# Clear your Head - Ambush your target when they go out for a walk.
 		50 = feast_events_ewan.0601		# A Mere Jest - Stuff a gross item (e.g., dead #rat) in a refined foodstuff (e.g., jug of wine).
 		50 = feast_events_ewan.0801		# A Pleasing Atmosphere - Sit back and enjoy the vibes.
 		#Generic
+		20 = ep2_wedding_ewan.0051		# And Another Thing - Someone is pitching questionable ideas at you, but they keep coming at you.
 		20 = COR_ceremony.0405			# Enjoying Magnificent Food
 		10 = feast_default.2005			#Drunk guest throws up
 		10 = feast_default.5001 #Hosts dread freaks you out

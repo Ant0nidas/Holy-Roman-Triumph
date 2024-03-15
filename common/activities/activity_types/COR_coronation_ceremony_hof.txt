@@ -497,45 +497,30 @@
 				# OPTIONS
 				add = { # Splendor Option
 					value = 0
-					add = -10 # Private Cost
-					add = 35 # Dignified Cost
-					add = 40 # Extravagant Cost divided by 2
-					# Scale option costs by tier and era
-					multiply = activity_cost_scale_by_tier
-					multiply = activity_cost_scale_by_era
-					# Divide by the total number of option levels so we get an average option cost
+					add = 0 # Private Cost
+					add = minor_gold_value # Dignified Cost
+					add = major_gold_value # Extravagant Cost
 					divide = 3
 				}
 				add = { # Entertainment
 					value = 0
-					add = 10 # Bad Option Cost
-					add = 30 # Normal Option Costost
-					add = 45 # Good Option Cost divided by 2
-					# Scale option costs by tier and era
-					#multiply = activity_cost_scale_by_tier
-					multiply = activity_cost_scale_by_era
-					# Divide by the total number of option levels so we get an average option cost
+					add = 0 # Bad Option Cost
+					add = minor_gold_value # Normal Option Cost Cost
+					add = major_gold_value # Good Option Cost
 					divide = 3
 				}
 				add = { # Food
-					value = 0 # Bad Option Cost
-					add = 10 # Normal Option Cost
-					add = 35 # Good Option Cost
-					# Scale option costs by tier and era
-					multiply = activity_cost_scale_by_tier
-					multiply = activity_cost_scale_by_era
-					# Divide by the total number of option levels so we get an average option cost
+					value = 0
+					add = 0 # Bad Option Cost
+					add = tiny_gold_value # Normal Option Cost
+					add = medium_gold_value # Good Option Cost
 					divide = 3
 				}
 				add = { # Decoration
 					value = 0
-					add = 20 # Bad Option Cost
-					add = 60 # Normal Option Cost
-					add = 90 # Good Option Cost divided by 2
-					# Scale option costs by tier and era
-					#multiply = activity_cost_scale_by_tier
-					multiply = activity_cost_scale_by_era
-					# Divide by the total number of option levels so we get an average option cost
+					add = tiny_gold_value # Bad Option Cost
+					add = medium_gold_value # Normal Option Cost
+					add = major_gold_value # Good Option Cost
 					divide = 3
 				}
 				# Make it a multiple of 5 (rounded up)
@@ -555,32 +540,9 @@
 		COR_ceremony_type = {
 			# Private Ceremony
 			COR_ceremony_type_private = {
-				cost = { 
+				cost = {
 					gold = {
-						subtract = {
-							add = {
-								value = 10
-								desc = COR_activity_coronation_ceremony_cost_splendor_private
-							}
-							add = {
-								value = 10 
-								multiply = activity_cost_scale_by_tier
-								subtract = 10
-								desc = activity_cost_scale_by_tier_desc
-							}
-							add = {
-								value = 10 
-								multiply = activity_cost_scale_by_era
-								subtract = 10 
-								desc = activity_cost_scale_by_era_desc
-							}
-						}
-						if = {
-							limit = {
-								root = { is_ai = yes }
-							}
-							multiply = 0
-						}
+						value = 0
 					}
 				}
 			}
@@ -594,22 +556,9 @@
 					gold = {
 						add = {
 							add = {
-								value = 35
+								value = minor_gold_value
 								desc = COR_activity_coronation_ceremony_cost_splendor_dignified
 							}
-							add = {
-								value = 35
-								multiply = activity_cost_scale_by_tier
-								subtract = 35
-								desc = activity_cost_scale_by_tier_desc
-							}
-							add = {
-								value = 35
-								multiply = activity_cost_scale_by_era
-								subtract = 35
-								desc = activity_cost_scale_by_era_desc
-							}
-							min = 0
 						}
 						if = {
 							limit = {
@@ -626,20 +575,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 80
+								value = major_gold_value
 								desc = COR_activity_coronation_ceremony_cost_splendor_extravagant
-							}
-							add = {
-								value = 80
-								multiply = activity_cost_scale_by_tier
-								subtract = 80
-								desc = activity_cost_scale_by_tier_desc
-							}
-							add = {
-								value = 80
-								multiply = activity_cost_scale_by_era
-								subtract = 80 
-								desc = activity_cost_scale_by_era_desc
 							}
 						}
 						if = {
@@ -663,41 +600,7 @@
 				}
 				cost = {
 					gold = {
-						add = {
-							add = {
-								value = 10
-								desc = COR_ceremony_entertainment_bad
-							}
-							add = {
-								value = 10
-								multiply = activity_cost_scale_by_era
-								subtract = 10
-								desc = activity_cost_scale_by_era_desc 
-							}
-						}
-						if = {
-							limit = {
-								is_ai = yes
-							}
-							multiply = 0
-						}
-					}
-				}
-				on_start = {
-					# keep synced with the cost of the option
-					if = {
-						limit = { # add the discounted cost 
-							scope:host = {
-								is_ai = no
-							}
-						}
-						change_variable = {
-							name = COR_ceremony_refund_pot
-							add = {
-								value = 10
-								multiply = activity_cost_scale_by_era
-							}
-						}
+						value = 0
 					}
 				}
 			}
@@ -715,14 +618,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 30
+								value = minor_gold_value
 								desc = COR_ceremony_entertainment_normal
-							}
-							add = {
-								value = 30
-								multiply = activity_cost_scale_by_era
-								subtract = 30
-								desc = activity_cost_scale_by_era_desc
 							}
 						}
 						if = {
@@ -745,10 +642,7 @@
 						}
 						change_variable = {
 							name = COR_ceremony_refund_pot
-							add = {
-								value = 30
-								multiply = activity_cost_scale_by_era
-							}
+							add = minor_gold_value
 						}
 					}
 				}
@@ -766,14 +660,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 90
+								value = major_gold_value
 								desc = COR_ceremony_entertainment_good
-							}
-							add = {
-								value = 90
-								multiply = activity_cost_scale_by_era
-								subtract = 90
-								desc = activity_cost_scale_by_era_desc 
 							}
 						}
 						if = {
@@ -796,10 +684,7 @@
 						}
 						change_variable = {
 							name = COR_ceremony_refund_pot
-							add = {
-								value = 90
-								multiply = activity_cost_scale_by_era
-							}
+							add = major_gold_value
 						}
 					}
 				}
@@ -842,42 +727,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 10
+								value = tiny_gold_value
 								desc = COR_ceremony_food_normal
-							}
-							add = {
-								value = 10
-								multiply = activity_cost_scale_by_tier
-								subtract = 10
-								desc = activity_cost_scale_by_tier_desc
-							}
-							add = {
-								value = 10
-								multiply = activity_cost_scale_by_era
-								subtract = 10
-								desc = activity_cost_scale_by_era_desc 
-							}
-							if = {
-								limit = {
-									dynasty ?= {
-										has_dynasty_perk = law_legacy_1
-									}
-								}
-								subtract = {
-									value = 10
-									add = {
-										value = 10
-										multiply = activity_cost_scale_by_tier
-										subtract = 10
-									}
-									add = {
-										value = 10
-										multiply = activity_cost_scale_by_era
-										subtract = 10
-									}
-									multiply = law_legacy_cost_reduction_mult
-									desc = law_legacy_1_name
-								}
 							}
 						}
 						if = {
@@ -900,10 +751,7 @@
 						}
 						change_variable = {
 							name = COR_ceremony_refund_pot
-							add = {
-								value = 10
-								multiply = activity_cost_scale_by_era
-							}
+							add = tiny_gold_value
 						}
 					}
 				}
@@ -921,42 +769,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 35
+								value = medium_gold_value
 								desc = COR_ceremony_food_good
-							}
-							add = {
-								value = 35
-								multiply = activity_cost_scale_by_tier
-								subtract = 35
-								desc = activity_cost_scale_by_tier_desc
-							}
-							add = {
-								value = 35
-								multiply = activity_cost_scale_by_era
-								subtract = 35
-								desc = activity_cost_scale_by_era_desc 
-							}
-							if = {
-								limit = {
-									dynasty ?= {
-										has_dynasty_perk = law_legacy_1
-									}
-								}
-								subtract = {
-									value = 35
-									add = {
-										value = 35
-										multiply = activity_cost_scale_by_tier
-										subtract = 35
-									}
-									add = {
-										value = 35
-										multiply = activity_cost_scale_by_era
-										subtract = 35
-									}
-									multiply = law_legacy_cost_reduction_mult
-									desc = law_legacy_1_name
-								}
 							}
 						}
 						if = {
@@ -979,10 +793,7 @@
 						}
 						change_variable = {
 							name = COR_ceremony_refund_pot
-							add = {
-								value = 35
-								multiply = activity_cost_scale_by_era
-							}
+							add = medium_gold_value
 						}
 					}
 				}
@@ -1001,14 +812,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 20
+								value = tiny_gold_value
 								desc = wedding_decoration_bad
-							}
-							add = {
-								value = 20
-								multiply = activity_cost_scale_by_era
-								subtract = 20
-								desc = activity_cost_scale_by_era_desc 
 							}
 						}
 						if = {
@@ -1029,10 +834,7 @@
 						}
 						change_variable = {
 							name = COR_ceremony_refund_pot
-							add = {
-								value = 20
-								multiply = activity_cost_scale_by_era
-							}
+							add = tiny_gold_value
 						}
 					}
 				}
@@ -1051,14 +853,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 60
+								value = medium_gold_value
 								desc = COR_ceremony_decoration_normal
-							}
-							add = {
-								value = 60
-								multiply = activity_cost_scale_by_era
-								subtract = 60
-								desc = activity_cost_scale_by_era_desc 
 							}
 						}
 						if = {
@@ -1081,10 +877,7 @@
 						}
 						change_variable = {
 							name = COR_ceremony_refund_pot
-							add = {
-								value = 60
-								multiply = activity_cost_scale_by_era
-							}
+							add = medium_gold_value
 						}
 					}
 				}
@@ -1102,14 +895,8 @@
 					gold = {
 						add = {
 							add = {
-								value = 180
+								value = major_gold_value
 								desc = COR_ceremony_decoration_good
-							}
-							add = {
-								value = 180
-								multiply = activity_cost_scale_by_era
-								subtract = 180
-								desc = activity_cost_scale_by_era_desc 
 							}
 						}
 						if = {
@@ -1135,10 +922,7 @@
 						}
 						change_variable = {
 							name = COR_ceremony_refund_pot
-							add = {
-								value = 180
-								multiply = activity_cost_scale_by_era
-							}
+							add = major_gold_value
 						}
 					}
 				}
