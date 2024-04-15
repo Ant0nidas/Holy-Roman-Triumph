@@ -2,9 +2,13 @@
 #################################
 #
 # Holy Roman Triumph
-# 0001 - 0002 Introduction Events
-# More to come, promise!
-# 
+# 0001 - 0002	Introduction Events
+# 0003 - 0005	GUI Button Events
+# 0006 - 0009	on_action Events
+# 0011			Decision Events
+# 1001			Italienzug Notification
+# 1101 - 1103	Italienzug On Army Enter Province
+#
 #################################
 
 HRT.0001 = { # Introduction Event for Louis II of Italy
@@ -18,7 +22,16 @@ HRT.0001 = { # Introduction Event for Louis II of Italy
 		animation = personality_bold
 	}
 
-	immediate = { }
+	immediate = {
+		hidden_effect = {
+			remove_variable = COR_years_reigned
+			remove_character_flag = sold_crown_charmod
+			set_variable = {
+				name = COR_coronator
+				value = character:7855 # Pope Leo IV
+			}
+		}
+	}
 
 	option = {
 		name = HRT.0001.a
@@ -312,6 +325,27 @@ HRT.0009 = {
 	option = { name = great_holy_war.0070.b }
 }
 
+#Decisions
+HRT.0011 = { # Prepare for Unification War
+	type = character_event
+	title = HRT.0011.t
+	desc = HRT.0011.desc
+	theme = crown
+	override_background = { reference = courtyard }
+
+	right_portrait = {
+		character = root
+		animation = marshal
+	}
+
+	immediate = { }
+
+	option = {
+		name = HRT.0011.a
+		custom_tooltip = HRT.0011.a.tt
+	}
+}
+
 ##############
 # Italienzug #
 ##############
@@ -334,6 +368,16 @@ HRT.1001 = {
 	left_portrait =	{
 		character = root
 		animation = personality_bold
+	}
+
+	trigger = {
+		OR = {
+			is_ai = yes
+			AND = {
+				has_dlc_feature = tours_and_tournaments
+				has_dlc_feature = advanced_activities
+			}
+		}
 	}
 
 	immediate = {

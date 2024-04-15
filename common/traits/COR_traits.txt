@@ -108,7 +108,7 @@ COR_crowned_by_pope = {
 			}
 			triggered_desc = {
 				trigger = {
-					exists = var:COR_coronator
+					has_variable = COR_coronator
 				}
 				desc = trait_COR_crowned_by_pope_with_name
 			}
@@ -126,7 +126,7 @@ COR_crowned_by_pope = {
 			}
 			triggered_desc = {
                 trigger = {
-                    exists = var:COR_coronator
+                    has_variable = COR_coronator
                 }
                 desc = trait_COR_crowned_by_pope_with_name_desc
             }

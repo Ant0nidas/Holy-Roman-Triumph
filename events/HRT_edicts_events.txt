@@ -78,6 +78,23 @@ HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
 					years = 5
 				}
 			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
+				}
+			}
 		}
 	}
 	option = {
@@ -154,6 +171,23 @@ HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
 					name = HRT_edict_chivalric_excellence_var
 					value = yes
 					years = 5
+				}
+			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
 				}
 			}
 		}
@@ -245,7 +279,25 @@ HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
 					years = 5
 				}
 			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
+				}
+			}
 		}
+		#TODO positive TCT catalyst
 	}
 	option = {
 		name = HRT_edicts.0003.b
@@ -320,6 +372,23 @@ HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
 					name = HRT_edict_consular_taxation_var
 					value = yes
 					years = 5
+				}
+			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
 				}
 			}
 		}
@@ -397,6 +466,23 @@ HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
 					name = HRT_edict_levy_conscription_var
 					value = yes
 					years = 5
+				}
+			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
 				}
 			}
 		}
@@ -491,6 +577,23 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 					name = HRT_edict_urban_rights_var
 					value = yes
 					years = 5
+				}
+			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
 				}
 			}
 		}
@@ -589,6 +692,23 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 					years = 5
 				}
 			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
+				}
+			}
 		}
 	}
 	option = {
@@ -672,6 +792,23 @@ HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
 					name = HRT_edict_scholastic_advancement_var
 					value = yes
 					years = 5
+				}
+			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
 				}
 			}
 		}
@@ -760,6 +897,23 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 					years = 5
 				}
 			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
+				}
+			}
 		}
 	}
 	option = {
@@ -846,7 +1000,25 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 					years = 5
 				}
 			}
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						has_variable = HRT_edicts_issued
+						var:HRT_edicts_issued < 10
+					}
+				}
+				dynasty ?= {
+					change_variable = {
+						name = HRT_edicts_issued
+						add = 1
+					}
+				}
+			}
 		}
+		#TODO positive TCT catalyst
 	}
 	option = {
 		name = HRT_edicts.0010.b

@@ -1,14 +1,14 @@
 ﻿#Imperial Edicts
 HRT_edict_legal_unification = { # Edict of Legal Unification (Era 2)
 	icon = diplomacy_positive
-	diplomacy = -2
-	stewardship = -1
+	#diplomacy = -2
+	#stewardship = -1
 	tyranny_gain_mult = 0.75
 	monthly_prestige_gain_mult = 0.02
 	title_creation_cost_mult = -0.05
 	#same_culture_opinion = 5
-	barons_and_minor_landholders_opinion = -5
-	parochial_opinion = -5
+	#barons_and_minor_landholders_opinion = -5
+	#parochial_opinion = -5
 }
 
 HRT_edict_legal_unification_vassal = {
@@ -19,50 +19,50 @@ HRT_edict_legal_unification_vassal = {
 
 HRT_edict_chivalric_excellence = { # Imperial Decree of Chivalric Excellence (Era 3)
 	icon = martial_positive
-	martial = -3
+	#martial = -3
 	monthly_prestige_gain_mult = 0.02
 	army_maintenance_mult = 0.03
 	knight_effectiveness_mult = 0.05
 	army_toughness_mult = 0.01
 	#glory_hound_opinion = 5
 	#courtly_opinion = 5
-	parochial_opinion = -5
+	#parochial_opinion = -5
 }
 
 HRT_edict_diplomatic_corps = { # Diplomatic Corps Activation Edict (Era 4)
 	icon = diplomacy_positive
-	diplomacy = -2
-	intrigue = -2
-	independent_ruler_opinion = 3
-	different_culture_opinion = 3
+	#diplomacy = -2
+	#intrigue = -2
+	independent_ruler_opinion = 5
+	different_culture_opinion = 5
 	monthly_piety_gain_mult = 0.02
 	sway_scheme_power_mult = 0.1
 	#courtly_opinion = 5
-	parochial_opinion = -5
+	#parochial_opinion = -5
 }
 
 HRT_edict_consular_taxation = { # Consular Taxation Directive (Era 2)
 	icon = stewardship_positive
-	stewardship = -3
+	#stewardship = -3
 	domain_tax_mult = 0.05
 	vassal_tax_mult = 0.01
 }
 
 HRT_edict_levy_conscription = { # Imperial Levy Conscription Order (Era 4)
 	icon = martial_positive
-	martial = -2
-	stewardship = -1
+	#martial = -2
+	#stewardship = -1
 	levy_size = 0.05
 	levy_reinforcement_rate = 0.02
 	levy_maintenance = 0.02
 	#glory_hound_opinion = 5
-	barons_and_minor_landholders_opinion = -5
+	#barons_and_minor_landholders_opinion = -5
 }
 
 HRT_edict_urban_rights = { # Edict of Urban Rights and Privileges (Era 4)
 	icon = diplomacy_positive
-	diplomacy = -1
-	stewardship = -2
+	#diplomacy = -1
+	#stewardship = -2
 	barons_and_minor_landholders_opinion = 5
 }
 
@@ -74,9 +74,9 @@ HRT_edict_urban_rights_county = {
 
 HRT_edict_border_defense = { # Border Defense Temporary Directive (Era 4)
 	icon = martial_positive
-	martial = -2
-	stewardship = -2
-	#glory_hound_opinion = 5
+	#martial = -1
+	#stewardship = -2
+	glory_hound_opinion = 5
 }
 
 HRT_edict_border_defense_county = {
@@ -92,7 +92,7 @@ HRT_edict_border_defense_county = {
 
 HRT_edict_scholastic_advancement = { # Edict of Scholastic Advancement (Era 3)
 	icon = learning_positive
-	learning = -2
+	#learning = -2
 	cultural_head_fascination_mult = 0.05
 	learn_language_scheme_power_mult = 0.1
 	#courtly_opinion = 5
@@ -100,13 +100,13 @@ HRT_edict_scholastic_advancement = { # Edict of Scholastic Advancement (Era 3)
 
 HRT_edict_scholastic_advancement_vassal = {
 	icon = learning_positive
-	learning = 1
+	#learning = 1
 	learn_language_scheme_power_mult = 0.1
 }
 
 HRT_edict_imperial_works = { # Edict of Imperial Works (Era 3)
 	icon = stewardship_positive
-	stewardship = -3
+	#stewardship = -1
 	character_travel_safety_mult = 0.15
 	character_travel_speed_mult = 0.1
 	domain_tax_mult = -0.1
@@ -131,7 +131,7 @@ HRT_edict_imperial_works_vassal = {
 
 HRT_edict_ecclesiastical_patronage = { # Edict of Ecclesiastical Patronage (Era 3)
 	icon = learning_positive
-	learning = -2
+	#learning = -2
 	monthly_piety_gain_mult = 0.05
 	clergy_opinion = 3
 	zealot_opinion = 2
@@ -166,4 +166,22 @@ HRT_edict_proclaim_directive_intrigue = {
 HRT_edict_proclaim_directive_learning = {
 	icon = learning_positive
 	learning = 2
+}
+
+HRT_preparing_for_unification_war = {
+	icon = martial_positive
+	levy_size = 0.1
+	levy_reinforcement_rate = 0.2
+	army_maintenance_mult = -0.1
+	knight_effectiveness_mult = 0.1
+}
+
+#Nibelungen
+HRT_nibelungen_valkyr_helmet_modifier = {
+	icon = prestige_positive
+	monthly_piety = -0.1
+	monthly_dynasty_prestige = 0.2
+	prowess_no_portrait = 6
+	hostile_scheme_resistance_add = 10
+	attraction_opinion = 10
 }

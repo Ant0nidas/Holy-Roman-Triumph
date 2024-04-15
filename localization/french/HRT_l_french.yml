@@ -50,7 +50,7 @@
  HRT_UNIFICATION_SPECIFIC_NAME: "Consolidate Imperial Territory" # of [TITLE.GetNameNoTier]
  HRT_UNIFICATION_WAR_SPECIFIC_NAME: "$ORDER$ [ATTACKER.GetPrimaryTitle.GetPrefix]-[DEFENDER.GetPrimaryTitle.GetAdjective] Unification War"
  HRT_UNIFICATION_WAR_SPECIFIC_NAME_BASE: "[ATTACKER.GetPrimaryTitle.GetAdjective][DEFENDER.GetPrimaryTitle.GetName]"
- HRT_unification_authority_req: "You need at least #V [EmptyScope.ScriptValue('HRT_unification_authority_value')|0]#! [HRT_imperial_authority|E]"
+ HRT_unification_war_authority_req: "You need at least #V [EmptyScope.ScriptValue('HRT_unification_authority_value')|0]#! [HRT_imperial_authority|E]"
  
  ##########################
  # Character Interactions #

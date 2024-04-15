@@ -68,20 +68,6 @@
 					value = 0
 				}
 			}
-			
-			#Become Independent
-			if = {
-				limit = { is_independent_ruler = no }
-				create_title_and_vassal_change = {
-					type = independency
-					save_scope_as = change
-					add_claim_on_loss = yes
-				}
-				becomes_independent = {
-					change = scope:change
-				}
-				resolve_title_and_vassal_change = scope:change
-			}
 
 			#Coronation
 			if = {
@@ -111,6 +97,23 @@
 						}
 					}
 					add_character_flag = sold_crown_charmod
+				}
+			}
+
+			#Nibelungen
+			if = {
+				limit = {
+					#is_ai = no
+					exists = dynasty
+					dynasty = {
+						NOT = { has_variable = HRT_edicts_issued }
+					}
+				}
+				dynasty = {
+					set_variable = {
+						name = HRT_edicts_issued
+						value = 0
+					}
 				}
 			}
 		}
@@ -205,7 +208,6 @@
 							multiply = 0
 						}
 					}
-
 
 					#Prestige Bonus
 					set_variable = {
@@ -328,7 +330,6 @@
 						}
 					}
 
-
 					#Prevent exceeding authority range (0-100)
 					if = {
 						limit = { HRT_authority_limiter_value <= 0 }
@@ -353,7 +354,6 @@
 					}
 				}
 
-
 				#Pope opinion of candidati parked here to prevent errors, sorry
 				every_HRT_candidati = {
 					save_scope_as = HRT_candidatus
@@ -375,7 +375,6 @@
 						}
 					}
 				}
-
 
 			}
 		}
@@ -525,6 +524,7 @@
 							5 = {
 								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
 							}
+							30 = { }
 						}
 					}
 					else_if = {
@@ -550,6 +550,7 @@
 							5 = {
 								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
 							}
+							20 = { }
 						}
 					}
 					else_if = {
@@ -582,7 +583,6 @@
 					is_ai = yes
 					HRT_authority_progressbar_value >= 40
 					prestige > major_prestige_value
-					culture = { has_cultural_era_or_later = culture_era_late_medieval }
 				}
 			}
 			effect = {
@@ -598,9 +598,15 @@
 							10 = {
 								trigger_event = HRT_edicts.0010 # Edict of Ecclesiastical Patronage
 							}
+							20 = { }
 						}
 					}
-					else = {
+					else_if = {
+						limit = {
+							NOT = {
+								culture = { has_cultural_era_or_later = culture_era_early_medieval }
+							}
+						}
 						trigger_event = HRT_edicts.0001 # Edict of Legal Unification
 					}
 				}

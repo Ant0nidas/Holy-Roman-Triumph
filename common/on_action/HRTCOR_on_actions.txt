@@ -42,10 +42,7 @@ HRTCOR_setup_on_actions = {
 		#Set variable
 		every_ruler = {
 			limit = {
-				OR = {
-					HRT_is_emperor_trigger = yes
-					highest_held_title_tier >= tier_kingdom
-				}
+				highest_held_title_tier >= tier_kingdom
 				faith = faith:catholic
 				government_has_flag = government_is_feudal
 				NOR = {
@@ -53,7 +50,6 @@ HRTCOR_setup_on_actions = {
 					has_trait = COR_crowned_by_bishop
 					has_trait = COR_crowned_by_pope
 					has_trait = COR_crowned_by_myself
-					has_trait = HRT_emperor
 					this = character:30228 #Louis II of Italy (gets his trait in starting event)
 				}
 			}
@@ -63,7 +59,16 @@ HRTCOR_setup_on_actions = {
 			}
 			# Taketh Crowns
 			if = {
-				limit = { has_game_rule = COR_crowns_taketh }
+				limit = {
+					has_game_rule = COR_crowns_taketh
+					OR = {
+						is_ai = yes
+						AND = {
+							has_dlc_feature = tours_and_tournaments
+							has_dlc_feature = advanced_activities
+						}
+					}
+				}
 				add_character_flag = sold_crown_charmod
 				every_spouse = {
 					limit = {
@@ -93,10 +98,6 @@ HRT_setup_after_game_start_on_actions = {
 		if = {
 			limit = { game_start_date = 867.1.1 }
 			character:30228 ?= { # Louis II of Italy Introduction Event
-				set_variable = {
-					name = COR_coronator
-					value = character:7855 # Pope Leo IV
-				}
 				create_story = HRT_emperor_story
 				trigger_event = HRT.0001 # Louis Introduction Event
 			}
@@ -163,6 +164,13 @@ HRT_yearly_maintenance_pulse = {
 				create_story = HRT_emperor_story
 				if = {
 					limit = {
+						OR = {
+							is_ai = yes
+							AND = {
+								has_dlc_feature = tours_and_tournaments
+								has_dlc_feature = advanced_activities
+							}
+						}
 						NOR = {
 							has_trait = HRT_emperor
 							has_trait = COR_crowned_by_myself
@@ -184,6 +192,13 @@ HRT_yearly_maintenance_pulse = {
 				create_story = HRT_emperor_story
 				if = {
 					limit = {
+						OR = {
+							is_ai = yes
+							AND = {
+								has_dlc_feature = tours_and_tournaments
+								has_dlc_feature = advanced_activities
+							}
+						}
 						NOR = {
 							has_trait = HRT_emperor
 							has_trait = COR_crowned_by_myself

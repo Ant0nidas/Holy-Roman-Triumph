@@ -469,6 +469,17 @@ COR_ceremony.0001 = {
 				has_realm_law_flag = free_enacted
 				factor = 0
 			}
+			modifier = {
+				NOT = { highest_held_title_tier = tier_empire }
+				capital_province = {
+					NOR = {
+						geographical_region = world_europe_west_germania
+						geographical_region = world_europe_west_francia
+						geographical_region = world_europe_south_italy
+					}
+				}
+				factor = 0.5
+			}
 		}
 	}
 
@@ -528,6 +539,12 @@ COR_ceremony.0001 = {
 				this = character:1316
 				has_realm_law_flag = free_enacted
 				factor = 0
+			}
+			modifier = {
+				capital_province = {
+					geographical_region = world_europe_north
+				}
+				factor = 0.5
 			}
 		}
 	}
@@ -667,6 +684,12 @@ COR_ceremony.0001 = {
 				this = character:1316
 				has_realm_law_flag = free_enacted
 				factor = 0
+			}
+			modifier = {
+				capital_province = {
+					geographical_region = world_europe_north
+				}
+				add = 50
 			}
 		}
 	}
@@ -1329,7 +1352,7 @@ COR_ceremony.0103 = {
 			limit = { is_ai = no }
 			pay_short_term_gold = {
 				target = scope:COR_coronator
-				gold = minor_gold_value
+				gold = tiny_gold_value
 			}
 		}
 
@@ -1393,7 +1416,7 @@ COR_ceremony.0104 = {
 			limit = { is_ai = no }
 			pay_short_term_gold = {
 				target = scope:COR_coronator
-				gold = medium_gold_value
+				gold = minor_gold_value
 			}
 		}
 
@@ -7083,7 +7106,16 @@ COR_ceremony.9100 = { # Maintenace & Uncrowned Malus (yearly_playable_pulse)
 				}
 			}
 			if = {
-				limit = { has_game_rule = COR_crowns_taketh }
+				limit = {
+					OR = {
+						is_ai = yes
+						AND = {
+							has_dlc_feature = tours_and_tournaments
+							has_dlc_feature = advanced_activities
+						}
+					}
+					has_game_rule = COR_crowns_taketh
+				}
 				#remove crown if still wearing
 				if = {
 					limit = {
@@ -7191,6 +7223,13 @@ COR_ceremony.9100 = { # Maintenace & Uncrowned Malus (yearly_playable_pulse)
 		if = {
 			limit = {
 				OR = {
+					AND = {
+						is_ai = no
+						NOR = {
+							has_dlc_feature = tours_and_tournaments
+							has_dlc_feature = advanced_activities
+						}
+					}
 					NAND = {
 						OR = {
 							HRT_is_emperor_trigger = yes

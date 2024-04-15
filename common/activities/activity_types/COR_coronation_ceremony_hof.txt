@@ -1,5 +1,12 @@
 ﻿COR_activity_coronation_ceremony_hof = {
 	is_shown = {
+		OR = {
+			is_ai = yes
+			AND = {
+				has_dlc_feature = tours_and_tournaments
+				has_dlc_feature = advanced_activities
+			}
+		}
 		has_character_flag = COR_flag_preparing_coronation
 		exists = var:COR_coronator
 		highest_held_title_tier >= tier_kingdom
@@ -1018,7 +1025,7 @@
 					limit = {
 						root = scope:host
 					}
-					scope:activity = { progress_activity_phase_after = { months = 1 } }
+					scope:activity = { progress_activity_phase_after = { weeks = 3 } }
 				}
 			}
 
@@ -1071,6 +1078,7 @@
 
 	can_be_activity_guest = {
 		is_adult = yes
+		faith.religion = scope:host.faith.religion
 		OR = {
 			in_diplomatic_range = scope:host
 			this = scope:host.var:COR_coronator

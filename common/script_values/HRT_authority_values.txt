@@ -9,7 +9,7 @@ authority_gain_per_vassal_duchy_bonus   				= 0.5
 authority_gain_per_vassal_kingdom_bonus 				= 1
 
 authority_loss_per_waged_vassal_war_multiplier			= -0.2
-authority_loss_per_waged_vassal_war						= 0.6
+authority_loss_per_waged_vassal_war						= 0.4
 
 authority_loss_infidel_multiplier						= 0.5
 #authority_loss_per_infidel								= -0.5
@@ -17,7 +17,7 @@ authority_loss_infidel_multiplier						= 0.5
 # Territory parameters
 authority_gain_per_territory_multiplier					= 0.002
 authority_loss_per_unheld_heartlands_multiplier			= 1
-authority_loss_per_unheld_heartlands					= -0.1
+authority_loss_per_unheld_heartlands					= -0.07
 
 HRT_authority_limiter_value = {
 	value = var:HRT_authority
@@ -219,8 +219,7 @@ HRT_authority_missing_reichskrone_malus = {
 					exists = title:e_hre.holder
 					NOT = {
 						any_character_artifact = {
-							artifact_slot_type = helmet
-							rarity = illustrious
+							has_variable = reichskrone
 						}
 					}
 				}
@@ -347,6 +346,13 @@ HRT_authority_uncrowned_malus = {
 	title:c_aachen.var:HRT_emperor = {
 		if = {
 			limit = {
+				OR = {
+					is_ai = yes
+					AND = {
+						has_dlc_feature = tours_and_tournaments
+						has_dlc_feature = advanced_activities
+					}
+				}
 				faith = faith:catholic
 				NOR = {
 					has_trait = HRT_emperor

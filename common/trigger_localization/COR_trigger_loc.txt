@@ -1,4 +1,0 @@
-﻿COR_excommunicated_free_investiture_tooltip = {
-	global = COR_excommunicated_free_investiture_tooltip
-	first = COR_excommunicated_free_investiture_tooltip
-}

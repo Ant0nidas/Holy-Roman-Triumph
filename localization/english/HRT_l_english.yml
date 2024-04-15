@@ -1,13 +1,17 @@
 ﻿l_english:
+ # Combined localization:
  ##########################
- # Combined localization: #
  # Traits                 #
  # Decisions              #
+ # Modifiers              #
  # Wars                   #
  # Character Interactions #
  # Important Actions      #
  # Game Rules             #
  # Game Concepts          #
+ # Artifacts              #
+ # Clothes                #
+ # Nibelungen Activity    #
  # Italienzug Activity    #
  # Events                 #
  ##########################
@@ -15,11 +19,12 @@
  ##########
  # Traits #
  ##########
- trait_HRT_emperor_name: "Crowned by the Pope"
- trait_HRT_emperor_pope: "Crowned by [ROOT.GetCharacter.GetFaith.ReligiousHeadName] [ROOT.Char.MakeScope.Var('COR_coronator').Char.GetFirstNameNoTooltip]"
+ 
+ trait_HRT_emperor_name: "Crowned"
+ trait_HRT_emperor_pope: "Crowned by [ROOT.Char.MakeScope.Var('COR_coronator').Char.GetTitledFirstNameNoTooltip]"
  trait_HRT_emperor_desc: "This character has been recognized and formally crowned as the rightful ruler of the Roman Empire."
- trait_HRT_emperor_pope_desc: "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been recognized and formally crowned by [ROOT.GetCharacter.GetFaith.ReligiousHeadName] [ROOT.Char.MakeScope.Var('COR_coronator').Char.GetFirstName] as the rightful ruler of the Roman Empire."
- trait_HRT_emperor_character_desc: "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been recognized and formally crowned by the [ROOT.GetCharacter.GetFaith.ReligiousHeadName] as the rightful ruler of the Roman Empire."
+ trait_HRT_emperor_pope_desc: "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been recognized and formally crowned by [ROOT.Char.MakeScope.Var('COR_coronator').Char.GetTitledFirstName] as the rightful ruler of the Roman Empire."
+ trait_HRT_emperor_character_desc: "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been recognized and formally crowned as the rightful ruler of the Roman Empire."
 
  trait_HRT_decline_succession: "Declines Succession"
  trait_HRT_decline_succession_desc: "This character refuses a possible succession to the Roman Empire."
@@ -30,14 +35,34 @@
  # Decisions #
  #############
  
+ HRT_prepare_unification_war_decision: "Prepare for Unification War"
+ HRT_prepare_unification_war_decision_desc: "Diplomacy and peaceful negotiations have failed! Use your [HRT_imperial_authority|E] to sound the horns of war, rally knights and muster levies to prepare for a war to unify the Roman Empire."
+ HRT_unification_army: "Imperial Army"
+ HRT_prepare_unification_war_decision_confirm: "Render unto Caesar the things that are Caesar's."
+ HRT_prepare_unification_war_decision_tooltip: "Prepare for a Unification War"
+ HRT_unification_decision_authority_req: "You need at least #V 20#! [HRT_imperial_authority|E]"
+ 
  HRT_decline_succession_decision: "Decline Succession"
  HRT_decline_succession_decision_desc: "This decision grants your character a trait that makes them unavailable for succession to the Roman Empire."
  HRT_decline_succession_decision_confirm: "Just leave me at peace!"
- HRT_decline_succession_decision_tooltip: "Decline succession to the Roman Empire."
+ HRT_decline_succession_decision_tooltip: "Decline succession to the Roman Empire"
  HRT_accept_succession_decision: "Accept Succession"
  HRT_accept_succession_decision_desc: "This decision makes your character lose the trait that makes them unavailable for succession to the Roman Empire."
  HRT_accept_succession_decision_confirm: "I am worthy!"
- HRT_accept_succession_decision_tooltip: "Stop declining succession to the Roman Empire."
+ HRT_accept_succession_decision_tooltip: "Stop declining succession to the Roman Empire"
+ 
+ HRT_nibelungen_start_decision: "Listen to a Legend"
+ HRT_nibelungen_start_decision_desc: "A poet speaks of a legend which stirs the curiosity of my courtiers. Perhaps it's time to listen closely, for such stories might hold more than mere words."
+ HRT_nibelungen_start_decision_effect: "Summon your court poet to recite the Nibelungenlied\n\n#emphasis Historical Context:#! The Nibelungenlied, translated as The Song of the Nibelungs, is an epic poem written around 1200 in Middle High German. The Nibelungenlied is based on an oral tradition of Germanic heroic legend that has some of its origin in historic events and individuals of the 5th and 6th centuries. Scandinavian parallels to the German poem are found especially in the heroic lays of the Poetic Edda and in the Völsunga saga."
+ HRT_nibelungen_start_decision_confirm: "Summon the poet!"
+ HRT_nibelungen_start_decision_tooltip: "A legend stirs the curiosity of my courtiers"
+ HRT_nibelungen_edicts_issued: "Your [dynasty|E] issued at least #V 10#! [HRT_imperial_edicts|E]. Currently: #V [GetPlayer.GetDynasty.MakeScope.Var('HRT_edicts_issued').GetValue]#!"
+ 
+ #############
+ # Modifiers #
+ #############
+ 
+ HRT_preparing_for_unification_war: "Preparing for a Unification War"
  
  ########
  # Wars #
@@ -50,7 +75,7 @@
  HRT_UNIFICATION_SPECIFIC_NAME: "Consolidate Imperial Territory" # of [TITLE.GetNameNoTier]
  HRT_UNIFICATION_WAR_SPECIFIC_NAME: "$ORDER$ [ATTACKER.GetPrimaryTitle.GetPrefix]-[DEFENDER.GetPrimaryTitle.GetAdjective] Unification War"
  HRT_UNIFICATION_WAR_SPECIFIC_NAME_BASE: "[ATTACKER.GetPrimaryTitle.GetAdjective][DEFENDER.GetPrimaryTitle.GetName]"
- HRT_unification_authority_req: "You need at least #V [EmptyScope.ScriptValue('HRT_unification_authority_value')|0]#! [HRT_imperial_authority|E]"
+ HRT_unification_war_authority_req: "You need at least #V [EmptyScope.ScriptValue('HRT_unification_authority_value')|0]#! [HRT_imperial_authority|E] or took the decision to prepare for a Unification War"
  
  ##########################
  # Character Interactions #
@@ -113,7 +138,7 @@
  
  game_concept_HRT_imperial_edict: "Imperial Edict"
  game_concept_HRT_imperial_edicts: "Imperial Edicts"
- game_concept_HRT_imperial_edict_desc: "Imperial Edicts are temporary decrees issued by the Emperor to swiftly address specific challenges or seize strategic opportunities within the Holy Roman Empire. Each Edict, crafted with [HRT_imperial_authority|E], can provide immediate benefits ranging from military enhancements to economic boosts.\nHowever, their temporary nature demands strategic foresight, as the effects are fleeting and often come with trade-offs. Wise use of these Imperial Edicts can greatly bolster the Empire's strength and stability in times of need."
+ game_concept_HRT_imperial_edict_desc: "Imperial Edicts are temporary decrees issued by the Emperor to swiftly address specific challenges or seize strategic opportunities within the Roman Empire. Each Edict, crafted with [HRT_imperial_authority|E], can provide immediate benefits ranging from military enhancements to economic boosts."
  
  game_concept_HRT_imperial_directive: "Imperial Directive"
  game_concept_HRT_imperial_directives: "Imperial Directives"
@@ -146,6 +171,54 @@
  
  game_concept_HRT_investiture_controversy: "Investiture Controversy"
  game_concept_HRT_investiture_controversy_desc: "The Investiture Controversy or Investiture Contest (German: Investiturstreit) was a conflict between the Church and the state in medieval Europe over the ability to choose and install bishops (investiture) and abbots of monasteries and the pope himself. A series of popes in the 11th and 12th centuries undercut the power of the Holy Roman Emperor and other European monarchies, and the controversy led to nearly 50 years of conflict."
+ 
+ #############
+ # Artifacts #
+ #############
+ HRT_nibelungen_valkyr_helmet_name: "Valkyr Helmet"
+ HRT_nibelungen_valkyr_helmet_description: "This famed helmet, adorned with intricate engravings, is said to have been worn by none other than Brünhilde, the formidable queen from the epic Nibelungenlied."
+ 
+ ###########
+ # Clothes #
+ ###########
+ #Unused, since there is no barbershop selection for these rare items
+ #PORTRAIT_MODIFIER_custom_headgear_HRT_valkyrie_helmet_male: "Brunhilde"
+ #PORTRAIT_MODIFIER_custom_headgear_HRT_valkyrie_helmet_female: "$PORTRAIT_MODIFIER_custom_headgear_HRT_valkyrie_helmet_male$"
+ 
+ #######################
+ # Nibelungen Activity #
+ #######################
+ 
+ HRT_nibelungen_activity_search: "Quest for Nibelungen Treasure"
+ HRT_nibelungen_activity_search_desc: "Within the storied tapestry of the Holy Roman Empire's legends, the quest for the Nibelungen treasure holds a place of intrigue and mystery. Said to be lost in the depths of the Rhine, this legendary hoard is not just a testament to the wealth and power of bygone eras but also a symbol of the enduring allure of ancient myths. Embarking on the search for this treasure is to follow in the footsteps of heroes and to seek a connection with the epic saga of the Nibelungenlied, where the lines between history and legend beautifully blur."
+ HRT_nibelungen_activity_search_selection_tooltip: "Search along the Rhine, passing through the lands of the Holy Roman Empire, to find the fabled Nibelungen treasure\n\nAnticipated Rewards:\n$EFFECT_LIST_BULLET$[gold_i|E] [gold|E]\n$EFFECT_LIST_BULLET$[prestige_i|E] [prestige|E]\n$EFFECT_LIST_BULLET$[dynasty_prestige_i|E] [dynasty_prestige|E]\n$EFFECT_LIST_BULLET$[artifacts|E]\n$EFFECT_LIST_BULLET$A mythical treasure"
+ HRT_nibelungen_activity_search_month_requirement: "The current month is between August and October"
+  
+ HRT_nibelungen_activity_search_host_desc: "$BULLET_WITH_TAB$Chance to gain [gold_i|E][gold|E], [prestige_i|E][prestige|E], and [artifacts|E]"
+ HRT_nibelungen_activity_search_guest_desc: "$BULLET_WITH_TAB$Gain random amounts of [gold_i|E][gold|E] and [prestige_i|E][prestige|E]"
+ 
+ TRAVEL_NAME_FOR_HRT_nibelungen_activity_search: "[Character.GetFirstNamePossessiveNoTooltip] $HRT_nibelungen_activity_search$"
+ 
+ NOT_HRT_nibelungen_activity_barony_searched: "You have already searched here"
+ NOT_HRT_nibelungen_activity_rhine_barony: "Province must be bordering Upper Rhine"
+ HRT_nibelungen_activity_search_province_desc: "Search along the Rhine for the fabled treasure\n#N Your quest will attract the attention of other treasure hunters.#!\n#emphasis Historical Context:#! A lifeline for the realms it touched, the Rhine is integral to the prosperity and power struggles of medieval Europe, both as a vital trade route and a natural boundary. Its banks are dotted with castles, monasteries, and burgeoning towns, reflecting the river's importance in politics, economy, and culture. The Rhine's significance was not just economic but also strategic, as control over it meant dominance over one of Europe's key trade arteries. The river also served as a cultural and linguistic boundary, influencing the development of distinct regional identities."
+ 
+ HRT_nibelungen_find_treasure_intent_header: "Find Treasure:"
+ HRT_nibelungen_find_treasure_intent: "Find Treasure"
+ HRT_nibelungen_find_treasure_intent_desc: "Guided by tales as old as time, you are determined to find the fabled Nibelungen treasure, long whispered to be concealed somewhere along the winding path of the Rhine River."
+ 
+ activity_window_character_treasure_hunter: "Treasure Hunter\n[Character.GetShortUINameNoTooltip|U]"
+ 
+ HRT_nibelungen_search_phase: "Treasure Hunt"
+ HRT_nibelungen_search_phase_desc: "Set forth to unravel the mysteries of the Rhine in search of the legendary Nibelungen treasure."
+
+ HRT_nibelungen_activity_search_destination_selection: ""
+ HRT_nibelungen_activity_search_guest_help_text: "$HRT_nibelungen_activity_search$"
+ HRT_nibelungen_activity_search_predicted_cost: "The cost of the search depends on the [activity_options|E] you select."
+ HRT_nibelungen_activity_search_conclusion_desc: "As the search along the Rhine concludes, and the whispers of ancient tales slowly fade into the river's flow, our spirits are lifted with a sense of accomplishment and wonder."
+ 
+ HRT_nibelungen_search_completed_log_title: "Finished the Search"
+ HRT_nibelungen_search_completed_log: "[CHARACTER.GetShortUIName|U] finished the Search for Nibelungen Treasure"
  
  #######################
  # Italienzug Activity #
@@ -208,7 +281,7 @@
  ##########
  
  HRT.0001.t: "Holy Roman Triumph"
- HRT.0001.desc: "In the latter half of the 9th century, Western Europe finds itself in a period of significant transition and fragmentation. The once mighty Carolingian Empire, established by Charlemagne, has been divided, and its unity is a relic of the past.\n\nYou reign as the King of Italy and are crowned #V Imperator Augustus#! of the Carolingian Empire, a title that bestows upon you the grandeur and responsibilities once held by the rulers of ancient Rome. The scope of your [HRT_imperial_authority|E], however, is primarily confined to Italy, with only nominal control extending beyond the borders of your demense. The fragmentation of the Carolingian Empire following the death of Charlemange and the divisions among his heirs has led to political and military challenges, as the once-unified empire crumbles into competing factions, further complicating your ability to exert widespread imperial control.\nYou face the daunting task of asserting your authority. Your efforts to strengthen imperial control will be met with resistance and the ever-present challenge of balancing the ambitions of local rulers with the broader goals of the Empire.\nThe Carolingian Empire stands at a crossroads, its future uncertain as it navigates the tides of change and the shifting allegiances of its constituent territories."
+ HRT.0001.desc: "In the latter half of the 9th century, Western Europe finds itself in a period of significant transition and fragmentation. The once mighty Carolingian Empire, established by Charlemagne, has been divided, and its unity is a relic of the past.\n\nYou reign as the King of Italy and are crowned #V Imperator Augustus#! of the Carolingian Empire, a title that bestows upon you the grandeur and responsibilities once held by the rulers of ancient Rome. The scope of your [HRT_imperial_authority|E], however, is primarily confined to Italy, with only nominal control extending beyond the borders of your demense. The fragmentation of the Carolingian Empire following the death of Charlemange and the divisions among his heirs has led to political and military challenges, as the once-unified empire crumbles into competing factions, further complicating your ability to exert widespread imperial control.\n\nYou face the daunting task of asserting your authority. Your efforts to strengthen imperial control will be met with resistance and the ever-present challenge of balancing the ambitions of local rulers with the broader goals of the Empire.\n\nThe Carolingian Empire stands at a crossroads, its future uncertain as it navigates the tides of change and the shifting allegiances of its constituent territories."
  HRT.0001.a: "Render unto Caesar the things that are Caesar's."
  
  HRT.0002.desc: "You are #V Romanorum Imperator Augustus#! of the the Holy Roman Empire. Your reign is defined by the need to consolidate [HRT_imperial_authority|E] amidst a complex web of feudal relations. Your control over the Empire's vast territories is challenged by assertive dukes and princes, each wielding considerable power in their own right.\nThe [HRT_investiture_controversy|E] looms large over your reign, pitting the ambitions of the Papacy against the prerogatives of your Imperial Crown.\n\nYour ability to maneuver through these tumultuous times will determine whether the Holy Roman Empire emerges strengthened or falls prey to the forces of division and external pressures."
@@ -231,6 +304,11 @@
  HRT.0009.desc.a: "In the wake of Emperor [HRTdeceasedemperor.GetFirstNameNicknamed]'s passing, a void was left at the very heart of Christendom. Throughout the lands of the Roman Empire, whispers of [title_recipient.GetFirstNameNicknamed]'s ascending prowess have not gone unheard. With profound reverence the herald proclaims that they have chosen [title_recipient.GetHerHim] to bear the weighty mantle of Emperor."
  HRT.0009.desc.b: "Throughout the lands of the Roman Empire, whispers of [title_recipient.GetFirstNameNicknamed]'s ascending prowess have not gone unheard. With profound reverence the herald proclaims that they have chosen [title_recipient.GetHerHim] to bear the weighty mantle of Emperor."
  
+ HRT.0011.t: "Unification of Legacy"
+ HRT.0011.desc: "Despite the heavenly mandate, there are still those who believe they can evade the grasp of my imperial authority. This cannot be tolerated any longer! With the law and legitimacy on my side, I hereby order the insubordinate to my rightful rule to kneel before my supremacy. Those failing to follow my command must be subdued by force, lest the very foundations of the Roman Empire weaken."
+ HRT.0011.a: "Let them see the errors in their ways!"
+ HRT.0011.a.tt: "You now have unrestricted access to the Consolidate Imperial Territory Casus Belli for 10 years"
+ 
  #####################
  # Italienzug Events #
  #####################
@@ -250,3 +328,93 @@
  HRT.1102.b: "This is not the right time."
  
  HRT.1103.a: "I am finally and truly Emperor."
+ 
+ #####################
+ # Nibelungen Events #
+ #####################
+ 
+ HRT_nibelungen.0001.t: "A Legend Retold"
+ HRT_nibelungen.0001.desc: "Within the hallowed halls of my grand palace, the court poet stands before me, ready to recount the epic saga of the #V Nibelungenlied#!. With a clear voice that carries the weight of history, [poet.GetFirstName] begins the tale:\n\nIn times of yore, a knight of unparalleled valor emerged from the mists of legend. #V Siegfried#!, son of King Siegmund, came to Worms, drawn by tales of the Burgundian court's splendor. His deeds, bold and mighty, soon became the court's fervent whispers. Among them, his victory over the fearsome dragon and the claim to the Nibelungs' treasure, a hoard unmeasured, which he bathed in, gaining skin impenetrable, save for one untouched spot. The King, intrigued by such tales, welcomed this paragon to his realm."
+ HRT_nibelungen.0001.a: "Such commendable bravery!"
+ HRT_nibelungen.0001.b: "Unchecked ambition can lead to unforeseen consequences."
+ HRT_nibelungen.0001.tt: "The tale continues"
+ 
+ HRT_nibelungen.0002.t: "The Deed for a Queen"
+ HRT_nibelungen.0002.desc: "In the heart of the Empire, Siegfried's gaze fell upon fair #V Kriemhild#!, the flower of Burgundy. Her beauty unmatched, her virtue steadfast. Enraptured, Siegfried vowed to win her heart. But the path to love is fraught with trials; only through valor and unwavering spirit could he hope to claim her hand.\n\nYet, love's path led to unexpected roads. #V Gunther#!, King of Burgundy, sought the hand of #V Brunhild#!, a queen of formidable might, whose heart could only be won through trials of strength. Siegfried, in loyalty to Gunther and in quest for his own love, donned the Tarnkappe, a cloak of invisibility and strength, and aided Gunther in this impossible feat. Brunhild, deceived, became Gunther's bride, but the seeds of betrayal were sown."
+ HRT_nibelungen.0002.a: "Deception is a path I avoid."
+ HRT_nibelungen.0002.b: "The pursuit of power often requires cunning."
+ 
+ HRT_nibelungen.0003.t: "Betrayal and Tragedy"
+ HRT_nibelungen.0003.desc: "As whispers of deceit spread, Brunhild's heart grew heavy with doubt and scorn. The bond of kings and knights, once unbreakable, now trembled under the weight of hidden truths. #V Hagen#!, Gunther's vassal, driven by loyalty and dark designs, plotted Siegfried's fall. In a grim hunt, betrayal struck; Siegfried fell, not by beast or enemy, but by the hand of kinship turned cold.\n\nMourning turned to fury as Kriemhild's heart cried out for justice. The gleaming halls of Worms grew dim with the shadow of revenge. Kriemhild, in her sorrow, found new purpose. With the Nibelungen treasure, she sought allies, wielding gold and grief as her weapons. A storm brewed over the realm, as Kriemhild's resolve hardened; the quest for vengeance would shake the very foundations of the Empire."
+ HRT_nibelungen.0003.a: "I shall reserve judgment."
+ HRT_nibelungen.0003.b: "Revenge is a dish best served cold."
+ 
+ HRT_nibelungen.0004.t: "The Echoes of the Past"
+ HRT_nibelungen.0004.desc: "In her quest for vengeance, Kriemhild married Etzel, the mighty king of the Huns, and lured her foes to their doom. A great feast turned to slaughter, and the rivers ran red with the blood of the fallen. Yet, in her triumph, Kriemhild found no peace, only more bloodshed.\n\nAnd so, the tale of the Nibelungenlied reaches us, not just as a story of heroes and villains, but as a reflection on the human condition. It is said the Nibelungen treasure, cause of so much strife, lies hidden in the depths of the Rhine, awaiting one worthy to claim it."
+ HRT_nibelungen.0004.a: "We shall uncover this legendary hoard."
+ HRT_nibelungen.0004.b: "The true wealth lies in the lessons of the tale."
+ HRT_nibelungen.0004.tt: "You now have access to the $HRT_nibelungen_activity_search$ [activity|E]"
+ 
+ HRT_nibelungen.0011.t: "On the Banks of the Rhine"
+ HRT_nibelungen.0011.desc: "Upon arriving at the majestic Rhine near [location.GetName], the search party, under my imperial command, surveys the vast expanse of this ancient waterway, contemplating the best approach to uncover the hidden Nibelungen treasure. The air is filled with an anticipatory hush, as if the river itself awaits our decision. The water's gentle murmur seems to whisper secrets of ages past, of heroes and treasures lost in its depths. Around us, the landscape tells a story of time immemorial, with each castle, each vine-clad hill holding its own silent tales. I am pondering what course we should strike."
+ HRT_nibelungen.0011.a: "Board draft boats and embark."
+ HRT_nibelungen.0011.a.tt: "Navigate the Rhine's depths and explore its numerous hidden inlets, where the treasure could be concealed away from prying eyes"
+ HRT_nibelungen.0011.a.tt2: "#V #P #bold HIGH#!#! chance of success and #N #bold HIGH#!#! chance of accident#!"
+ HRT_nibelungen.0011.b: "Search along the banks."
+ HRT_nibelungen.0011.b.tt: "Meticulously scour the banks of the Rhine, investigating caves, old ruins, and riverbeds exposed during low tide, for any signs of the legendary hoard's burial"
+ HRT_nibelungen.0011.b.tt2: "#V #M #bold MEDIUM#!#! chance of success and #M #bold MEDIUM#!#! chance of accident#!"
+ HRT_nibelungen.0011.c: "Explore the Vineyard-Cloaked Hills."
+ HRT_nibelungen.0011.c.tt: "Explore the vineyard-laden hills that flank the Rhine, particularly those with ancient roots and ruins entwined among their vines"
+ HRT_nibelungen.0011.c.tt2: "#V #N #bold LOW#!#! chance of success and #P #bold LOW#!#! chance of accident#!"
+ 
+ HRT_nibelungen.0021.t: "Result"
+ HRT_nibelungen.0021.desc.a: "As we navigated the Rhine's depths and explored its hidden inlets, promising clues tantalized our senses, leading us deeper into the river's secrets. However, with each revelation, our hopes were dashed as the trail grew cold, and the whispers of the treasure faded into mere echoes of the past. Disheartened but undeterred, we returned empty-handed, resolved to pursue other avenues in our quest for the legendary Nibelungen treasure."
+ HRT_nibelungen.0021.desc.b: "The journey along the Rhine's depths proved treacherous, as the draft boats encountered swift currents and submerged obstacles that tested our resolve and resourcefulness. Despite our best efforts, the relentless forces of nature conspired against us, forcing us to retreat with nothing to show for our efforts but bruises and battered spirits. Yet, as we regrouped and licked our wounds, the flame of determination burned brighter, urging us onward in our search for the elusive treasure."
+ HRT_nibelungen.0021.desc.c: "Enthralled by tales spun from the lips of locals, we ventured forth to investigate rumored spots of hidden treasure along the Rhine's banks. Yet, as we delved deeper into the myths and legends, reality clashed with fantasy, revealing that the whispers of wealth were naught but echoes of imagination. Disappointed but undeterred, we returned to the drawing board, recognizing that the path to the Nibelungen treasure would be paved with more than mere fables."
+ HRT_nibelungen.0021.desc.d: "With the passage of time as our relentless adversary, we pressed on in our search along the Rhine's storied banks, our hearts heavy with the burden of unfulfilled expectations. Yet, as the sun dipped below the horizon and the shadows lengthened, we were forced to concede defeat, our quest for the Nibelungen treasure stymied by the inexorable march of time. Reluctantly, we turned our boats homeward, vowing to return with renewed vigor and unwavering determination."
+ HRT_nibelungen.0021.a: "Disappointing."
+ 
+ HRT_nibelungen.0022.desc.a: "Amidst the tranquil waters of the Rhine, an unforeseen collision between two of our draft boats sent shockwaves through our expedition, resulting in minor damage and injuries among our crew. As we frantically worked to mend the broken pieces and tend to the wounded, the realization dawned upon us that our quest for the Nibelungen treasure would be fraught with unexpected challenges and setbacks."
+ HRT_nibelungen.0022.desc.b: "The serenity of our journey along the Rhine was shattered by the sudden onslaught of river rapids, which tested the mettle of our draft boats and crew. In the chaos that ensued, one of our boats briefly capsized, resulting in minor injuries and a setback in our search for the elusive treasure. Yet, as we regrouped and rallied our spirits, we resolved to set out again another time, undeterred by the trials that lay ahead."
+ HRT_nibelungen.0022.desc.c: "A critical piece of equipment malfunctioned during our expedition along the Rhine, resulting in a minor accident that left us scrambling to repair the damage and salvage what remained of our hopes for the Nibelungen treasure. Despite the setback, we refused to be deterred, determined to overcome adversity and emerge victorious in our quest for the legendary artifact."
+ HRT_nibelungen.0022.a: "Unbelievable!"
+ 
+ HRT_nibelungen.0023.desc.a: "Amidst the tranquil beauty of the Rhine's hidden inlets, our expedition stumbled upon a rare find: an ancient relic of historical significance, concealed within the river's depths. As we unearthed the artifact, its weathered surface hinted at a storied past, promising to fetch a modest sum of gold upon our return to civilization. Though not the legendary Nibelungen treasure we sought, the discovery kindled a spark of hope within us, fueling our determination to continue our quest with renewed vigor."
+ HRT_nibelungen.0023.desc.b: "Deep within the labyrinthine caverns that lined the Rhine's banks, our expedition unearthed a hidden cache of valuable trinkets and artifacts, long forgotten by the passage of time. As we marveled at the treasures laid bare before us, we recognized the potential for profit and prestige that lay within our grasp. With our coffers enriched and our spirits buoyed, we set our sights on further exploration, eager to uncover the secrets that lay hidden beneath the river's surface."
+ HRT_nibelungen.0023.desc.c: "In a stroke of serendipity, a chance encounter with a local fisherman led us to the discovery of a cryptic map detailing the location of a lesser-known treasure hidden along the Rhine's banks. As we studied the faded parchment, its ancient markings whispered of untold riches and hidden dangers, beckoning us to embark on a new adventure. With the map as our guide, we set forth with renewed purpose, determined to unlock the secrets that lay hidden within the river's embrace."
+ HRT_nibelungen.0023.desc.d: "Beneath the shimmering surface of the Rhine, a hidden pool awaited our discovery, its waters teeming with ethereal treasures left behind by mystical beings of ages past. As we gazed upon the otherworldly bounty laid before us, we marveled at the beauty and wonder of the artifacts that beckoned from the depths below. Though not the fabled Nibelungen treasure we sought, the encounter left an indelible mark upon our expedition, filling our hearts with awe and wonder at the mysteries of the river's depths."
+ HRT_nibelungen.0023.a: "Marvellous!"
+ 
+ HRT_nibelungen.0024.t: "Triumph of Legends"
+ HRT_nibelungen.0024.desc: "As the sun dips below the horizon, casting a golden glow upon the vineyard-cloaked hills that flank the majestic Rhine, our search for the fabled Nibelungen treasure reached its climax. Hidden from the prying eyes of the world, we uncovered a relic of untold power and significance: the Valkyr Helmet, worn by the legendary warrior queen Brünhilde herself.\n\nAs the helmet gleamed in the fading light, its ancient runes and intricate engravings whispered tales of valor and sacrifice, echoing the triumphs and tragedies of the Nibelungen saga. With each passing moment, the lessons learned on our journey paralleled those of the heroes of old: the bonds of loyalty tested, the fires of ambition kindled, and the price of hubris paid in blood.\n\nYet, amidst the echoes of the past, a new chapter unfolds. For in the discovery of the Valkyr Helmet, we found not only a relic of historical significance but a symbol of unity and strength for the Holy Roman Empire. As we gaze upon the helm, we are reminded that true greatness lies not in the wealth of kingdoms or the spoils of conquest, but in the courage to face adversity and the wisdom to learn from the lessons of history.\n\nWith the Valkyr Helmet in our possession, we embark on the journey back to the heart of the empire, our spirits buoyed by the knowledge that we had uncovered a treasure that would forever shape the course of history. And as we cross the threshold into a new era, we carry with us the lessons learned on our quest: the power of perseverance, the importance of loyalty, and the enduring legacy of the Nibelungen saga."
+ HRT_nibelungen.0024.a: "Behold, Triumph is ours!"
+ 
+ HRT_nibelungen.0031.desc.a: "Despite our meticulous efforts to scour the banks of the Rhine for any sign of the legendary hoard's burial, our search yielded naught but disappointment. Every cave, every ruin, every riverbed exposed during low tide proved devoid of the treasure we sought, leaving us with naught but the echoes of our own footsteps and the whispers of the river's secrets. Undeterred by this setback, we resolved to redouble our efforts, knowing that the path to the Nibelungen treasure would be fraught with challenges and false promises."
+ HRT_nibelungen.0031.desc.b: "As we combed the banks of the Rhine with painstaking care, nature herself seemed to conspire against us, obscuring the clues we sought with cunning and guile. Each cave, each ruin, each riverbed exposed during low tide held the promise of discovery, only to reveal the cruel trickery of the elements. Yet, as we weathered nature's deception, our resolve remained unshaken, for we knew that perseverance was the key to unlocking the secrets of the legendary hoard."
+ HRT_nibelungen.0031.desc.c: "Amidst the ancient ruins and caverns that lined the banks of the Rhine, shadows danced and whispers echoed, teasing us with the promise of untold riches. Yet, as we delved deeper into the heart of darkness, the elusive treasure remained just out of reach, mocking our efforts with its elusive nature. Disheartened but undeterred, we pressed onward, knowing that the path to the Nibelungen treasure was fraught with uncertainty and peril."
+ HRT_nibelungen.0031.desc.d: "Despite our best efforts to unravel the mysteries hidden along the banks of the Rhine, the treasure we sought remained shrouded in shadow and mystery. Every cave we explored, every ruin we unearthed, held the promise of discovery, yet each yielded only empty promises and false hope. Though our search proved fruitless, we refused to be discouraged, knowing that the true worth of our quest lay not in the treasure we sought, but in the journey itself."
+ 
+ HRT_nibelungen.0032.desc.a: "As we meticulously combed the banks of the Rhine for any sign of the legendary hoard's burial, unforeseen hazards lurked around every corner, threatening to derail our expedition at every turn. A sudden slip, a treacherous rock, and a minor accident left us nursing bruises and scratches, a stark reminder of the dangers that lurked within the shadows. Yet, as we tended to our wounds and regrouped, our determination remained unshaken, for we knew that adversity was but a small price to pay in the pursuit of greatness."
+ HRT_nibelungen.0032.desc.b: "The tranquility of our search along the banks of the Rhine was shattered by the fury of nature herself, as a sudden storm lashed out with ferocity, casting us into chaos and confusion. Amidst the tempest's fury, a minor accident left us reeling, our progress halted as we struggled to regain our footing. Yet, as the storm subsided and the skies cleared, we emerged stronger and more determined than ever, ready to face whatever challenges lay ahead in our quest for the Nibelungen treasure."
+ HRT_nibelungen.0032.desc.c: "Navigating the treacherous terrain along the banks of the Rhine proved to be a test of skill and perseverance, as hidden pitfalls and unseen obstacles threatened to ensnare us at every step. A minor accident served as a stark reminder of the dangers that lurked within the shadows, forcing us to proceed with caution as we continued our search for the elusive treasure. Yet, as we pressed onward, undeterred by the challenges that lay ahead, we remained steadfast in our determination to uncover the secrets of the legendary hoard."
+ HRT_nibelungen.0032.desc.d: "In our relentless pursuit of the legendary Nibelungen treasure along the banks of the Rhine, adversity reared its head in the form of a minor accident that left us momentarily shaken. Yet, as we rallied our spirits and tended to the wounded, we refused to let this setback deter us from our noble quest. For we knew that true greatness lay not in avoiding adversity, but in overcoming it with courage and determination. And so, with renewed resolve, we pressed onward, eager to face whatever challenges the river's banks had in store for us."
+ 
+ HRT_nibelungen.0033.desc.a: "Amidst the ancient ruins and forgotten caves that lined the banks of the Rhine, our diligent search yielded a modest discovery: a cache of hidden relics, their value obscured by the passage of time. Though not the legendary Nibelungen treasure we sought, these tokens held a quiet allure, promising a modest sum of gold upon our return to civilization. With our spirits buoyed by this unexpected find, we pressed onward, knowing that even the smallest treasures could hold great significance in our quest for greatness."
+ HRT_nibelungen.0033.desc.b: "As we combed the banks of the Rhine with meticulous care, our efforts were rewarded with a fortuitous discovery: a collection of artifacts and trinkets, their origins shrouded in mystery. Though not the fabled Nibelungen treasure we sought, these humble tokens held the promise of profit and prestige, offering a welcome boon to our expedition's coffers. With our spirits lifted by this unexpected windfall, we continued our search with renewed vigor, eager to uncover the secrets that lay hidden along the river's edge."
+ HRT_nibelungen.0033.desc.c: "Beneath the shadowed boughs of ancient trees and amidst the crumbling ruins that lined the banks of the Rhine, our diligent search revealed an unexpected bounty: a trove of treasures, hidden away from prying eyes. Though not the legendary Nibelungen treasure we sought, these humble offerings held a quiet charm, promising a modest reward upon our return to civilization. With our hearts lightened by this unexpected boon, we pressed onward, knowing that even the smallest discoveries could hold great significance in our quest for glory."
+ HRT_nibelungen.0033.desc.d: "In the quiet solitude of the Rhine's hidden inlets and forgotten alcoves, our expedition stumbled upon a trove of hidden gems: small, yet exquisite tokens of a bygone era. Though not the fabled Nibelungen treasure we sought, these precious jewels held a quiet allure, promising a modest sum of gold upon our return to civilization. With our spirits lifted by this unexpected discovery, we continued our search with renewed determination, knowing that even the smallest treasures could hold great significance in our quest for greatness."
+ 
+ HRT_nibelungen.0041.desc.a: "As we traversed the vineyard-laden hills that hugged the Rhine's banks, our search for the elusive Nibelungen treasure proved fruitless. Despite the beauty and tranquility of the surroundings, the hills remained silent, revealing no trace of the legendary hoard's burial. Disappointed yet undeterred, we continued our exploration, knowing that the path to greatness often winds through valleys of disappointment and uncertainty."
+ HRT_nibelungen.0041.desc.b: "In the shadowed depths of the vineyard-cloaked hills, our expedition's search for the fabled Nibelungen treasure led us to naught but dead ends and false leads. Though the ancient roots and ruins entwined among the vines whispered tales of untold riches, their secrets remained elusive, shrouded in mystery and obscurity. Undeterred by this setback, we pressed onward, our resolve unshaken by the silent vigil of the hills."
+ HRT_nibelungen.0041.desc.c: "Amidst the timeless beauty of the vineyard-cloaked hills, our quest for the legendary Nibelungen treasure echoed with the footsteps of those who had come before us. Yet, despite our diligent search, the hills revealed no trace of the fabled hoard, their secrets guarded by the passage of time. Though disappointed by this turn of events, we remained undaunted in our pursuit, knowing that the path to greatness often winds through valleys of uncertainty and doubt."
+ HRT_nibelungen.0041.desc.d: "Beneath the verdant canopy of the vineyard-cloaked hills, our expedition's search for the Nibelungen treasure was thwarted by the tangled vines and hidden pitfalls that lurked within. Despite our best efforts to unravel the mysteries that lay hidden among the foliage, the treasure we sought remained tantalizingly out of reach. Undeterred by this setback, we pressed onward, determined to uncover the secrets that lay hidden within the hills' tangled embrace."
+ 
+ HRT_nibelungen.0042.desc.a: "As we explored the vineyard-laden hills that flanked the Rhine, our progress was hindered by hidden hazards and treacherous terrain. A sudden stumble, a twisted ankle, and a minor accident served as a stark reminder of the dangers that lurked within the shadows. Yet, as we tended to the wounded and regrouped, our resolve remained unshaken, for we knew that adversity was but a small price to pay in the pursuit of greatness."
+ HRT_nibelungen.0042.desc.b: "In the midst of our exploration of the vineyard-cloaked hills, our expedition was ensnared by the relentless grip of the tangled vines that wound their way through the landscape. A minor accident left us momentarily incapacitated, our progress halted by the vines' tenacious embrace. Yet, as we struggled to free ourselves from their clutches, our determination remained unbroken, for we knew that only by overcoming adversity could we hope to achieve our noble goal."
+ HRT_nibelungen.0042.desc.c: "Navigating the treacherous terrain of the vineyard-laden hills proved to be a test of skill and resilience, as hidden obstacles and unseen pitfalls threatened to ensnare us at every turn. A minor accident served as a stark reminder of the dangers that lurked within the landscape, forcing us to proceed with caution as we continued our search for the elusive treasure. Yet, as we pressed onward, undeterred by the challenges that lay ahead, we remained steadfast in our determination to uncover the secrets of the legendary hoard."
+ HRT_nibelungen.0042.desc.d: "As we delved deeper into the shadows of the vineyard-cloaked hills, our expedition was caught off guard by an unexpected hazard that lay hidden beneath the foliage. A minor accident left us momentarily stunned, our progress halted by the unforeseen obstacle. Yet, as we regrouped and rallied our spirits, we refused to let this setback deter us from our noble quest. For we knew that true greatness lay not in avoiding adversity, but in overcoming it with courage and determination. And so, with renewed resolve, we pressed onward, eager to face whatever challenges the hills had in store for us."
+ 
+ HRT_nibelungen.0043.desc.a: "Amidst the vineyard-cloaked hills that flanked the Rhine, our diligent search was rewarded with a modest discovery: a forgotten cache of treasures, hidden away from prying eyes. Though not the legendary Nibelungen treasure we sought, these humble offerings held a quiet allure, promising a modest sum of gold upon our return to civilization. With our spirits buoyed by this unexpected find, we continued our search with renewed determination, knowing that even the smallest treasures could hold great significance in our quest for greatness."
+ HRT_nibelungen.0043.desc.b: "In the heart of the vineyard-laden hills, our expedition stumbled upon a trove of hidden treasures, nestled amidst the ancient roots and ruins that dotted the landscape. Though not the fabled Nibelungen treasure we sought, these humble tokens held the promise of profit and prestige, offering a welcome boon to our expedition's coffers. With our spirits lifted by this unexpected windfall, we continued our search with renewed vigor, eager to uncover the secrets that lay hidden within the hills' verdant embrace."
+ HRT_nibelungen.0043.desc.c: "As we combed the vineyard-cloaked hills for any sign of the legendary hoard's burial, our efforts were rewarded with a fortuitous discovery: a collection of ancient relics, their value obscured by the passage of time. Though not the fabled Nibelungen treasure we sought, these humble artifacts held a quiet charm, promising a modest reward upon our return to civilization. With our hearts lightened by this unexpected boon, we pressed onward, knowing that even the smallest discoveries could hold great significance in our quest for greatness."
+ HRT_nibelungen.0043.desc.d: "Beneath the shadowed boughs of ancient trees and amidst the crumbling ruins that lined the vineyard-cloaked hills, our diligent search unearthed a trove of hidden gems: small, yet exquisite tokens of a bygone era. Though not the legendary Nibelungen treasure we sought, these precious jewels held a quiet allure, promising a modest sum of gold upon our return to civilization. With our spirits lifted by this unexpected discovery, we continued our search with renewed determination, knowing that even the smallest treasures could hold great significance in our quest for greatness."

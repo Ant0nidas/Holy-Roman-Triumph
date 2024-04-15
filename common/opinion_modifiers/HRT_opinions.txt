@@ -1,5 +1,5 @@
 ﻿HRT_edict_diplomatic_corps_opinion = {
-	opinion = 4
+	opinion = 5
 	years = 5
 }
 

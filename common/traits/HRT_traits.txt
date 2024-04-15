@@ -23,7 +23,7 @@
 			}
 			triggered_desc = {
 				trigger = {
-					exists = var:COR_coronator
+					has_variable = COR_coronator
 				}
 				desc = trait_HRT_emperor_pope
 			}
@@ -41,7 +41,8 @@
 			}
 			triggered_desc = {
                 trigger = {
-                    exists = var:COR_coronator
+                    has_variable = COR_coronator
+					var:COR_coronator = { has_title = title:k_papal_state }
                 }
                 desc = trait_HRT_emperor_pope_desc
             }

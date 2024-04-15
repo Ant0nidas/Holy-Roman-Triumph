@@ -5,6 +5,13 @@
 	desc = COR_prepare_coronation_ceremony_decision_desc
 
 	is_shown = {
+		OR = {
+			is_ai = yes
+			AND = {
+				has_dlc_feature = tours_and_tournaments
+				has_dlc_feature = advanced_activities
+			}
+		}
 		has_variable = COR_years_reigned
 		OR = {
 			highest_held_title_tier >= tier_kingdom
