@@ -72,6 +72,8 @@
  HRT_authority_imprisoned_malus: "Is [imprisoned|E]"
  HRT_authority_child_malus: "Is a Child"
  HRT_authority_child_malus_value: "#N -100%#!"
+ HRT_authority_legitimacy_modifier: "[legitimacy|E] Multiplicator"
+ HRT_authority_legitimacy_modifier_value: "[EmptyScope.ScriptValue('HRT_authority_legitimacy_modifier')]"
  HRT_authority_game_rule_bonus: "Game Rule Bonus"
  HRT_authority_game_rule_bonus_one_and_a_half_value: "1.5x"
  HRT_authority_game_rule_bonus_twice_value: "2x"

@@ -273,6 +273,14 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "value"    {text = "HRT_authority_child_malus_value"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_authority_legitimacy_modifier} 
+                    blockoverride "value"    {text = "HRT_authority_legitimacy_modifier_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_authority_edict_modifier} 
+                    blockoverride "value"    {text = "HRT_authority_edict_modifier_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_game_rule_bonus_one_and_a_half'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_game_rule_bonus} 
                     blockoverride "value"    {text = "setting_HRT_authority_one_and_a_half"}
@@ -281,10 +289,6 @@ types WOKValueBreakdown_HRT  {
 					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_game_rule_bonus_twice'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_game_rule_bonus} 
                     blockoverride "value"    {text = "setting_HRT_authority_twice"}
-				}
-				wok_cardinal_breakdown_box_HRT  = {
-                    blockoverride "text"     {text = HRT_authority_edict_modifier} 
-                    blockoverride "value"    {text = "HRT_authority_edict_modifier_value"}
 				}
             }
         }

@@ -188,7 +188,7 @@
  COR_activity_coronation_ceremony_hof_guest_desc: "$BULLET_WITH_TAB$Gain random amounts of [piety_i|E][piety|E] and [prestige_i|E][prestige|E]"
  COR_activity_coronation_ceremony_hof_guest_help_text: "$COR_activity_coronation_ceremony$"
  
- COR_ceremony_refund_tt: "[previous_host.Custom('UIName')|U] received a refund for the canceled [GetActivityType('COR_activity_coronation_ceremony').GetName] of [gold_i][THIS.Var('COR_ceremony_gold_recoup_value').GetValue|V0]"
+ COR_ceremony_refund_tt: "You received a refund for the canceled [GetActivityType('COR_activity_coronation_ceremony').GetName] of [gold_i][THIS.Var('COR_ceremony_gold_recoup_value').GetValue|V0]"
  
  COR_coronator: "Officiant"
  COR_coronator_for_host: "$COR_coronator$"

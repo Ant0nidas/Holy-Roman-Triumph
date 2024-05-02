@@ -16,7 +16,7 @@ authority_loss_infidel_multiplier						= 0.5
 
 # Territory parameters
 authority_gain_per_territory_multiplier					= 0.002
-authority_loss_per_unheld_heartlands_multiplier			= 1
+authority_loss_per_unheld_heartlands_multiplier			= -0.2
 authority_loss_per_unheld_heartlands					= -0.07
 
 HRT_authority_limiter_value = {
@@ -28,7 +28,7 @@ HRT_authority_change_value = {
 	value = 0
 	if = {
 		limit = {
-			title:c_aachen.var:HRT_emperor = {
+			title:c_aachen.var:HRT_emperor ?= {
 				exists = this
 				is_alive = yes
 			}
@@ -52,6 +52,10 @@ HRT_authority_change_value = {
 			multiply = HRT_authority_imprisoned_malus
 			multiply = HRT_authority_criminal_malus
 			multiply = HRT_authority_serious_disease_malus
+			#Legitimacy
+			multiply = HRT_authority_legitimacy_modifier
+			#Edicts
+			multiply = HRT_authority_edict_modifier
 			#Game Rule
 			multiply = HRT_authority_game_rule_bonus_one_and_a_half
 			multiply = HRT_authority_game_rule_bonus_twice
@@ -63,7 +67,6 @@ HRT_authority_change_value = {
 		add = HRT_authority_unheld_heartlands_malus
 		add = HRT_authority_excommunicated_malus
 
-		multiply = HRT_authority_edict_modifier
 		multiply = HRT_authority_child_malus
 
 		min = HRT_authority_min
@@ -83,7 +86,7 @@ HRT_authority_constrained_reach = {
 
 HRT_authority_prestige_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = var:HRT_authority_prestige
 		divide = 10000
 		max = 2
@@ -93,7 +96,7 @@ HRT_authority_prestige_bonus = {
 }
 HRT_authority_dread_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = var:HRT_authority_dread
 		divide = 100
 		if =		{ limit = { var:HRT_authority_dread >= 70 } add = 1 }
@@ -103,7 +106,7 @@ HRT_authority_dread_bonus = {
 }
 HRT_authority_gain_years_reigned_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = var:HRT_authority_years_reigned
 		divide = 100
 		#if =		{ limit = { var:HRT_authority_years_reigned >= 40 } add = 1 }
@@ -113,7 +116,7 @@ HRT_authority_gain_years_reigned_bonus = {
 
 HRT_authority_vassal_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = var:HRT_authority_vassals_bonus_var
 		multiply = authority_gain_per_vassal_multiplier
 		if = {
@@ -124,7 +127,7 @@ HRT_authority_vassal_bonus = {
 }
 HRT_authority_loss_waged_vassal_wars_malus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = var:HRT_authority_vassals_war_var
 		multiply = authority_loss_per_waged_vassal_war_multiplier
 		min = -3
@@ -132,7 +135,7 @@ HRT_authority_loss_waged_vassal_wars_malus = {
 }
 HRT_authority_infidel_malus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = HRT_authority_infidels_share
 		divide = 10
 		multiply = -0.5
@@ -140,7 +143,7 @@ HRT_authority_infidel_malus = {
 	}
 }
 HRT_authority_infidels_share = {
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		value = var:HRT_authority_infidels_var
 		divide = {
 			value = var:HRT_authority_vassals_var
@@ -152,7 +155,7 @@ HRT_authority_infidels_share = {
 
 HRT_authority_territory_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		value = var:HRT_authority_territory
 		multiply = authority_gain_per_territory_multiplier
 		max = 3
@@ -161,10 +164,10 @@ HRT_authority_territory_bonus = {
 
 HRT_authority_unheld_heartlands_malus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = HRT_authority_unheld_heartlands_share
 		divide = 20
-		multiply = -1
+		multiply = authority_loss_per_unheld_heartlands_multiplier
 		if = {
 			limit = { NOT = { has_title = title:e_hre } }
 			multiply = 0
@@ -172,7 +175,7 @@ HRT_authority_unheld_heartlands_malus = {
 	}
 }
 HRT_authority_unheld_heartlands_share = {
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		value = var:HRT_authority_unheld_heartlands
 		divide = {
 			value = title:c_aachen.var:HRT_core_territory
@@ -193,7 +196,7 @@ HRT_authority_unheld_heartlands_share = {
 
 HRT_authority_ally_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = var:HRT_authority_ally_military_strength
 		divide = {
 			value = var:HRT_authority_military_strength
@@ -205,14 +208,14 @@ HRT_authority_ally_bonus = {
 
 HRT_authority_artifact_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		add = var:HRT_authority_artifacts
 		max = 1.5
 	}
 }
 HRT_authority_missing_reichskrone_malus = {
 	value = 1
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				AND = {
@@ -236,9 +239,9 @@ HRT_authority_cardinals_bonus = {
 	if = {
 		limit = {
 			exists = global_var:Trinity_is_loaded
-			title:c_aachen.var:HRT_emperor = { faith = faith:catholic }
+			title:c_aachen.var:HRT_emperor ?= { faith = faith:catholic }
 		}
-		title:c_aachen.var:HRT_emperor = {
+		title:c_aachen.var:HRT_emperor ?= {
 			add = var:HRT_authority_cardinals
 			divide = 21
 		}
@@ -250,7 +253,7 @@ HRT_authority_papal_investiture_malus = {
 	if = {
 		limit = {
 			exists = global_var:Trinity_is_loaded
-			title:c_aachen.var:HRT_emperor = {
+			title:c_aachen.var:HRT_emperor ?= {
 				faith = faith:catholic
 				has_realm_law_flag = papal_enacted
 			}
@@ -263,7 +266,7 @@ HRT_authority_free_investiture_bonus = {
 	if = {
 		limit = {
 			exists = global_var:Trinity_is_loaded
-			title:c_aachen.var:HRT_emperor = {
+			title:c_aachen.var:HRT_emperor ?= {
 				faith = faith:catholic
 				has_realm_law_flag = free_enacted
 			}
@@ -273,7 +276,7 @@ HRT_authority_free_investiture_bonus = {
 }
 HRT_authority_excommunicated_malus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				faith = faith:catholic
@@ -292,7 +295,7 @@ HRT_authority_excommunicated_malus = {
 }
 HRT_authority_criminal_malus = {
 	value = 1
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				faith = faith:catholic
@@ -310,7 +313,7 @@ HRT_authority_criminal_malus = {
 }
 HRT_authority_serious_disease_malus = {
 	value = 1
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				OR = {
@@ -328,7 +331,7 @@ HRT_authority_serious_disease_malus = {
 
 HRT_authority_grand_tour_bonus = {
 	value = 0
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				involved_activity ?= {
@@ -343,7 +346,7 @@ HRT_authority_grand_tour_bonus = {
 
 HRT_authority_uncrowned_malus = {
 	value = 1
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				OR = {
@@ -366,7 +369,7 @@ HRT_authority_uncrowned_malus = {
 
 HRT_authority_imprisoned_malus = {
 	value = 1
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				is_imprisoned = yes
@@ -377,13 +380,33 @@ HRT_authority_imprisoned_malus = {
 }
 HRT_authority_child_malus = {
 	value = 1
-	title:c_aachen.var:HRT_emperor = {
+	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
 				is_adult = no
 			}
 			subtract = 1
 		}
+	}
+}
+
+HRT_authority_legitimacy_modifier = {
+	value = 1
+	if = { limit = { title:c_aachen.var:HRT_emperor ?= { highest_held_title_tier = tier_empire } }
+		if =		{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 0 } }			multiply = 0.1 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 1 } }			multiply = 0.2 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 2 } }			multiply = 0.4 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 3 } }			multiply = 0.8 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 4 } }			multiply = 1 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 5 } }			multiply = 1.2 }
+	}
+	else = {
+		if =		{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 0 } }			multiply = 0.2 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 1 } }			multiply = 0.4 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 2 } }			multiply = 0.8 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 3 } }			multiply = 1 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 4 } }			multiply = 1.2 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 5 } }			multiply = 1.6 }
 	}
 }
 
@@ -416,12 +439,34 @@ HRT_authority_max = {
 	min = 0
 }
 
+#War Values
+HRT_authority_on_war_won_attacker_value = {
+	value = 0
+	add = scope:defender.max_military_strength
+	divide = {
+		value = max_military_strength
+		min = 1
+	}
+	multiply = 10
+	max = 10
+}
+HRT_authority_on_war_won_defender_value = {
+	value = 0
+	add = scope:attacker.max_military_strength
+	divide = {
+		value = max_military_strength
+		min = 1
+	}
+	multiply = 20
+	max = 20
+}
+
 #Game Rules
 HRT_authority_game_rule_bonus_one_and_a_half = {
 	value = 1
 	if = {
 		limit = {
-			title:c_aachen.var:HRT_emperor = {
+			title:c_aachen.var:HRT_emperor ?= {
 				is_ai = no
 			}
 			has_game_rule = HRT_authority_one_and_a_half
@@ -433,7 +478,7 @@ HRT_authority_game_rule_bonus_twice = {
 	value = 1
 	if = {
 		limit = {
-			title:c_aachen.var:HRT_emperor = {
+			title:c_aachen.var:HRT_emperor ?= {
 				is_ai = no
 			}
 			has_game_rule = HRT_authority_twice
@@ -447,7 +492,7 @@ HRT_authority_progressbar_value = {
 	value = 0
 	if = {
 		limit = {
-			title:c_aachen.var:HRT_emperor = {
+			title:c_aachen.var:HRT_emperor ?= {
 				exists = this
 				is_alive = yes
 				has_variable = HRT_authority
@@ -460,12 +505,12 @@ HRT_authority_change_value_gui = {
 	value = 0
 	if = {
 		limit = {
-			title:c_aachen.var:HRT_emperor = {
+			title:c_aachen.var:HRT_emperor ?= {
 				exists = this
 				is_alive = yes
 			}
 		}
-		title:c_aachen.var:HRT_emperor = {
+		title:c_aachen.var:HRT_emperor ?= {
 			add = HRT_authority_change_value
 		}
 	}

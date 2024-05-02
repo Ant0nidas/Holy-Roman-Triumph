@@ -17,7 +17,10 @@
 		}
 	}
 	OR = {
-		is_close_or_extended_family_of = title:c_aachen.var:HRT_emperor
+		AND = {
+			exists = title:c_aachen.var:HRT_emperor
+			is_close_or_extended_family_of = title:c_aachen.var:HRT_emperor
+		}
 		has_variable = HRT_prince_var
 		has_claim_on = title:e_hre
 		AND = {

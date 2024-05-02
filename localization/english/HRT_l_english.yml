@@ -40,7 +40,7 @@
  HRT_unification_army: "Imperial Army"
  HRT_prepare_unification_war_decision_confirm: "Render unto Caesar the things that are Caesar's."
  HRT_prepare_unification_war_decision_tooltip: "Prepare for a Unification War"
- HRT_unification_decision_authority_req: "You need at least #V 20#! [HRT_imperial_authority|E]"
+ HRT_unification_decision_authority_req: "You have at least #V 20#! [HRT_imperial_authority|E]"
  
  HRT_decline_succession_decision: "Decline Succession"
  HRT_decline_succession_decision_desc: "This decision grants your character a trait that makes them unavailable for succession to the Roman Empire."
@@ -53,7 +53,7 @@
  
  HRT_nibelungen_start_decision: "Listen to a Legend"
  HRT_nibelungen_start_decision_desc: "A poet speaks of a legend which stirs the curiosity of my courtiers. Perhaps it's time to listen closely, for such stories might hold more than mere words."
- HRT_nibelungen_start_decision_effect: "Summon your court poet to recite the Nibelungenlied\n\n#emphasis Historical Context:#! The Nibelungenlied, translated as The Song of the Nibelungs, is an epic poem written around 1200 in Middle High German. The Nibelungenlied is based on an oral tradition of Germanic heroic legend that has some of its origin in historic events and individuals of the 5th and 6th centuries. Scandinavian parallels to the German poem are found especially in the heroic lays of the Poetic Edda and in the Völsunga saga."
+ HRT_nibelungen_start_decision_effect: "Summon your court poet to recite the Nibelungenlied\n\n#emphasis Historical Context:#! The Nibelungenlied is an epic poem written around 1200 in Middle High German. The Nibelungenlied is based on an oral tradition of Germanic heroic legend that has some of its origin in historic events and individuals of the 5th and 6th centuries. Scandinavian parallels to the German poem are found especially in the heroic lays of the Poetic Edda and in the Völsunga saga."
  HRT_nibelungen_start_decision_confirm: "Summon the poet!"
  HRT_nibelungen_start_decision_tooltip: "A legend stirs the curiosity of my courtiers"
  HRT_nibelungen_edicts_issued: "Your [dynasty|E] issued at least #V 10#! [HRT_imperial_edicts|E]. Currently: #V [GetPlayer.GetDynasty.MakeScope.Var('HRT_edicts_issued').GetValue]#!"
@@ -76,6 +76,11 @@
  HRT_UNIFICATION_WAR_SPECIFIC_NAME: "$ORDER$ [ATTACKER.GetPrimaryTitle.GetPrefix]-[DEFENDER.GetPrimaryTitle.GetAdjective] Unification War"
  HRT_UNIFICATION_WAR_SPECIFIC_NAME_BASE: "[ATTACKER.GetPrimaryTitle.GetAdjective][DEFENDER.GetPrimaryTitle.GetName]"
  HRT_unification_war_authority_req: "You need at least #V [EmptyScope.ScriptValue('HRT_unification_authority_value')|0]#! [HRT_imperial_authority|E] or took the decision to prepare for a Unification War"
+ 
+ HRT_on_war_won.toast.t: "Gained Imperial Authority"
+ HRT_on_war_won.toast: "Your victory increased your [HRT_imperial_authority|E]!\nNone shall doubt your holy reign."
+ HRT_on_war_lost.toast.t: "Lost Imperial Authority"
+ HRT_on_war_lost.toast: "Your defeat diminished your [HRT_imperial_authority|E]!\nYour heavenly mandate is crumbling."
  
  ##########################
  # Character Interactions #
@@ -128,10 +133,10 @@
  ##################
  
  game_concept_HRT_imperial_authority: "Imperial Authority"
- game_concept_HRT_imperial_authority_desc: "Imperial Authority represents the amount of control the Emperor exerts over his [vassals|E]. Authority is needed to issue [HRT_imperial_edicts|E] and proclaim [HRT_imperial_directives|E] within the Holy Roman Empire."
+ game_concept_HRT_imperial_authority_desc: "Imperial Authority represents the amount of control the Emperor exerts over his [vassals|E], as well as his [legitimacy|E]. Authority is needed to issue [HRT_imperial_edicts|E] and proclaim [HRT_imperial_directives|E] within the Holy Roman Empire. The rate at which you gain or lose Imperial Authority is displayed as [HRT_imperial_authority_change|E] on the dynamic Coat of Arms in the Imperial Succession Window, which is accessed by pressing the Reichskrone which appears above the Realm icon (F2) after opening it."
  
  game_concept_HRT_imperial_authority_change: "Monthly Authority Change"
- game_concept_HRT_imperial_authority_change_desc: "The rate at which you gain or lose [HRT_imperial_authority|E]. Capped at +5 and -5 per month before [HRT_imperial_edict|E] effects."
+ game_concept_HRT_imperial_authority_change_desc: "The rate at which you gain or lose [HRT_imperial_authority|E]. Capped at +5 and -5 per month before [HRT_imperial_edict|E] effects. In addition to the factors displayed in the tooltip, you gain Imperial Authority by winning [wars|E] depending on the opponent's military strength and lose a portion by losing Wars respectively."
  
  game_concept_HRT_imperial_territory: "Imperial Territory"
  game_concept_HRT_imperial_territory_desc: "The Imperial Core Territories include the [kingdoms|E] of #V East Francia/Germany#!, #V Bavaria#!, #V Lotharingia#! and #V Frisia#!."

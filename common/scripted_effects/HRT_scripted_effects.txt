@@ -1,7 +1,12 @@
 ﻿HRT_initialize_succession = {
 	#Succession if HRE is formed
 	if = {
-		limit = { exists = title:e_hre.holder }
+		limit = {
+			exists = title:e_hre.holder 
+			title:c_aachen = {
+				NOT = { has_variable = HRT_CF_apostate_active } #CF Compat
+			}
+		}
 		title:e_hre.current_heir = {
 			create_story = HRT_emperor_story
 			trigger_event = {
@@ -11,7 +16,12 @@
 		}
 	}
 	#Succession before HRE is formed
-	else = {
+	else_if = {
+		limit = {
+			title:c_aachen = {
+				NOT = { has_variable = HRT_CF_apostate_active } #CF Compat
+			}
+		}
 		ordered_HRT_candidati = {
 			order_by = HRT_imperator_score
 			position = 0
@@ -42,7 +52,12 @@
 #GUI
 HRT_update_window_effect = {
 	if = {
-		limit = { exists = title:e_hre.holder }
+		limit = {
+			exists = title:e_hre.holder 
+			title:c_aachen = {
+				NOT = { has_variable = HRT_CF_apostate_active } #CF Compat
+			}
+		}
 		set_variable = { #Don't display certain gui elements when Elector voting is active
 			name = HRT_formed_gui
 			value = yes
@@ -55,6 +70,7 @@ HRT_update_window_effect = {
 			if = {
 				limit = {
 					has_title_law = princely_elective_succession_law
+					exists = scope:imperator
 				}
 				every_elector = {
 					limit = {
@@ -118,13 +134,18 @@ HRT_update_window_effect = {
 		}
 	}
 
-	else = {
+	else_if = {
+		limit = {
+			title:c_aachen = {
+				NOT = { has_variable = HRT_CF_apostate_active } #CF Compat
+			}
+		}
 		# Imperator
-		title:c_aachen.var:HRT_emperor = {
+		title:c_aachen.var:HRT_emperor ?= {
 			save_scope_as = imperator
 		}
 		# Imperator's Primary Heir
-		scope:imperator = {
+		scope:imperator ?= {
 			primary_heir ?= {
 				set_variable = {
 					name = HRT_prince_var
@@ -160,7 +181,7 @@ HRT_update_window_effect = {
 	#Imperator
 	if = {
 		limit = {
-			scope:imperator = {
+			scope:imperator ?= {
 				exists = this
 				is_alive = yes
 			}
@@ -407,3 +428,20 @@ HRT_nibelungen_search_completed_log_entry_effect = {
 		}
 	}
 }
+
+# Compat Effects
+# Counterfactuals
+#HRT_CF_effect = { #CF Compat
+#	HRT_close_window = yes
+#	title:c_aachen = {
+#		remove_variable = HRT_emperor
+#		set_variable = {
+#			name = HRT_CF_apostate_active
+#			value = yes
+#		}
+#	}
+#	random_owned_story = {
+#		limit = { story_type = HRT_emperor_story }
+#		end_story = yes
+#	}
+#}
