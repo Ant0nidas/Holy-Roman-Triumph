@@ -8,7 +8,7 @@
 # 0011			Decision Events
 # 1001			Italienzug Notification
 # 1101 - 1103	Italienzug On Army Enter Province
-#
+# 2001 - 2100	Unity Events
 #################################
 
 HRT.0001 = { # Introduction Event for Louis II of Italy
@@ -595,5 +595,1079 @@ HRT.1103 = {
         dynasty = {
 			add_dynasty_prestige = medium_dynasty_prestige_value
 		}
+	}
+}
+
+# 2.2 Unity
+HRT.2001 = { # Promote Unity
+	type = character_event
+	title = HRT.2001.t
+	desc = HRT.2001.desc
+	theme = crown
+	left_portrait = scope:stammesfuehrer_1
+	right_portrait = scope:stammesfuehrer_2
+	lower_left_portrait = scope:stammesfuehrer_3
+	lower_right_portrait = scope:stammesfuehrer_4
+
+	trigger = {
+		HRT_is_emperor_trigger = yes
+		var:HRT_authority >= 20	
+		NOR = {
+			has_character_flag = HRT_promote_unity_open
+			has_variable = HRT_promote_unity_cd
+		}
+	}
+
+	immediate = {
+		save_scope_as = emperor
+		add_character_flag = HRT_promote_unity_open
+
+		var:HRT_core_culture_1 ?= {
+			save_scope_as = culture_1
+		}
+		var:HRT_core_culture_2 ?= {
+			save_scope_as = culture_2
+			culture_head ?= {
+				add_to_list = stammesfuehrer
+			}
+		}
+		var:HRT_core_culture_3 ?= {
+			save_scope_as = culture_3
+			culture_head ?= {
+				add_to_list = stammesfuehrer
+			}
+		}
+		var:HRT_core_culture_4 ?= {
+			save_scope_as = culture_4
+			culture_head ?= {
+				add_to_list = stammesfuehrer
+			}
+		}
+		var:HRT_core_culture_5 ?= {
+			save_scope_as = culture_5
+			culture_head ?= {
+				add_to_list = stammesfuehrer
+			}
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			save_scope_as = stammesfuehrer_1
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOT = { this = scope:stammesfuehrer_1 }
+			}
+			save_scope_as = stammesfuehrer_2
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+				}
+			}
+			save_scope_as = stammesfuehrer_3
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+					this = scope:stammesfuehrer_3
+				}
+			}
+			save_scope_as = stammesfuehrer_4
+		}
+	}
+
+	option = {
+		name = HRT.2001.a # Cultural Festivals
+		custom_tooltip = HRT.2001.a.tt
+		trigger_event = HRT.2011
+	}
+	option = {
+		name = HRT.2001.b # Marriage Alliances
+		custom_tooltip = HRT.2001.b.tt
+		trigger_event = HRT.2012
+	}
+	option = {
+		name = HRT.2001.c # Feudal Contracts
+		custom_tooltip = HRT.2001.c.tt
+		trigger_event = HRT.2013
+	}
+	option = {
+		name = HRT.2001.d # Trade and Commerce
+		custom_tooltip = HRT.2001.d.tt
+		trigger_event = HRT.2014
+	}
+	option = {
+		name = HRT_edicts.1001.f # Not yet
+		remove_character_flag = HRT_promote_unity_open
+	}
+}
+
+HRT.2011 = { # Cultural Festivals
+	type = character_event
+	title = HRT.2011.t
+	desc = HRT.2011.desc
+	theme = crown
+	override_background = { reference = tournament_contest }
+	left_portrait = scope:stammesfuehrer_1
+	right_portrait = scope:stammesfuehrer_2
+	lower_left_portrait = scope:stammesfuehrer_3
+	lower_right_portrait = scope:stammesfuehrer_4
+
+	immediate = {
+		random_in_list = {
+			list = stammesfuehrer
+			save_scope_as = stammesfuehrer_1
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOT = { this = scope:stammesfuehrer_1 }
+			}
+			save_scope_as = stammesfuehrer_2
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+				}
+			}
+			save_scope_as = stammesfuehrer_3
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+					this = scope:stammesfuehrer_3
+				}
+			}
+			save_scope_as = stammesfuehrer_4
+		}
+	}
+
+	option = {
+		name = HRT.2011.a
+		custom_tooltip = HRT.2011.a.tt
+		custom_tooltip = HRT.20_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_prestige = medium_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_festival
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+			}
+			scope:culture_2 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+			}
+			scope:culture_3 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+			}
+			scope:culture_4 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_festival
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 20
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2011.b
+		trigger = { var:HRT_authority >= 30 }
+		custom_tooltip = HRT.2011.b.tt
+		custom_tooltip = HRT.30_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_prestige = major_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_festival
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_2 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_3 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_4 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 30
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2011.c
+		trigger = { var:HRT_authority >= 40 }
+		custom_tooltip = HRT.2011.c.tt
+		custom_tooltip = HRT.40_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_prestige = massive_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_festival
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_2 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_3 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_4 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 40
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0010.b
+	}
+
+	after = {
+		remove_character_flag = HRT_promote_unity_open
+	}
+}
+
+HRT.2012 = { # Marriage Alliances
+	type = character_event
+	title = HRT.2012.t
+	desc = HRT.2012.desc
+	theme = crown
+	override_background = { reference = garden }
+	left_portrait = scope:stammesfuehrer_1
+	right_portrait = scope:stammesfuehrer_2
+	lower_left_portrait = scope:stammesfuehrer_3
+	lower_right_portrait = scope:stammesfuehrer_4
+
+	immediate = {
+		random_in_list = {
+			list = stammesfuehrer
+			save_scope_as = stammesfuehrer_1
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOT = { this = scope:stammesfuehrer_1 }
+			}
+			save_scope_as = stammesfuehrer_2
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+				}
+			}
+			save_scope_as = stammesfuehrer_3
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+					this = scope:stammesfuehrer_3
+				}
+			}
+			save_scope_as = stammesfuehrer_4
+		}
+	}
+
+	option = {
+		name = HRT.2012.a
+		trigger = { exists = scope:stammesfuehrer_1 }
+		custom_tooltip = HRT.2012.a.tt
+		custom_tooltip = HRT.20_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_piety = minor_piety_loss
+		add_prestige = minor_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_marriage
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 10
+					desc = HRT_cultural_acceptance_marriage
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 20
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2012.b
+		trigger = { exists = scope:stammesfuehrer_2 }
+		custom_tooltip = HRT.2012.b.tt
+		custom_tooltip = HRT.20_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_piety = minor_piety_loss
+		add_prestige = minor_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_marriage
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 10
+					desc = HRT_cultural_acceptance_marriage
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 20
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2012.c
+		trigger = { exists = scope:stammesfuehrer_3 }
+		custom_tooltip = HRT.2012.c.tt
+		custom_tooltip = HRT.20_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_piety = minor_piety_loss
+		add_prestige = minor_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_marriage
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 10
+					desc = HRT_cultural_acceptance_marriage
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 20
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2012.d
+		trigger = { exists = scope:stammesfuehrer_4 }
+		custom_tooltip = HRT.2012.d.tt
+		custom_tooltip = HRT.20_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_piety = minor_piety_loss
+		add_prestige = minor_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_marriage
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 10
+					desc = HRT_cultural_acceptance_marriage
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 20
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0008.b
+	}
+
+	after = {
+		remove_character_flag = HRT_promote_unity_open
+	}
+}
+
+HRT.2013 = { # Feudal Contracts
+	type = character_event
+	title = HRT.2013.t
+	desc = HRT.2013.desc
+	theme = crown
+	left_portrait = scope:stammesfuehrer_1
+	right_portrait = scope:stammesfuehrer_2
+	lower_left_portrait = scope:stammesfuehrer_3
+	lower_right_portrait = scope:stammesfuehrer_4
+
+	immediate = {
+		random_in_list = {
+			list = stammesfuehrer
+			save_scope_as = stammesfuehrer_1
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOT = { this = scope:stammesfuehrer_1 }
+			}
+			save_scope_as = stammesfuehrer_2
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+				}
+			}
+			save_scope_as = stammesfuehrer_3
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+					this = scope:stammesfuehrer_3
+				}
+			}
+			save_scope_as = stammesfuehrer_4
+		}
+	}
+
+	option = {
+		name = HRT.2013.a
+		trigger = { exists = scope:stammesfuehrer_1 }
+		custom_tooltip = HRT.2013.a.tt
+		custom_tooltip = HRT.20_authority.tt
+		add_prestige = major_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_contracts
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 5
+					desc = HRT_cultural_acceptance_contracts
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 20
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2013.b
+		trigger = {
+			exists = scope:stammesfuehrer_2
+			var:HRT_authority >= 30
+		}
+		custom_tooltip = HRT.2013.b.tt
+		custom_tooltip = HRT.30_authority.tt
+		add_prestige = major_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_contracts
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 10
+					desc = HRT_cultural_acceptance_contracts
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 30
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2013.c
+		trigger = {
+			exists = scope:stammesfuehrer_3
+			var:HRT_authority >= 40
+		}
+		custom_tooltip = HRT.2013.c.tt
+		custom_tooltip = HRT.40_authority.tt
+		add_prestige = massive_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_contracts
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 15
+					desc = HRT_cultural_acceptance_contracts
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 40
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2013.d
+		trigger = {
+			exists = scope:stammesfuehrer_4
+			var:HRT_authority >= 40
+		}
+		custom_tooltip = HRT.2013.d.tt
+		custom_tooltip = HRT.40_authority.tt
+		add_prestige = massive_prestige_loss
+		add_character_modifier = {
+			modifier = HRT_unity_contracts
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 15
+					desc = HRT_cultural_acceptance_contracts
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 40
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0005.b
+	}
+
+	after = {
+		remove_character_flag = HRT_promote_unity_open
+	}
+}
+
+HRT.2014 = { # Trade and Commerce
+	type = character_event
+	title = HRT.2014.t
+	desc = HRT.2014.desc
+	theme = crown
+	override_background = { reference = market }
+	left_portrait = scope:stammesfuehrer_1
+	right_portrait = scope:stammesfuehrer_2
+	lower_left_portrait = scope:stammesfuehrer_3
+	lower_right_portrait = scope:stammesfuehrer_4
+
+	immediate = {
+		random_in_list = {
+			list = stammesfuehrer
+			save_scope_as = stammesfuehrer_1
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOT = { this = scope:stammesfuehrer_1 }
+			}
+			save_scope_as = stammesfuehrer_2
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+				}
+			}
+			save_scope_as = stammesfuehrer_3
+		}
+		random_in_list = {
+			list = stammesfuehrer
+			limit = {
+				NOR = {
+					this = scope:stammesfuehrer_1
+					this = scope:stammesfuehrer_2
+					this = scope:stammesfuehrer_3
+				}
+			}
+			save_scope_as = stammesfuehrer_4
+		}
+	}
+
+	option = {
+		name = HRT.2014.a
+		custom_tooltip = HRT.2014.a.tt
+		custom_tooltip = HRT.20_authority.tt
+		remove_short_term_gold = medium_gold_value
+		add_character_modifier = {
+			modifier = HRT_unity_trade
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_2 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_3 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_4 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 1
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 20
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2014.b
+		trigger = { var:HRT_authority >= 30 }
+		custom_tooltip = HRT.2014.b.tt
+		custom_tooltip = HRT.30_authority.tt
+		remove_short_term_gold = major_gold_value
+		add_character_modifier = {
+			modifier = HRT_unity_trade
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_2 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_3 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_4 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 2
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 30
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT.2014.c
+		trigger = { var:HRT_authority >= 40 }
+		custom_tooltip = HRT.2014.c.tt
+		custom_tooltip = HRT.40_authority.tt
+		remove_short_term_gold = massive_gold_value
+		add_character_modifier = {
+			modifier = HRT_unity_trade
+			years = 3
+		}
+
+		hidden_effect = {
+			scope:culture_1 = {
+				change_cultural_acceptance = {
+					target = scope:culture_2
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_2 = {
+				change_cultural_acceptance = {
+					target = scope:culture_3
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_3 = {
+				change_cultural_acceptance = {
+					target = scope:culture_4
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			scope:culture_4 = {
+				change_cultural_acceptance = {
+					target = scope:culture_5
+					value = 3
+					desc = HRT_cultural_acceptance_trade
+				}
+			}
+			change_variable = {
+				name = HRT_authority
+				subtract = 40
+			}
+			set_variable = {
+				name = HRT_promote_unity_cd
+				value = yes
+				years = 20
+			}
+		}
+	}
+	option = {
+		name = HRT_edicts.0004.b
+	}
+
+	after = {
+		remove_character_flag = HRT_promote_unity_open
 	}
 }

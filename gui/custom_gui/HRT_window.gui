@@ -3,7 +3,7 @@
 	datacontext = "[GetVariableSystem]"
 	datacontext = "[GetPlayer]"
 	parentanchor = center
-    layer = middle
+    layer = hud_layer
 	size = { 1100 960 }
 	visible = "[And(GetVariableSystem.HasValue('HRT_window_open', 'yes'),Not(GetGlobalVariable('HRT_close_window_temp_var').IsSet))]"
 	using = Window_Background
@@ -26,6 +26,7 @@
         using = Sound_WindowHide_Standard
 		# Clear Candidati List
 		on_start = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+		on_start = "[GetVariableSystem.Set('HRT_unity_window_open', 'no')]"
 		on_finish = "[GetScriptedGui('HRT_abort_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 	}
 
@@ -517,13 +518,31 @@
 						alpha = 0
 						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
 					}
+					# 2.2 Unity
+					#button_standard = {
+					#	raw_text = HRT_Close
+					#	onclick = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+					#}
 					button_standard = {
-						raw_text = HRT_Close
-						onclick = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+						raw_text = HRT_Unity
+						enabled = "[GetScriptedGui('HRT_unity_module_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+						visible = "[GetVariableSystem.HasValue('HRT_unity_window_open', 'no')]"
+						onclick = "[GetVariableSystem.Set('HRT_unity_window_open', 'yes')]"
+						tooltip = HRT_unity_tt
+						using = tooltip_nw
+					}
+					button_standard = {
+						raw_text = HRT_Unity
+						visible = "[GetVariableSystem.HasValue('HRT_unity_window_open', 'yes')]"
+						onclick = "[GetVariableSystem.Set('HRT_unity_window_open', 'no')]"
+						tooltip = HRT_unity_tt
+						using = tooltip_nw
 					}
 					button_standard = {
 						alpha = 0
 						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
+						tooltip = HRT_unity_tt
+						using = tooltip_n
 					}
 					#button_primary = {
 					#	size = { 170 35 }

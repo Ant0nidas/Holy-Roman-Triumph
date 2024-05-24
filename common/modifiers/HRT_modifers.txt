@@ -185,3 +185,21 @@ HRT_nibelungen_valkyr_helmet_modifier = {
 	hostile_scheme_resistance_add = 10
 	attraction_opinion = 10
 }
+
+#2.2 Unity
+HRT_unity_festival = {
+	icon = learning_negative
+	learning = -1
+}
+HRT_unity_marriage = {
+	icon = intrigue_negative
+	intrigue = -1
+}
+HRT_unity_contracts = {
+	icon = diplomacy_negative
+	diplomacy = -1
+}
+HRT_unity_trade = {
+	icon = stewardship_negative
+	stewardship = -1
+}

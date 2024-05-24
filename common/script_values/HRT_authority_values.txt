@@ -45,6 +45,8 @@ HRT_authority_change_value = {
 			add = HRT_authority_artifact_bonus
 			add = HRT_authority_grand_tour_bonus
 			add = HRT_authority_cardinals_bonus
+			# 2.2 Unity
+			if = { limit = { HRT_authority_unity_bonus >= 0 } add = HRT_authority_unity_bonus }
 			multiply = HRT_authority_free_investiture_bonus
 			multiply = HRT_authority_papal_investiture_malus
 			multiply = HRT_authority_constrained_reach
@@ -66,6 +68,8 @@ HRT_authority_change_value = {
 		add = HRT_authority_infidel_malus
 		add = HRT_authority_unheld_heartlands_malus
 		add = HRT_authority_excommunicated_malus
+		# 2.2 Unity
+		if = { limit = { HRT_authority_unity_bonus < 0 } add = HRT_authority_unity_bonus }
 
 		multiply = HRT_authority_child_malus
 
@@ -293,6 +297,25 @@ HRT_authority_excommunicated_malus = {
 		}
 	}
 }
+#2.2 Unity
+HRT_authority_unity_bonus = {
+	value = 0
+	if = {
+		limit = { exists = title:e_hre.holder }
+		title:c_aachen.var:HRT_emperor ?= {
+			add = var:HRT_authority_unity
+			if = {
+				limit = { var:HRT_authority_unity < 50 }
+				divide = 50
+				subtract = 1
+			}
+			else = {
+				subtract = 50
+				divide = 25
+			}
+		}
+	}
+}	
 HRT_authority_criminal_malus = {
 	value = 1
 	title:c_aachen.var:HRT_emperor ?= {

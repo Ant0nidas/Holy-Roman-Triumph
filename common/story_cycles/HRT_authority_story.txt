@@ -116,6 +116,26 @@
 					}
 				}
 			}
+
+			# 2.2 Unity
+			if = {
+				limit = { exists = title:e_hre.holder }
+				title:c_aachen = {
+					#every_in_list = {
+					#	variable = HRT_core_cultures
+					#	change_variable = {
+					#		name = HRT_core_culture_count
+					#		multiply = 0
+					#	}
+					#}
+					clear_variable_list = HRT_core_cultures
+				}
+				HRT_unity_effect = yes
+				set_variable = {
+					name = HRT_authority_unity
+					value = HRT_total_unity_value
+				}
+			}
 		}
 	}
 	
@@ -158,6 +178,7 @@
 		remove_variable = HRT_authority_ally_military_strength
 		remove_variable = HRT_authority_artifacts
 		remove_variable = HRT_authority_cardinals
+		remove_variable = HRT_authority_unity
 	}
 
 	effect_group = {
@@ -207,6 +228,10 @@
 							name = HRT_authority_cardinals
 							multiply = 0
 						}
+					}
+					change_variable = {
+						name = HRT_authority_unity
+						multiply = 0
 					}
 
 					#Prestige Bonus
@@ -327,6 +352,14 @@
 									add = 1
 								}
 							}
+						}
+					}
+					#2.2 Unity
+					if = {
+						limit = { exists = title:e_hre.holder }
+						change_variable = {
+							name = HRT_authority_unity
+							add = HRT_total_unity_value
 						}
 					}
 
@@ -623,6 +656,26 @@
 					change_variable = {
 						name = HRT_authority_years_reigned
 						add = 1
+					}
+
+					# 2.2 Unity
+					if = {
+						limit = { exists = title:e_hre.holder }
+						title:c_aachen = {
+							every_in_list = {
+								variable = HRT_core_cultures
+								change_variable = {
+									name = HRT_core_culture_count
+									multiply = 0
+								}
+								change_variable = {
+									name = HRT_core_culture_count_weight
+									multiply = 0
+								}
+							}
+							clear_variable_list = HRT_core_cultures
+						}
+						HRT_unity_effect = yes
 					}
 				}
 			}

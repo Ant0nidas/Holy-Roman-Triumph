@@ -177,6 +177,14 @@
  game_concept_HRT_investiture_controversy: "Investiture Controversy"
  game_concept_HRT_investiture_controversy_desc: "The Investiture Controversy or Investiture Contest (German: Investiturstreit) was a conflict between the Church and the state in medieval Europe over the ability to choose and install bishops (investiture) and abbots of monasteries and the pope himself. A series of popes in the 11th and 12th centuries undercut the power of the Holy Roman Emperor and other European monarchies, and the controversy led to nearly 50 years of conflict."
  
+ game_concept_HRT_stammesherzogtum: "Stammesherzogtum"
+ game_concept_HRT_stammesherzogtuemer: "Stammesherzogtümer"
+ game_concept_HRT_stammesherzogtum_desc: "#italic The five largest and most influential cultures in the Holy Roman Empire form the current bulk of the Stammesherzogtümer#!\n\nThey refer to the tribal [duchies|E] in early medieval Germany, which were large territorial units ruled by dukes and based on ancient tribal divisions.\nThese duchies, historically including Saxony, Bavaria, Swabia, Franconia, and Lorraine, were significant political entities in the 9th and 10th centuries, playing crucial roles in the formation of the Holy Roman Empire. They were characterized by a degree of autonomy and were often led by powerful local families who maintained their own armies and governance structures.\n\nOver the centuries, the few Stammesherzogtümer from the time of Otto I evolved into a confusing array of various secular and ecclesiastical dominions, which were held together solely by their loyalty to the Kaiser and belief in his holy mission, but were otherwise independent.\n\n#italic The [HRT_unity|E] between the German tribes affects your [HRT_imperial_authority_change|E]. Use [HRT_imperial_authority|E] to promote [cultural_acceptance|E] and steer the destiny of the Holy Roman Empire.#!"
+ 
+ game_concept_HRT_cohesion: "Cohesion"
+ game_concept_HRT_unity: "Unity"
+ game_concept_HRT_cohesion_desc: "Cohesion, or Unity, refers to the delicate balance among the [HRT_stammesherzogtuemer|E]. Despite their cultural and political differences, these duchies were bound together by mutual loyalty to the Kaiser and a shared belief in his divine mission. This cohesion was essential for maintaining stability and asserting collective strength against external threats, requiring a ruler of exceptional skill to navigate the complexities of their alliances and rivalries.\n\n#italic The [HRT_unity] between the German tribes affects your [HRT_imperial_authority_change|E]. Use [HRT_imperial_authority|E] to promote [cultural_acceptance|E] and steer the destiny of the Holy Roman Empire.#!"
+ 
  #############
  # Artifacts #
  #############
@@ -423,3 +431,70 @@
  HRT_nibelungen.0043.desc.b: "In the heart of the vineyard-laden hills, our expedition stumbled upon a trove of hidden treasures, nestled amidst the ancient roots and ruins that dotted the landscape. Though not the fabled Nibelungen treasure we sought, these humble tokens held the promise of profit and prestige, offering a welcome boon to our expedition's coffers. With our spirits lifted by this unexpected windfall, we continued our search with renewed vigor, eager to uncover the secrets that lay hidden within the hills' verdant embrace."
  HRT_nibelungen.0043.desc.c: "As we combed the vineyard-cloaked hills for any sign of the legendary hoard's burial, our efforts were rewarded with a fortuitous discovery: a collection of ancient relics, their value obscured by the passage of time. Though not the fabled Nibelungen treasure we sought, these humble artifacts held a quiet charm, promising a modest reward upon our return to civilization. With our hearts lightened by this unexpected boon, we pressed onward, knowing that even the smallest discoveries could hold great significance in our quest for greatness."
  HRT_nibelungen.0043.desc.d: "Beneath the shadowed boughs of ancient trees and amidst the crumbling ruins that lined the vineyard-cloaked hills, our diligent search unearthed a trove of hidden gems: small, yet exquisite tokens of a bygone era. Though not the legendary Nibelungen treasure we sought, these precious jewels held a quiet allure, promising a modest sum of gold upon our return to civilization. With our spirits lifted by this unexpected discovery, we continued our search with renewed determination, knowing that even the smallest treasures could hold great significance in our quest for greatness."
+ 
+ ################
+ # Unity Events #
+ ################
+ 
+ HRT.2001.t: "Promote Unity Between the Tribes"
+ HRT.2001.desc: "As the realm faces both internal strife and external threats, I recognize the importance of fostering unity among the diverse tribes that comprise #V [emperor.GetPrimaryTitle.GetNameNoTooltip]#!. The lands of the empire are rich with a tapestry of cultures, traditions, and languages. Yet, these very differences have often sown discord and division.\n\nIn a grand assembly at the imperial court, I have gathered representatives of the [HRT_stammesherzogtuemer|E]. [GetPlayer.MakeScope.Var('HRT_core_culture_1').Culture.GetName], [GetPlayer.MakeScope.Var('HRT_core_culture_2').Culture.GetName], [GetPlayer.MakeScope.Var('HRT_core_culture_3').Culture.GetName], [GetPlayer.MakeScope.Var('HRT_core_culture_4').Culture.GetName], and [GetPlayer.MakeScope.Var('HRT_core_culture_5').Culture.GetName] banners flutter side by side, a rare and powerful symbol of the potential for unity.\n\nBefore the gathered assembly, I address the need for a cohesive and harmonious realm, where every tribe can coexist in mutual respect and shared prosperity. To achieve this noble goal, several strategies are presented, each aimed at strengthening the bonds between these proud and storied peoples."
+ HRT.2001.a: "Organize cultural festivals."
+ HRT.2001.a.tt: "Organizing cultural festivals and events that celebrate the traditions and heritage of different tribes can promote cross-cultural interaction and appreciation. Sponsor grand festivities that showcase the rich cultural diversity within the empire, encouraging unity and solidarity among its subjects."
+ HRT.2001.b: "Encourage marriage alliances."
+ HRT.2001.b.tt: "Encouraging marriage alliances between noble families from different tribes can promote cultural exchange and understanding. Arrange marriages between members of your tribe and influential families from different regions, fostering personal connections and loyalty to the imperial authority."
+ HRT.2001.c: "Implement new feudal contracts."
+ HRT.2001.c.tt: "Implementing feudal contracts that emphasize cultural tolerance and cooperation can help strengthen the bonds between the tribes. These contracts could include clauses that promote the preservation and respect of each tribe's customs, languages, and traditions within the empire."
+ HRT.2001.d: "Facilitate trade and commerce."
+ HRT.2001.d.tt: "Facilitating trade and commerce between regions can lead to increased cultural exchange and integration. Invest in infrastructure projects such as roads and bridges to improve connectivity between tribes, fostering economic interdependence and cultural interaction."
+ 
+ HRT.2011.t: "Unity: Cultural Festivals"
+ HRT.2011.desc: "I have resolved to promote unity through the joyous celebration of each tribe's unique cultural heritage. By organizing grand festivals, I aim to foster mutual respect and admiration among the tribes, creating a vibrant tapestry of shared traditions and communal harmony.\n\nAs the imperial herald prepares to announce my imperial decree, the hall buzzes with anticipation. Representatives from each tribe await the specifics, knowing that such celebrations could bring about a new era of understanding and camaraderie. I have three distinct paths in mind, to ensure these cultural festivals serve as a beacon of unity:"
+ HRT.2011.a: " Tribal competitions."
+ HRT.2011.a.tt: "Organize friendly competitions and games that bring together participants from different tribes.\n\nThis option increases the [cultural_acceptance|E] between each [HRT_stammesherzogtum|E] by #V 1%#! (10% total)\n"
+ HRT.2011.b: " Annual celebrations."
+ HRT.2011.b.tt: "Establish annual celebrations that rotate between different tribal regions, ensuring each tribe has a chance to host and share its culture.\n\nThis option increases the [cultural_acceptance|E] between each [HRT_stammesherzogtum|E] by #V 2%#! (20% total)\n"
+ HRT.2011.c: " Cultural heritage sites."
+ HRT.2011.c.tt: "Establish and maintain cultural heritage sites and monuments that celebrate the contributions and history of all tribes within the empire.\n\nThis option increases the [cultural_acceptance|E] between each [HRT_stammesherzogtum|E] by #V 3%#! (30% total)\n"
+ HRT_cultural_acceptance_festival: "Cultural Festivals"
+ HRT_unity_festival: "Hosting Cultural Festivals"
+ 
+ HRT.2012.t: "Unity: Marriage Alliances"
+ HRT.2012.desc: "Understanding that familial bonds can be the strongest ties of all, I have decided to promote unity within [emperor.GetPrimaryTitle.GetNameNoTooltip] through strategic marriage alliances. By intertwining the noble families of various tribes with our own, I might be able to create a network of kinship that fosters a deeper sense of belonging to the empire.\nIn the grand hall of the imperial court, filled with the nobility of the realm, I step forward to address the assembly. The faces of [GetPlayer.MakeScope.Var('HRT_core_culture_1').Culture.GetName], [GetPlayer.MakeScope.Var('HRT_core_culture_2').Culture.GetName], [GetPlayer.MakeScope.Var('HRT_core_culture_3').Culture.GetName], [GetPlayer.MakeScope.Var('HRT_core_culture_4').Culture.GetName], and [GetPlayer.MakeScope.Var('HRT_core_culture_5').Culture.GetName] lords and ladies reflect a mixture of curiosity and anticipation.\nNow, which [HRT_stammesherzogtum|E] shall receive this honor?"
+ HRT.2012.a: "[GetPlayer.MakeScope.Var('HRT_core_culture_2').Culture.GetName]"
+ HRT.2012.a.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_2').Culture.GetName] [HRT_stammesherzogtum|E] by #V 10%#!\n"
+ HRT.2012.b: "[GetPlayer.MakeScope.Var('HRT_core_culture_3').Culture.GetName]"
+ HRT.2012.b.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_3').Culture.GetName] [HRT_stammesherzogtum|E] by #V 10%#!\n"
+ HRT.2012.c: "[GetPlayer.MakeScope.Var('HRT_core_culture_4').Culture.GetName]"
+ HRT.2012.c.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_4').Culture.GetName] [HRT_stammesherzogtum|E] by #V 10%#!\n"
+ HRT.2012.d: "[GetPlayer.MakeScope.Var('HRT_core_culture_5').Culture.GetName]"
+ HRT.2012.d.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_5').Culture.GetName] [HRT_stammesherzogtum|E] by #V 10%#!\n"
+ HRT_cultural_acceptance_marriage: "Marriage Alliances"
+ HRT_unity_marriage: "Arranging Political Marriages"
+ 
+ HRT.2013.t: "Unity: Feudal Contracts"
+ HRT.2013.desc: "Recognizing the importance of a cohesive and harmonious realm, I have turned my attention to the foundational agreements that govern the relationships between the crown and its vassals. By revising local charters to promote mutual respect and cultural tolerance, I promise to create a more integrated and cooperative empire.\nIn the ornate chambers of the imperial court, representatives from the various tribes of [emperor.GetPrimaryTitle.GetNameNoTooltip] gather. I step forward, my voice carrying the weight of authority and vision.\n\nWhere should the bureauratic apparatus begin?"
+ HRT.2013.a: "[GetPlayer.MakeScope.Var('HRT_core_culture_2').Culture.GetName]"
+ HRT.2013.a.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_2').Culture.GetName] [HRT_stammesherzogtum|E] by #V 5%#!\n"
+ HRT.2013.b: "[GetPlayer.MakeScope.Var('HRT_core_culture_3').Culture.GetName]"
+ HRT.2013.b.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_3').Culture.GetName] [HRT_stammesherzogtum|E] by #V 10%#!\n"
+ HRT.2013.c: "[GetPlayer.MakeScope.Var('HRT_core_culture_4').Culture.GetName]"
+ HRT.2013.c.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_4').Culture.GetName] [HRT_stammesherzogtum|E] by #V 15%#!\n"
+ HRT.2013.d: "[GetPlayer.MakeScope.Var('HRT_core_culture_5').Culture.GetName]"
+ HRT.2013.d.tt: "This option increases your [cultural_acceptance|E] with the [GetPlayer.MakeScope.Var('HRT_core_culture_5').Culture.GetName] [HRT_stammesherzogtum|E] by #V 15%#!\n"
+ HRT_cultural_acceptance_contracts: "Feudal Contracts"
+ HRT_unity_contracts: "Revising Feudal Contracts"
+ 
+ HRT.2014.t: "Unity: Trade and Commerce"
+ HRT.2014.desc: "I understand that trade and commerce are the lifeblood of [emperor.GetPrimaryTitle.GetNameNoTooltip], essential for fostering prosperity and unity among its diverse tribes. By enhancing trade networks and encouraging economic interdependence, a web of connections that bind the empire together through mutual benefit and shared wealth can be created.\n\nIn the grand hall of the imperial palace, merchants, nobles, and representatives from various regions gather to hear the my vision. I speak of a future where goods, ideas, and cultures flow freely across the empire, enriching all who participate.\n\nBy what investment shall this immeasurable profit return?"
+ HRT.2014.a: "Local market days."
+ HRT.2014.a.tt: "Establish regular market days where merchants from different tribes can trade goods and share cultural practices.\n\nThis option increases the [cultural_acceptance|E] between each [HRT_stammesherzogtum|E] by #V 1%#! (10% total)\n"
+ HRT.2014.b: "Infrastructure improvements."
+ HRT.2014.b.tt: "Invest in infrastructure projects such as roads and bridges that connect tribal regions, enhancing trade routes.\n\nThis option increases the [cultural_acceptance|E] between each [HRT_stammesherzogtum|E] by #V 2%#! (20% total)\n"
+ HRT.2014.c: "Imperial trade networks."
+ HRT.2014.c.tt: "Develop extensive trade networks that link all major regions of the empire, promoting economic interdependence.\n\nThis option increases the [cultural_acceptance|E] between each [HRT_stammesherzogtum|E] by #V 3%#! (30% total)\n"
+ HRT_cultural_acceptance_trade: "Facilitated Trade"
+ HRT_unity_trade: "Facilitating Trade"
+
+ HRT.20_authority.tt: "You spend #N 20 [HRT_imperial_authority|E]#!"
+ HRT.30_authority.tt: "You spend #N 30 [HRT_imperial_authority|E]#!"
+ HRT.40_authority.tt: "You spend #N 40 [HRT_imperial_authority|E]#!"

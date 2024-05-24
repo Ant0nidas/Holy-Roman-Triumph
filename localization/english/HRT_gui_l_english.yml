@@ -72,6 +72,10 @@
  HRT_authority_imprisoned_malus: "Is [imprisoned|E]"
  HRT_authority_child_malus: "Is a Child"
  HRT_authority_child_malus_value: "#N -100%#!"
+ #2.2 Unity
+ HRT_authority_unity_bonus: "[HRT_cohesion|E]"
+ HRT_authority_unity_bonus_value_positive: "#P [EmptyScope.ScriptValue('HRT_authority_unity_bonus')|L=]#!"
+ HRT_authority_unity_bonus_value_negative: "#N [EmptyScope.ScriptValue('HRT_authority_unity_bonus')|L=]#!"
  HRT_authority_legitimacy_modifier: "[legitimacy|E] Multiplicator"
  HRT_authority_legitimacy_modifier_value: "[EmptyScope.ScriptValue('HRT_authority_legitimacy_modifier')]"
  HRT_authority_game_rule_bonus: "Game Rule Bonus"
@@ -83,8 +87,6 @@
  
  #Tooltips
  HRT_floating_button_tt: "Holy Roman Triumph"
- 
- HRT_dismantle_hre_tt: "#T Dismantle the Holy Roman Empire#!\n\n[de_jure|E] [rulers|E] in the Holy Roman Empire will lose #N 25#! opinion of you for #V 10#! years\n\nCost: [prestige_i]#V 11400#!"
 
  #Buttons and Headers
  HRT_Imperial_Succession: "Imperial Succession"
@@ -92,6 +94,17 @@
  HRT_Prince_Electors: "Prince-Electors"
  HRT_Imperial_Authority: "$game_concept_HRT_imperial_authority$"
  HRT_Dismantle_HRE: "Dismantle HRE"
- HRT_Close: "Close"
+ HRT_dismantle_hre_tt: "#T Dismantle the Holy Roman Empire#!\n\n[de_jure|E] [rulers|E] in the Holy Roman Empire will lose #N 25#! opinion of you for #V 10#! years.\n\nCost: [prestige_i]#V 11400#!"
  HRT_Proclaim_Directive: "Proclaim Directive"
  #HRT_Enact_Resolution: "Enact Resolution"
+ # 2.2 Unity
+ #HRT_Close: "Close"
+ HRT_Unity: "Stammesherzogtümer"
+ HRT_unity_tt: "#t View Stammesherzogtümer#!\n\nUnited, the [HRT_stammesherzogtuemer|E] of the Holy Roman Empire are a formidable force to reckon with. However, establishing [HRT_cohesion|E] among their diverse cultures requires a Kaiser who is both skilled and cunning.\n\n#italic Requires Restoration of the Holy Roman Empire#!"
+ HRT_total_unity_bad: "Total [HRT_cohesion|E]:\n#N [Character.MakeScope.Var('HRT_authority_unity').GetValue|0]%#!"
+ HRT_total_unity: "Total [HRT_cohesion|E]:\n[Character.MakeScope.Var('HRT_authority_unity').GetValue|0]%"
+ HRT_total_unity_good: "Total [HRT_cohesion|E]:\n#P [Character.MakeScope.Var('HRT_authority_unity').GetValue|0]%#!"
+ HRT_UNITY_PROMOTE: "Promote Unity"
+ HRT_UNITY_PROMOTE_TT: "#T Promote Unity#!\n\nClick to choose among various options to increase the [cultural_acceptance|E] between the [HRT_stammesherzogtuemer|E] to boost overall [HRT_cohesion|E]\n\n#italic #N You need at least #V 20#! [HRT_imperial_authority|E] and an assigned [steward|E]#!\n\nCooldown: #V 10 years#!#!"
+ HRT_UNITY_PROMOTE_CD_TT: "#T Promote Unity#!\n\n#italic #N You have recently promoted Unity! You can perform this action again on #V [GetCurrentDateWithDiff( GetVarTimeRemaining( GetPlayer.MakeScope, 'HRT_promote_unity_cd') )]#!#!#!\n\nClick to choose among various options to increase the [cultural_acceptance|E] between the [HRT_stammesherzogtuemer|E] to boost overall [HRT_cohesion|E]. Higher amounts of [HRT_imperial_authority|E] unlock more options.\n\n#italic #N You need at least #V 20#! [HRT_imperial_authority|E] and an assigned [steward|E]#!\n\nCooldown: #V 20 years#!#!"
+ HRT_WEIGHT_TT: "#T Weight#!\nThis number indicates the influence this culture holds in the Empire. The more imperial provinces are following this culture, the bigger its impact on the [HRT_cohesion|E]."

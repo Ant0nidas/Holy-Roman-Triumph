@@ -207,3 +207,20 @@ HRT_is_involved_sgui = {
 		}
 	}
 }
+
+# 2.2 Unity
+HRT_unity_module_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_formed_gui
+		title:c_aachen = { has_variable = HRT_unity_module }
+	}
+}
+
+HRT_promote_unity_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT.2001
+	}
+}

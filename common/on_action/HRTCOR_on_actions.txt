@@ -104,10 +104,19 @@ HRT_setup_after_game_start_on_actions = {
 		}
 		else_if = {
 			limit = { exists = title:e_hre.holder }
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_unity_module
+					value = yes
+				}
+			}
 			title:e_hre.holder = {
 				add_character_flag = HRT_italienzug
 				create_story = HRT_emperor_story
 				trigger_event = HRT.0002 # Generic Introduction Event
+
+				# 2.2 Unity
+				HRT_unity_effect = yes
 			}
 		}
 
@@ -148,73 +157,96 @@ HRT_yearly_maintenance_pulse = {
 				has_variable = HRT_CF_apostate_active #CF Compat
 			}
 		}
-		OR = {
-			AND = {
-				exists = title:e_hre.holder
-				title:e_hre.holder = {
-					HRT_is_emperor_trigger = no
-				}
-			}
-			title:c_aachen.var:HRT_emperor ?= {
-				is_alive = no
-			}
-		}
 	}
 	effect = {
 		if = {
-			limit = { exists = title:e_hre.holder }
+			limit = {
+				OR = {
+					AND = {
+						exists = title:e_hre.holder
+						title:e_hre.holder = {
+							HRT_is_emperor_trigger = no
+						}
+					}
+					title:c_aachen.var:HRT_emperor ?= {
+						is_alive = no
+					}
+				}
+			}
+			if = {
+				limit = { exists = title:e_hre.holder }
+				title:e_hre.holder = {
+					create_story = HRT_emperor_story
+					if = {
+						limit = {
+							OR = {
+								is_ai = yes
+								AND = {
+									has_dlc_feature = tours_and_tournaments
+									has_dlc_feature = advanced_activities
+								}
+							}
+							NOR = {
+								has_trait = HRT_emperor
+								has_trait = COR_crowned_by_myself
+								this = character:1316 # Heinrich IV
+							}
+						}
+						trigger_event = {
+							id = HRT.1001
+							days = { 7 14 }
+						}
+					}
+				}
+			}
+			else = {
+				ordered_HRT_candidati = {
+					order_by = HRT_imperator_score
+					position = 0
+					save_temporary_scope_as = HRT_new_emperor
+					create_story = HRT_emperor_story
+					if = {
+						limit = {
+							OR = {
+								is_ai = yes
+								AND = {
+									has_dlc_feature = tours_and_tournaments
+									has_dlc_feature = advanced_activities
+								}
+							}
+							NOR = {
+								has_trait = HRT_emperor
+								has_trait = COR_crowned_by_myself
+							}
+						}
+						trigger_event = {
+							id = HRT.1001
+							days = { 7 14 }
+						}
+					}
+				}
+			}
+			HRT_close_window = yes
+		}
+		# 2.2 Unity
+		if = {
+			limit = {
+				exists = title:e_hre.holder
+				title:c_aachen = {
+					NOT = { has_variable = HRT_unity_module }
+				}
+			}
+			title:c_aachen = {
+				set_variable = {
+					name = HRT_unity_module
+					value = yes
+				}
+			}
+			# 2.2 Unity
 			title:e_hre.holder = {
-				create_story = HRT_emperor_story
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							AND = {
-								has_dlc_feature = tours_and_tournaments
-								has_dlc_feature = advanced_activities
-							}
-						}
-						NOR = {
-							has_trait = HRT_emperor
-							has_trait = COR_crowned_by_myself
-							this = character:1316 # Heinrich IV
-						}
-					}
-					trigger_event = {
-						id = HRT.1001
-						days = { 7 14 }
-					}
-				}
+				HRT_unity_effect = yes
 			}
 		}
-		else = {
-			ordered_HRT_candidati = {
-				order_by = HRT_imperator_score
-				position = 0
-				save_temporary_scope_as = HRT_new_emperor
-				create_story = HRT_emperor_story
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							AND = {
-								has_dlc_feature = tours_and_tournaments
-								has_dlc_feature = advanced_activities
-							}
-						}
-						NOR = {
-							has_trait = HRT_emperor
-							has_trait = COR_crowned_by_myself
-						}
-					}
-					trigger_event = {
-						id = HRT.1001
-						days = { 7 14 }
-					}
-				}
-			}
-		}
-		HRT_close_window = yes
 	}
 }
 

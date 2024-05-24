@@ -272,6 +272,17 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "text"     {text = HRT_authority_child_malus} 
                     blockoverride "value"    {text = "HRT_authority_child_malus_value"}
 				}
+				#2.2 Unity
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[And(GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_is_formed_value'),'(CFixedPoint)0'),GreaterThanOrEqualTo_CFixedPoint(TopScope.ScriptValue('HRT_authority_unity_bonus'),'(CFixedPoint)50'))]"
+                    blockoverride "text"     {text = HRT_authority_unity_bonus} 
+                    blockoverride "value"    {text = "HRT_authority_unity_bonus_value_positive"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[And(GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_is_formed_value'),'(CFixedPoint)0'),LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_unity_bonus'),'(CFixedPoint)50'))]"
+                    blockoverride "text"     {text = HRT_authority_unity_bonus} 
+                    blockoverride "value"    {text = "HRT_authority_unity_bonus_value_negative"}
+				}
 				wok_cardinal_breakdown_box_HRT  = {
                     blockoverride "text"     {text = HRT_authority_legitimacy_modifier} 
                     blockoverride "value"    {text = "HRT_authority_legitimacy_modifier_value"}
