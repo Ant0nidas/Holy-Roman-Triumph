@@ -10,6 +10,7 @@
 		has_character_flag = COR_flag_preparing_coronation
 		exists = var:COR_coronator
 		government_has_flag = government_is_feudal
+		faith = faith:catholic
 		is_landed = yes
 		age >= 11
 		OR = {
@@ -46,19 +47,19 @@
 					}
 				}
 			}
-			trigger_if = {
-				limit = {
-					is_ai = yes
-				}
-				OR = {
-					NOT = {
-						any_character_war ?= {
-							is_war_leader = root
-							is_defender = root
-						}
+		}
+		trigger_if = {
+			limit = {
+				is_ai = yes
+			}
+			OR = {
+				NOT = {
+					any_character_war ?= {
+						is_war_leader = root
+						is_defender = root
 					}
-					var:COR_years_reigned ?= 30
 				}
+				var:COR_years_reigned ?= 30
 			}
 		}
 	}
@@ -66,10 +67,13 @@
 	can_start_showing_failures_only = {
 		is_available = yes
 		OR = {
-			NOT = {
-				any_character_war ?= {
-					is_war_leader = root
-					is_defender = root
+			custom_tooltip = {
+				text = COR_war_defender
+				NOT = {
+					any_character_war ?= {
+						is_war_leader = root
+						is_defender = root
+					}
 				}
 			}
 			custom_tooltip = {
@@ -417,75 +421,6 @@
 
 	ai_will_select_province = {
 		value = 30
-		# Plague
-		scope:host = {
-			if = {
-        		limit = {
-        		    any_sub_realm_county = {
-        		        any_county_province = {
-        		            any_province_epidemic = {
-        		                count >= 1
-        		                outbreak_intensity < apocalyptic
-        		            }
-        		        }
-        		    }
-        		    would_follow_social_distancing_value >= -1
-        		}
-        		add = {
-        		    value = -60
-        		    desc = "Plague in Realm"
-        		}
-    		}
-    		else_if = {
-    		    limit = {
-    		        any_realm_county = {
-    		            any_county_province = {
-    		                any_province_epidemic = {
-    		                    count >= 1
-    		                    outbreak_intensity < apocalyptic
-    		                }
-    		            }
-    		        }
-    		        would_follow_social_distancing_value >= -1
-    		    }
-    		    add = {
-    		        value = -40
-    		        desc = "Plague in Top Realm"
-    		    }
-    		}
-    		if = {
-    		    limit = {
-    		        any_sub_realm_county = {
-    		            any_county_province = {
-    		                any_province_epidemic = {
-    		                    count >= 1
-    		                    outbreak_intensity = apocalyptic
-    		                }
-    		            }
-    		        }
-    		    }
-    		    add = {
-    		        value = -200
-    		        desc = "Apocalyptic Plague in Realm"
-    		    }
-    		}
-    		else_if = {
-    		    limit = {
-    		        any_realm_county = {
-    		            any_county_province = {
-    		                any_province_epidemic = {
-    		                    count >= 1
-    		                    outbreak_intensity = apocalyptic
-    		                }
-    		            }
-    		        }
-    		    }
-    		    add = {
-    		        value = -100
-    		        desc = "Apocalyptic Plague in Top Realm"
-    		    }
-    		}
-		}
 	}
 
 	province_score = {
@@ -1386,7 +1321,6 @@
 	}
 
 	### Graphics
-	is_grand_activity = yes
 
 	map_entity = {
 		trigger = {

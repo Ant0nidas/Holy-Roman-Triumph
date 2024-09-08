@@ -450,6 +450,7 @@ HRT_nibelungen.0023 = { # Minor Treasure
 	
 	option = { # ok
 		name = HRT_nibelungen.0023.a
+		complete_activity_intent = yes
 	}
 
 	after = {
@@ -503,6 +504,7 @@ HRT_nibelungen.0024 = { # Price
 	
 	option = { # ok
 		name = HRT_nibelungen.0024.a
+		complete_activity_intent = yes
 	}
 
 	after = {
@@ -651,6 +653,7 @@ HRT_nibelungen.0033 = { # Minor Treasure
 	
 	option = { # ok
 		name = HRT_nibelungen.0023.a
+		complete_activity_intent = yes
 	}
 
 	after = {
@@ -799,6 +802,7 @@ HRT_nibelungen.0043 = { # Minor Treasure
 	
 	option = { # ok
 		name = HRT_nibelungen.0023.a
+		complete_activity_intent = yes
 	}
 
 	after = {

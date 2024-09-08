@@ -22,7 +22,7 @@ widget = {
 	}
 
 	button = {
-		visible = "[GetScriptedGui('HRT_is_involved_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+		visible = "[And(GetScriptedGui('HRT_is_involved_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),Not(GetGlobalVariable('HRT_disabled').IsSet))]"
 		name = "HRT_open" #I tear my
 		size = { 40 40 }
 		#position = { 548 229 }

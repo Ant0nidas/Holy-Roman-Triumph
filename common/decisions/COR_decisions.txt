@@ -345,3 +345,126 @@
 		}
 	}
 }
+
+# 2.4 Jewel of Byzantium
+COR_byz_prepare_coronation_ceremony_decision = {
+	picture = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
+	major = yes
+	ai_check_interval = 3 #check only once every 3 months.
+	desc = COR_byz_prepare_coronation_ceremony_decision_desc
+
+	is_shown = {
+		NOT = { has_trait = COR_byz_crowned_by_patriarch }
+		OR = {
+			is_ai = yes
+			AND = {
+				has_dlc_feature = tours_and_tournaments
+				has_dlc_feature = advanced_activities
+			}
+		}
+		has_variable = COR_years_reigned
+		OR = {
+			has_primary_title = title:e_byzantium
+			has_primary_title = title:e_roman_empire
+		}
+		faith = faith:orthodox
+		government_has_flag = government_is_feudal
+		is_landed = yes
+	}
+
+	is_valid_showing_failures_only = {
+		is_available = yes
+		custom_tooltip = {
+			text = COR_preparing_coronation_tooltip
+			NOT = { has_character_flag = COR_flag_preparing_coronation } 
+		}
+		custom_tooltip = {
+			text = COR_coronation_request_cooldown_tooltip
+			NOT = { has_variable = COR_coronation_request_cooldown } 
+		}
+	}
+
+	is_valid = {
+		faith = faith:orthodox
+		exists = faith:orthodox.religious_head
+		age >= 11
+		NOT = { has_trait = excommunicated }
+		OR = {
+			custom_tooltip = {
+				text = COR_war_defender
+				NOT = {
+					any_character_war ?= {
+						is_war_leader = root
+						is_defender = root
+					}
+				}
+			}
+			custom_tooltip = {
+				text = COR_maxed_uncrowned_tooltip
+				var:COR_years_reigned = 30
+			}
+		}
+		trigger_if = { #Either is an adult, or the child is liked by the regent and has assertive traits.
+			limit = {
+				is_adult = no
+			}
+			OR = {
+				has_trait = bossy
+				has_trait = ambitious
+				has_trait = intellect_good
+			}
+			diarch ?= {
+				opinion = {
+					target = root
+					value >= neutral_opinion
+				}
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = { text = COR_begin_coronation_tooltip }
+
+		#Events
+		trigger_event = COR_ceremony.7001
+		set_variable = {
+			name = COR_coronation_request_cooldown
+			months = 5
+		}
+	}
+
+	cost = { }
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 100
+
+		modifier = {
+			factor = 5
+			has_primary_title = title:e_byzantium
+		}
+		modifier = {
+			factor = 1.5
+			var:COR_years_reigned > 0
+		}
+		modifier = {
+			factor = 1.75
+			var:COR_years_reigned > 8
+		}
+		modifier = {
+			factor = 2
+			var:COR_years_reigned > 12
+		}
+		modifier = {
+			factor = 3
+			var:COR_years_reigned > 16
+		}
+		modifier = {
+			factor = 4
+			var:COR_years_reigned > 25
+		}
+	}
+}

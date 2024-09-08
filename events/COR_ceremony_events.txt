@@ -6,6 +6,7 @@
 # 0101 - 0200 Priest & Powerful Theocrat
 # 0201 - 0300 Pope & Antipope
 # 0301 - 0500 Coronation Activity Events
+# 7001 - 7999 2.4 Jewel of Byzantium
 # 9000 - 9999 Mechanical
 # by Kaepora Gaebora
 # 
@@ -714,30 +715,34 @@ COR_ceremony.0001 = {
 	}
 }
 
-# Notify ruler of coronator's death
-COR_ceremony.0002 = {
-	hidden = yes
-	
-	trigger = {
-		has_variable_list = COR_coronation_targets
-	}
-	
-	immediate = {
-		every_in_list = {
-			variable = COR_coronation_targets
-			limit = {
-				is_alive = yes
-			}
-			trigger_event = COR_ceremony.0003
-		}
-	}
-}
+## Notify ruler of coronator's death ## Moved to Coronator Story
+#COR_ceremony.0002 = {
+#	hidden = yes
+#	
+#	trigger = {
+#		has_variable_list = COR_coronation_targets
+#	}
+#	
+#	immediate = {
+#		every_in_list = {
+#			variable = COR_coronation_targets
+#			limit = {
+#				is_alive = yes
+#			}
+#			trigger_event = COR_ceremony.0003
+#		}
+#	}
+#}
 
 COR_ceremony.0003 = {
 	type = character_event
 	title = COR_ceremony.0003.t
 	desc = COR_ceremony.0003.desc
 	theme = crown
+	
+	trigger = {
+		has_variable = COR_coronator
+	}
 	
 	right_portrait = {
 		character = root
@@ -754,7 +759,19 @@ COR_ceremony.0003 = {
 	option = {
 		name = COR_ceremony.0003.a
 
-		remove_variable = COR_coronator
+		if = {
+			limit = {
+				NOR = {
+					has_trait = COR_crowned_by_priest
+					has_trait = COR_crowned_by_bishop
+					has_trait = COR_crowned_by_pope
+					has_trait = COR_crowned_by_myself
+					has_trait = HRT_emperor
+					has_trait = COR_byz_crowned_by_patriarch
+				}
+			}
+			remove_variable = COR_coronator
+		}
 		remove_variable = COR_coronation_request_cooldown
 		remove_character_flag = COR_flag_preparing_coronation
 	}
@@ -1322,6 +1339,7 @@ COR_ceremony.0102 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -1367,6 +1385,7 @@ COR_ceremony.0103 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -1431,6 +1450,7 @@ COR_ceremony.0104 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -1526,6 +1546,7 @@ COR_ceremony.0106 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -1617,6 +1638,7 @@ COR_ceremony.0107 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -1685,6 +1707,7 @@ COR_ceremony.0110 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -2316,6 +2339,7 @@ COR_ceremony.0202 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -2387,6 +2411,7 @@ COR_ceremony.0203 = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
 		}
 		set_variable = {
 			name = COR_coronator
@@ -2552,6 +2577,7 @@ COR_ceremony.0305 = {
 					has_trait = COR_crowned_by_pope
 					has_trait = COR_crowned_by_myself
 					has_trait = HRT_emperor
+					has_trait = COR_byz_crowned_by_patriarch
 				}
 			}
 			remove_variable = COR_coronator
@@ -2635,6 +2661,7 @@ COR_ceremony.0307 = {
 					has_trait = COR_crowned_by_pope
 					has_trait = COR_crowned_by_myself
 					has_trait = HRT_emperor
+					has_trait = COR_byz_crowned_by_patriarch
 				}
 			}
 			remove_variable = COR_coronator
@@ -2773,6 +2800,7 @@ COR_ceremony.0311 = {
 					has_trait = COR_crowned_by_pope
 					has_trait = COR_crowned_by_myself
 					has_trait = HRT_emperor
+					has_trait = COR_byz_crowned_by_patriarch
 				}
 			}
 			remove_variable = COR_coronator
@@ -2797,31 +2825,7 @@ COR_ceremony.0312 = {
 		animation = grief
 	}
 
-	immediate = {
-		remove_character_flag = COR_flag_preparing_coronation
-		remove_variable = COR_years_reigned
-		remove_variable = COR_coronation_request_cooldown
-		remove_variable = COR_coronator_rank
-		remove_all_character_modifier_instances = COR_uncrowned_modifier
-		var:COR_coronator = {
-			remove_list_variable = {
-				name = COR_coronation_targets
-				target = scope:COR_ruler
-			}
-		}
-		if = {
-			limit = {
-				NOR = {
-					has_trait = COR_crowned_by_priest
-					has_trait = COR_crowned_by_bishop
-					has_trait = COR_crowned_by_pope
-					has_trait = COR_crowned_by_myself
-					has_trait = HRT_emperor
-				}
-			}
-			remove_variable = COR_coronator
-		}
-	}
+	immediate = { }
 
 	option = {
 		name = COR_ceremony.0312.a
@@ -2916,6 +2920,7 @@ COR_ceremony.0315 = {
 					has_trait = COR_crowned_by_pope
 					has_trait = COR_crowned_by_myself
 					has_trait = HRT_emperor
+					has_trait = COR_byz_crowned_by_patriarch
 				}
 			}
 			remove_variable = COR_coronator
@@ -3075,28 +3080,6 @@ COR_ceremony.0320 = {
 	}
 }
 
-## For guests
-#COR_ceremony.0321 = {
-#	type = activity_event
-#	title = COR_ceremony.0320.t
-#	desc = COR_ceremony.0321.desc
-#	theme = crown
-#	override_background = { reference = temple }
-#
-#	right_portrait = root
-#
-#	left_portrait = {
-#		character = scope:COR_ruler
-#		animation = proud
-#	}
-#
-#	immediate = { }
-#
-#	option = {
-#		name = COR_ceremony.0320.a
-#	}
-#}
-
 # ON END - CEREMONY
 
 # For host
@@ -3109,11 +3092,16 @@ COR_ceremony.0322 = {
 				trigger = {
 					OR = {
 						has_title = title:e_hre
-						#HRT
 						HRT_is_emperor_trigger = yes
 					}
 				}
-				desc = COR_ceremony.0322.desc_hre
+				desc = COR_ceremony.0322.desc_hre.1
+			}
+			triggered_desc = {
+				trigger = {
+					has_title = title:k_king_of_the_germans
+				}
+				desc = COR_ceremony.0322.desc_king_of_the_germans.1
 			}
 			random_valid = {
 				triggered_desc = {
@@ -3333,163 +3321,183 @@ COR_ceremony.0322 = {
 			COR_crowned_by_pope = { remove_trait = COR_crowned_by_pope }
 			COR_crowned_by_myself = { remove_trait = COR_crowned_by_myself }
 			HRT_emperor = { remove_trait = HRT_emperor }
+			COR_byz_crowned_by_patriarch = { remove_trait = COR_byz_crowned_by_patriarch }
 		}
 
 		if = {
 			limit = {
-				HRT_is_emperor_trigger = yes
+				OR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+				}
 			}
 			add_trait = HRT_emperor
-		}
-		else = {
 			if = {
 				limit = {
-					var:COR_coronator_rank ?= 1
+					has_nickname = HRT_in_romanorum_regem_electus
 				}
-				add_trait = COR_crowned_by_pope
-			}
-			else_if = {
-				limit = {
-					var:COR_coronator_rank ?= 0
-				}
-				add_trait = COR_crowned_by_bishop
-			}
-			else = {
-				add_trait = COR_crowned_by_priest
-			}
-		}
-		
-		if = {
-			limit = { scope:officiant ?= faith:catholic.religious_head }
-			add_piety = major_piety_gain
-		}
-		else = {
-			add_piety = minor_piety_gain
-		}
-		dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_gain }
-
-		#Assign possible modifier.
-		if = {
-			limit = {
-				scope:activity = {
-					NOR = {
-						AND = {
-							has_activity_type = COR_activity_coronation_ceremony
-							has_activity_option = {
-								category = COR_ceremony_type
-								option = COR_ceremony_type_private
-							}
-						}
-						AND = {
-							has_activity_type = COR_activity_coronation_ceremony_hof
-							has_activity_option = {
-								category = COR_ceremony_type
-								option = COR_ceremony_type_private
-							}
-						}
-					}
-				}
-			}
-			scope:activity.activity_location.county = {
-				add_county_modifier = {
-					modifier = COR_improved_trade
-					years = 10
-				}
-			}
-		}
-		if = {
-			limit = {
-				is_at_war = no
-				scope:activity = {
-					OR = {
-						AND = {
-							has_activity_type = COR_activity_coronation_ceremony
-							has_activity_option = {
-								category = COR_ceremony_type
-								option = COR_ceremony_type_private
-							}
-						}
-						AND = {
-							has_activity_type = COR_activity_coronation_ceremony_hof
-							has_activity_option = {
-								category = COR_ceremony_type
-								option = COR_ceremony_type_private
-							}
-						}
-					}
-				}
-				NOT = { var:COR_coronator_rank ?= 1 }
-			}
-			add_character_modifier = {
-				modifier = COR_crowned_in_barn
-				years = 20
+				remove_nickname = yes
 			}
 		}
 		else_if = {
 			limit = {
-				is_at_war = yes
-				#scope:activity = {
-				#	OR = {
-				#		AND = {
-				#			has_activity_type = COR_activity_coronation_ceremony
-				#			has_activity_option = {
-				#				category = COR_ceremony_type
-				#				option = COR_ceremony_type_private
-				#			}
-				#		}
-				#		AND = {
-				#			has_activity_type = COR_activity_coronation_ceremony_hof
-				#			has_activity_option = {
-				#				category = COR_ceremony_type
-				#				option = COR_ceremony_type_private
-				#			}
-				#		}
-				#	}
-				#}
+				var:COR_coronator_rank ?= 1
+				scope:officiant ?= faith:catholic.religious_head
 			}
-			add_character_modifier = {
-				modifier = COR_crowned_in_war
-				years = 20
-			}
+			add_trait = COR_crowned_by_pope
 		}
+		else_if = {
+			limit = {
+				var:COR_coronator_rank ?= 0
+			}
+			add_trait = COR_crowned_by_bishop
+		}
+		else = {
+			add_trait = COR_crowned_by_priest
+		}
+
 		if = {
 			limit = {
-				scope:activity = {
-					OR = {
-						AND = {
-							has_activity_type = activity_HRT_italienzug
-							has_activity_option = {
-								category = HRT_italienzug_expedition_type
-								option = HRT_italienzug_expedition_type_grand
+				NOR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+					has_title = title:k_king_of_the_germans
+				}
+			}		
+			if = {
+				limit = { scope:officiant ?= faith:catholic.religious_head }
+				add_piety = major_piety_gain
+			}
+			else = {
+				add_piety = minor_piety_gain
+			}
+			dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_gain }
+
+			#Assign possible modifier.
+			if = {
+				limit = {
+					scope:activity = {
+						NOR = {
+							AND = {
+								has_activity_type = COR_activity_coronation_ceremony
+								has_activity_option = {
+									category = COR_ceremony_type
+									option = COR_ceremony_type_private
+								}
 							}
-						}
-						AND = {
-							has_activity_type = COR_activity_coronation_ceremony
-							has_activity_option = {
-								category = COR_ceremony_type
-								option = COR_ceremony_type_extravagant
-							}
-						}
-						AND = {
-							has_activity_type = COR_activity_coronation_ceremony_hof
-							has_activity_option = {
-								category = COR_ceremony_type
-								option = COR_ceremony_type_extravagant
+							AND = {
+								has_activity_type = COR_activity_coronation_ceremony_hof
+								has_activity_option = {
+									category = COR_ceremony_type
+									option = COR_ceremony_type_private
+								}
 							}
 						}
 					}
 				}
+				scope:activity.activity_location.county = {
+					add_county_modifier = {
+						modifier = COR_improved_trade
+						years = 10
+					}
+				}
 			}
-			add_character_modifier = {
-				modifier = COR_extravagant_coronation
-				years = 20
+			if = {
+				limit = {
+					is_at_war = no
+					scope:activity = {
+						OR = {
+							AND = {
+								has_activity_type = COR_activity_coronation_ceremony
+								has_activity_option = {
+									category = COR_ceremony_type
+									option = COR_ceremony_type_private
+								}
+							}
+							AND = {
+								has_activity_type = COR_activity_coronation_ceremony_hof
+								has_activity_option = {
+									category = COR_ceremony_type
+									option = COR_ceremony_type_private
+								}
+							}
+						}
+					}
+					NOT = { var:COR_coronator_rank ?= 1 }
+				}
+				add_character_modifier = {
+					modifier = COR_crowned_in_barn
+					years = 20
+				}
 			}
+			else_if = {
+				limit = {
+					is_at_war = yes
+				}
+				add_character_modifier = {
+					modifier = COR_crowned_in_war
+					years = 20
+				}
+			}
+			if = {
+				limit = {
+					scope:activity = {
+						OR = {
+							AND = {
+								has_activity_type = activity_HRT_italienzug
+								has_activity_option = {
+									category = HRT_italienzug_expedition_type
+									option = HRT_italienzug_expedition_type_grand
+								}
+							}
+							AND = {
+								has_activity_type = COR_activity_coronation_ceremony
+								has_activity_option = {
+									category = COR_ceremony_type
+									option = COR_ceremony_type_extravagant
+								}
+							}
+							AND = {
+								has_activity_type = COR_activity_coronation_ceremony_hof
+								has_activity_option = {
+									category = COR_ceremony_type
+									option = COR_ceremony_type_extravagant
+								}
+							}
+						}
+					}
+				}
+				add_character_modifier = {
+					modifier = COR_extravagant_coronation
+					years = 20
+				}
+			}
+
+			# Progress to next phase
+			hidden_effect = {
+				scope:activity = { progress_activity_phase_after = { days = 1 } }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+					has_title = title:k_king_of_the_germans
+				}
+			}
+			if = {
+				limit = {
+					is_at_war = yes
+				}
+				add_character_modifier = {
+					modifier = COR_crowned_in_war
+					years = 20
+				}
+			}
+			trigger_event = COR_ceremony.0326 # Because the desc is too long. I will never sort this event id
 		}
 
-		# Progress to next phase
-		hidden_effect = {
-			scope:activity = { progress_activity_phase_after = { days = 1 } }
-		}
 		ai_chance = {
 			base = 95
 		}
@@ -3501,7 +3509,10 @@ COR_ceremony.0322 = {
 		remove_variable = COR_years_reigned
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
-		remove_all_character_modifier_instances = COR_uncrowned_modifier
+		if = {
+			limit = { has_character_modifier = COR_uncrowned_modifier }
+			remove_all_character_modifier_instances = COR_uncrowned_modifier
+		}
 		scope:COR_coronator = {
 			remove_list_variable = {
 				name = COR_coronation_targets
@@ -3532,17 +3543,28 @@ COR_ceremony.0323 = {
 		first_valid = {
 			triggered_desc = {
 				trigger = {
-					OR = {
-						has_title = title:e_hre
-						#HRT
-						HRT_is_emperor_trigger = yes
+					scope:host = {
+						OR = {
+							has_title = title:e_hre
+							HRT_is_emperor_trigger = yes
+						}
 					}
 				}
-				desc = COR_ceremony.0323.desc_hre
+				desc = COR_ceremony.0323.desc_hre.1
 			}
 			triggered_desc = {
 				trigger = {
-					is_adult = no
+					scope:host = {
+						has_title = title:k_king_of_the_germans
+					}
+				}
+				desc = COR_ceremony.0323.desc_king_of_the_germans.1
+			}
+			triggered_desc = {
+				trigger = {
+					scope:host = {
+						is_adult = no
+					}
 				}
 				desc = COR_ceremony.0323.desc_child
 			}
@@ -3574,14 +3596,27 @@ COR_ceremony.0323 = {
 	option = {
 		name = COR_ceremony.0323.a
 		trigger = {
-			HRT_is_emperor_trigger = no
+			scope:host = {
+				NOR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+					has_title = title:k_king_of_the_germans
+				}
+			}
 		}
 	}
 	option = {
-		name = COR_ceremony.0323.a_hre
+		name = COR_ceremony.7322.a
 		trigger = {
-			HRT_is_emperor_trigger = yes
+			scope:host = {
+				OR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+					has_title = title:k_king_of_the_germans
+				}
+			}
 		}
+		trigger_event = COR_ceremony.0327
 	}
 }
 
@@ -3675,6 +3710,221 @@ COR_ceremony.0325 = {
 		name = COR_ceremony.0325.a
 		trigger = {
 			NOT = { root = scope:COR_coronator }
+		}
+	}
+}
+
+#HRE coronation for host part 2
+COR_ceremony.0326 = {
+	type = activity_event
+	title = COR_ceremony.0322.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					OR = {
+						has_title = title:e_hre
+						HRT_is_emperor_trigger = yes
+					}
+				}
+				desc = COR_ceremony.0322.desc_hre.2
+			}
+			triggered_desc = {
+				trigger = {
+					has_title = title:k_king_of_the_germans
+				}
+				desc = COR_ceremony.0322.desc_king_of_the_germans.2
+			}
+		}
+	}
+	theme = crown
+	override_background = { reference = temple }
+	left_portrait = {
+		character = scope:COR_coronator
+		animation = personality_zealous
+	}
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = COR_ceremony.7322.a
+		
+		if = {
+			limit = { scope:officiant ?= faith:catholic.religious_head }
+			add_piety = major_piety_gain
+		}
+		else = {
+			add_piety = minor_piety_gain
+		}
+		dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_gain }
+
+		#Assign possible modifier.
+		if = {
+			limit = {
+				scope:activity = {
+					NOR = {
+						AND = {
+							has_activity_type = COR_activity_coronation_ceremony
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_private
+							}
+						}
+						AND = {
+							has_activity_type = COR_activity_coronation_ceremony_hof
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_private
+							}
+						}
+					}
+				}
+			}
+			scope:activity.activity_location.county = {
+				add_county_modifier = {
+					modifier = COR_improved_trade
+					years = 10
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_at_war = no
+				scope:activity = {
+					OR = {
+						AND = {
+							has_activity_type = COR_activity_coronation_ceremony
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_private
+							}
+						}
+						AND = {
+							has_activity_type = COR_activity_coronation_ceremony_hof
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_private
+							}
+						}
+					}
+				}
+				NOT = { var:COR_coronator_rank ?= 1 }
+			}
+			add_character_modifier = {
+				modifier = COR_crowned_in_barn
+				years = 20
+			}
+		}
+		if = {
+			limit = {
+				scope:activity = {
+					OR = {
+						AND = {
+							has_activity_type = activity_HRT_italienzug
+							has_activity_option = {
+								category = HRT_italienzug_expedition_type
+								option = HRT_italienzug_expedition_type_grand
+							}
+						}
+						AND = {
+							has_activity_type = COR_activity_coronation_ceremony
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_extravagant
+							}
+						}
+						AND = {
+							has_activity_type = COR_activity_coronation_ceremony_hof
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_extravagant
+							}
+						}
+					}
+				}
+			}
+			add_character_modifier = {
+				modifier = COR_extravagant_coronation
+				years = 20
+			}
+		}
+
+		# Progress to next phase
+		hidden_effect = {
+			scope:activity = { progress_activity_phase_after = { days = 1 } }
+		}
+		ai_chance = {
+			base = 95
+		}
+	}
+}
+
+#HRE coronation for guests part 2
+COR_ceremony.0327 = {
+	type = activity_event
+	title = COR_ceremony.0322.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:host = {
+						OR = {
+							has_title = title:e_hre
+							HRT_is_emperor_trigger = yes
+						}
+					}
+				}
+				desc = COR_ceremony.0323.desc_hre.2
+			}
+			triggered_desc = {
+				trigger = {
+					scope:host = {
+						has_title = title:k_king_of_the_germans
+					}
+				}
+				desc = COR_ceremony.0323.desc_king_of_the_germans.2
+			}
+		}
+	}
+	theme = crown
+	override_background = { reference = temple }
+	left_portrait = {
+		character = scope:COR_coronator
+		animation = personality_zealous
+	}
+	right_portrait = {
+		character = scope:COR_ruler
+		animation = personality_honorable
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = COR_ceremony.0323.a_hre # Hail Caesar
+		trigger = {
+			scope:host = {
+				OR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = COR_ceremony.0323.a # Hail the King
+		trigger = {
+			scope:host = {
+				NOR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+				}
+			}
 		}
 	}
 }
@@ -6898,401 +7148,334 @@ COR_ceremony.0500 = {
 	}
 }
 
-##############
-# MECHANICAL #
-##############
+##########################
+# 2.4 Jewel of Byzantium #
+##########################
 
-COR_ceremony.9000 = { # A title is transferred to a new character (on_title_gain)
-	hidden = yes
+COR_ceremony.7001 = {
+	type = character_event
+	title = COR_ceremony.0001.t
+	desc = COR_ceremony.7001.desc
+	theme = crown
+	override_background = { reference = temple }
 	
-	trigger = {
-		scope:title = { tier >= tier_kingdom }
-		faith = faith:catholic
-		government_has_flag = government_is_feudal
-		OR = {
-			NOR = {
-				has_trait = COR_crowned_by_priest
-				has_trait = COR_crowned_by_bishop
-				has_trait = COR_crowned_by_pope
-				has_trait = COR_crowned_by_myself
-				has_trait = HRT_emperor
-			}
-		}
-	}
+	left_portrait = scope:COR_coronator
 	
 	immediate = {
-		if = {
-			limit = {
-				NOT = { has_variable = COR_years_reigned }
-			}
-			set_variable = {
-				name = COR_years_reigned
-				value = 0
+		##Set up some scopes we'll need
+		save_scope_as = COR_ruler
+
+		##Fetch valid coronators
+		#Patriarch
+		faith:orthodox.religious_head = {
+			save_scope_as = COR_coronator
+		}
+	}
+
+	option = { #Ask to be crowned by the Patriarch
+		name = COR_ceremony.7001.a
+		trigger = {
+			NOT = { has_trait = excommunicated }
+			exists = scope:COR_coronator
+		}
+		custom_tooltip = COR_ceremony.7001.a.tt
+
+		var:COR_coronator ?= {
+			remove_list_variable = {
+				name = COR_coronation_targets
+				target = scope:COR_ruler
 			}
 		}
-		if = {
-			limit = { has_game_rule = COR_crowns_taketh }
-			add_character_flag = sold_crown_charmod
-			every_spouse = {
-				limit = {
-					NOR = {
-						has_trait = COR_crowned_by_priest
-						has_trait = COR_crowned_by_bishop
-						has_trait = COR_crowned_by_pope
-						has_trait = COR_crowned_by_myself
-						has_trait = HRT_emperor
-					}
-				}
-				add_character_flag = sold_crown_charmod
+		scope:COR_coronator = {
+			add_to_variable_list = {
+				name = COR_coronation_targets
+				target = scope:COR_ruler
 			}
+			create_story = COR_coronator_story
+		}
+		set_variable = {
+			name = COR_coronator
+			value = scope:COR_coronator
+		}
+		add_character_flag = COR_flag_preparing_coronation
+
+		open_view_data = {
+			view = activity_list_detail_host_window
+			data = activity_type:COR_byz_activity_coronation_ceremony
+			player = root
+		}
+
+		ai_chance = {
+			base = 20
+		}
+	}
+
+	option = { #Changed your mind, not yet.
+		name = COR_ceremony.0001.e
+
+		custom_tooltip = COR_ceremony.0001.e.tt
+
+		hidden_effect = {
+			remove_variable = COR_coronation_request_cooldown
+		}
+
+		ai_chance = {
+			base = 0
 		}
 	}
 }
 
-#COR_e.0002 = { # A title is inherited by a character (on_title_gain_inheritance)
-#	hidden = yes
-#	
-#	trigger = {
-#		scope:title = { tier >= tier_kingdom }
-#		faith = faith:catholic
-#		government_has_flag = government_is_feudal
-#		NOR = {
-#			has_trait = COR_crowned_by_priest
-#			has_trait = COR_crowned_by_bishop
-#			has_trait = COR_crowned_by_pope
-#			has_trait = COR_crowned_by_myself
-#			has_trait = HRT_emperor
-#			has_variable = COR_years_reigned
-#		}
-#	}
-#	
-#	immediate = {
-#		add_character_flag = sold_crown_charmod
-#		set_variable = {
-#			name = COR_years_reigned
-#			value = 0
-#		}
-#		every_spouse = {
-#			limit = {
-#				NOR = {
-#					has_trait = COR_crowned_by_priest
-#					has_trait = COR_crowned_by_bishop
-#					has_trait = COR_crowned_by_pope
-#					has_trait = COR_crowned_by_myself
-#					has_trait = HRT_emperor
-#				}
-#			}
-#			add_character_flag = sold_crown_charmod
-#		}
-#	}
-#}
-#
-#COR_e.0003 = { # A title is usurped by a character (on_title_gain_usurpation)
-#	hidden = yes
-#	
-#	trigger = {
-#		scope:title = { tier >= tier_kingdom }
-#		faith = faith:catholic
-#		government_has_flag = government_is_feudal
-#		NOR = {
-#			has_trait = COR_crowned_by_priest
-#			has_trait = COR_crowned_by_bishop
-#			has_trait = COR_crowned_by_pope
-#			has_trait = COR_crowned_by_myself
-#			has_trait = HRT_emperor
-#			has_variable = COR_years_reigned
-#		}
-#	}
-#	
-#	immediate = {
-#		add_character_flag = sold_crown_charmod
-#		set_variable = {
-#			name = COR_years_reigned
-#			value = 0
-#		}
-#		every_spouse = {
-#			limit = {
-#				NOR = {
-#					has_trait = COR_crowned_by_priest
-#					has_trait = COR_crowned_by_bishop
-#					has_trait = COR_crowned_by_pope
-#					has_trait = COR_crowned_by_myself
-#					has_trait = HRT_emperor
-#				}
-#			}
-#			add_character_flag = sold_crown_charmod
-#		}
-#	}
-#}
+# ON START - CORONATION CEREMONY
+# For host
+COR_ceremony.7320 = {
+	type = activity_event
+	title = COR_ceremony.0320.t
 
-COR_ceremony.9100 = { # Maintenace & Uncrowned Malus (yearly_playable_pulse)
-	hidden = yes
-	
-	trigger = {
-		OR = {
-			has_variable = COR_years_reigned
-			has_character_modifier = COR_uncrowned_modifier
-			AND = {
-				NOT = { has_nickname = nick_the_crownless }
-				has_character_flag = sold_crown_charmod
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					scope:activity = {
+						AND = {
+							has_activity_type = COR_byz_activity_coronation_ceremony
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_dignified
+							}
+						}
+					}
+				}
+				desc = COR_ceremony.0320.desc.dignified
 			}
-			AND = {
-				OR = {
-					HRT_is_emperor_trigger = yes
-					highest_held_title_tier >= tier_kingdom
-				}
-				faith = faith:catholic
-				government_has_flag = government_is_feudal
-				OR = {
-					AND = {
-						HRT_is_emperor_trigger = no
-						NOR = {
-							has_trait = COR_crowned_by_priest
-							has_trait = COR_crowned_by_bishop
-							has_trait = COR_crowned_by_pope
-							has_trait = COR_crowned_by_myself
-						}
-					}
-					AND = {
-						HRT_is_emperor_trigger = yes
-						NOR = {
-							has_trait = HRT_emperor
-							has_trait = COR_crowned_by_myself
+			triggered_desc = {
+				trigger = {
+					scope:activity = {
+						AND = {
+							has_activity_type = COR_byz_activity_coronation_ceremony
+							has_activity_option = {
+								category = COR_ceremony_type
+								option = COR_ceremony_type_extravagant
+							}
 						}
 					}
 				}
+				desc = COR_ceremony.0320.desc.extravagant
 			}
 		}
 	}
-	
+
+	theme = crown
+	override_background = { reference = temple }
+
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	immediate = { }
+
+	option = {
+		name = COR_ceremony.0320.a
+	}
+}
+
+# ON END - CEREMONY
+
+# For host
+COR_ceremony.7322 = {
+	type = activity_event
+	title = COR_ceremony.0322.t
+	desc = COR_ceremony.7322.desc
+	theme = crown
+	override_background = { reference = temple }
+	left_portrait = {
+		character = scope:COR_coronator
+		animation = wedding_priest
+	}
+	right_portrait = {
+		character = root
+		animation = throne_room_bow_1 #throne_room_kneel_1
+	}
+
+	trigger = {
+		this = scope:COR_ruler
+	}
+
 	immediate = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Stingers/Grand_Activities/ep2_mx_sting_wedding_west" #TODO
+	}
+
+	option = {
+		name = COR_ceremony.7322.a
+
+		switch = {
+			trigger = has_trait
+			COR_crowned_by_priest = { remove_trait = COR_crowned_by_priest }
+			COR_crowned_by_bishop = { remove_trait = COR_crowned_by_bishop }
+			COR_crowned_by_pope = { remove_trait = COR_crowned_by_pope }
+			COR_crowned_by_myself = { remove_trait = COR_crowned_by_myself }
+			HRT_emperor = { remove_trait = HRT_emperor }
+		}
+
+		add_trait = COR_byz_crowned_by_patriarch
 		if = {
 			limit = {
-				AND = {
-					OR = {
-						HRT_is_emperor_trigger = yes
-						highest_held_title_tier >= tier_kingdom
-					}
-					faith = faith:catholic
-					government_has_flag = government_is_feudal
-					OR = {
-						AND = {
-							HRT_is_emperor_trigger = no
-							NOR = {
-								has_trait = COR_crowned_by_priest
-								has_trait = COR_crowned_by_bishop
-								has_trait = COR_crowned_by_pope
-								has_trait = COR_crowned_by_myself
-							}
-						}
-						AND = {
-							HRT_is_emperor_trigger = yes
-							NOR = {
-								has_trait = HRT_emperor
-								has_trait = COR_crowned_by_myself
-							}
-						}
-					}
-				}
+				is_at_war = yes
 			}
-			#set variable if missing
-			if = {
-				limit = {
-					NOT = { has_variable = COR_years_reigned }
-				}
-				set_variable = {
-					name = COR_years_reigned
-					value = 0
-				}
-			}
-			if = {
-				limit = {
-					OR = {
-						is_ai = yes
-						AND = {
-							has_dlc_feature = tours_and_tournaments
-							has_dlc_feature = advanced_activities
-						}
-					}
-					has_game_rule = COR_crowns_taketh
-				}
-				#remove crown if still wearing
-				if = {
-					limit = {
-						NOT = { has_character_flag = sold_crown_charmod }
-					}
-					add_character_flag = sold_crown_charmod
-				}
-				#increase uncrowned malus for adult rulers
-				if = {
-					limit = {
-						is_adult = yes
-					}
-					if = {
-						limit = {
-							var:COR_years_reigned < 30
-						}
-						change_variable = {
-							name = COR_years_reigned
-							add = 1
-						}
-						add_character_modifier = {
-							modifier = COR_uncrowned_modifier
-						}
-					}
-				}
-				#remove spouses crowns
-				every_spouse = {
-					limit = {
-						NOR = {
-							has_trait = COR_crowned_by_priest
-							has_trait = COR_crowned_by_bishop
-							has_trait = COR_crowned_by_pope
-							has_trait = COR_crowned_by_myself
-							has_trait = HRT_emperor
-							has_character_flag = sold_crown_charmod
-						}
-					}
-					add_character_flag = sold_crown_charmod
-				}
-			}
-			else = {
-				remove_all_character_modifier_instances = COR_uncrowned_modifier
-				if = {
-					limit = {
-						NOT = { has_nickname = nick_the_crownless }
-					}
-					remove_character_flag = sold_crown_charmod
-				}
-				every_spouse = {
-					limit = {
-						NOT = { has_nickname = nick_the_crownless }
-						has_character_flag = sold_crown_charmod
-					}
-					remove_character_flag = sold_crown_charmod
-				}
-			}
-
-			#check if officiant is valid (COR_coronator)
-			if = {
-				limit = {
-					has_variable = COR_coronator
-					NOR = {
-						has_trait = COR_crowned_by_priest
-						has_trait = COR_crowned_by_bishop
-						has_trait = COR_crowned_by_pope
-						has_trait = COR_crowned_by_myself
-						has_trait = HRT_emperor
-					}
-					var:COR_coronator = {
-						NOR = {
-							is_alive = yes
-							is_imprisoned = no
-							faith = faith:catholic
-							OR = {
-								has_trait = TCT_antipope
-								is_cardinal = yes
-								this = faith:catholic.religious_head
-								is_theocratic_lessee = yes
-								has_council_position = councillor_court_chaplain
-							}
-						}
-					}
-				}
-				save_scope_as = COR_coronator
-				send_interface_toast = {
-					type = event_toast_effect_bad
-					left_icon = var:COR_coronator
-					title = COR_officiant_invalidated.toast.t
-					custom_tooltip = COR_officiant_invalidated.toast
-				}
-				remove_character_flag = COR_flag_preparing_coronation
-				remove_variable = COR_coronation_request_cooldown
-				remove_variable = COR_coronator_rank
-				var:COR_coronator = {
-					remove_list_variable = {
-						name = COR_coronation_targets
-						target = root
-					}
-				}
-				remove_variable = COR_coronator
+			add_character_modifier = {
+				modifier = COR_crowned_in_war
+				years = 20
 			}
 		}
 
-		#give back crowns and remove modifiers if you fail to meet the criteria
+		trigger_event = COR_ceremony.7323
+
+		ai_chance = {
+			base = 95
+		}
+	}
+
+	after = {
+		remove_character_flag = COR_flag_preparing_coronation
+		remove_variable = COR_years_reigned
+		remove_variable = COR_coronation_request_cooldown
 		if = {
-			limit = {
-				OR = {
-					AND = {
-						is_ai = no
-						NOR = {
-							has_dlc_feature = tours_and_tournaments
-							has_dlc_feature = advanced_activities
-						}
-					}
-					NAND = {
-						OR = {
-							HRT_is_emperor_trigger = yes
-							highest_held_title_tier >= tier_kingdom
-						}
-						faith = faith:catholic
-						government_has_flag = government_is_feudal
-					}
-					AND = {
-						HRT_is_emperor_trigger = no
-						OR = {
-							has_trait = COR_crowned_by_priest
-							has_trait = COR_crowned_by_bishop
-							has_trait = COR_crowned_by_pope
-							has_trait = COR_crowned_by_myself
-						}
-					}
-					AND = {
-						HRT_is_emperor_trigger = yes
-						OR = {
-							has_trait = HRT_emperor
-							has_trait = COR_crowned_by_myself
-						}
-					}
-				}
-			}
-			remove_character_flag = COR_flag_preparing_coronation
-			remove_variable = COR_years_reigned
-			remove_variable = COR_coronation_request_cooldown
-			remove_variable = COR_coronator_rank
+			limit = { has_character_modifier = COR_uncrowned_modifier }
 			remove_all_character_modifier_instances = COR_uncrowned_modifier
-			var:COR_coronator ?= {
-				remove_list_variable = {
-					name = COR_coronation_targets
-					target = root
-				}
-			}
-			if = {
-				limit = {
-					has_variable = COR_coronator
-					NOR = {
-						has_trait = COR_crowned_by_priest
-						has_trait = COR_crowned_by_bishop
-						has_trait = COR_crowned_by_pope
-						has_trait = COR_crowned_by_myself
-						has_trait = HRT_emperor
-					}
-				}
-				remove_variable = COR_coronator
-			}
-			if = {
-				limit = {
-					NOT = { has_nickname = nick_the_crownless }
-				}
-				remove_character_flag = sold_crown_charmod
-			}
-			every_spouse = {
-				limit = {
-					NOT = { has_nickname = nick_the_crownless }
-					has_character_flag = sold_crown_charmod
-				}
-				remove_character_flag = sold_crown_charmod
+		}
+		scope:COR_coronator = {
+			remove_list_variable = {
+				name = COR_coronation_targets
+				target = scope:COR_ruler
 			}
 		}
+		if = {
+			limit = {
+				NOT = { has_nickname = nick_the_crownless }
+			}
+			remove_character_flag = sold_crown_charmod
+		}
+		every_spouse = {
+			limit = {
+				NOT = { has_nickname = nick_the_crownless }
+				has_character_flag = sold_crown_charmod
+			}
+			remove_character_flag = sold_crown_charmod
+		}
+	}
+}
+
+COR_ceremony.7323 = {
+	type = activity_event
+	title = COR_ceremony.0322.t
+	desc = COR_ceremony.7323.desc
+	theme = crown
+	override_background = { reference = temple }
+	left_portrait = {
+		character = scope:COR_coronator
+		animation = personality_zealous
+	}
+	right_portrait = {
+		character = root
+		animation = personality_honorable
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = COR_ceremony.0323.a
+		
+		add_piety = major_piety_gain
+		dynasty ?= { add_dynasty_prestige = medium_dynasty_prestige_gain }
+
+		#Assign possible modifier.
+		scope:activity.activity_location.county = {
+			add_county_modifier = {
+				modifier = COR_improved_trade
+				years = 10
+			}
+		}
+		if = {
+			limit = {
+				scope:activity = {
+					AND = {
+						has_activity_type = COR_byz_activity_coronation_ceremony
+						has_activity_option = {
+							category = COR_ceremony_type
+							option = COR_ceremony_type_extravagant
+						}
+					}
+				}
+			}
+			add_character_modifier = {
+				modifier = COR_extravagant_coronation
+				years = 20
+			}
+		}
+
+		# Progress to next phase
+		hidden_effect = {
+			scope:activity = { progress_activity_phase_after = { days = 1 } }
+		}
+		ai_chance = {
+			base = 95
+		}
+	}
+}
+
+# For guests
+COR_ceremony.7324 = {
+	type = activity_event
+	title = COR_ceremony.0322.t
+	desc = COR_ceremony.7324.desc
+	theme = crown
+	override_background = { reference = temple }
+	left_portrait = {
+		character = scope:COR_coronator
+		animation = wedding_priest
+	}
+	right_portrait = {
+		character = scope:COR_ruler
+		animation = throne_room_bow_1 #throne_room_kneel_1
+	}
+
+	trigger = {
+		NOR = {
+			this = scope:COR_ruler
+			this = scope:COR_coronator
+		}
+	}
+
+	immediate = {
+		play_sound_effect = "event:/DLC/EP2/SFX/Stingers/Grand_Activities/ep2_mx_sting_wedding_west" #TODO
+	}
+
+	option = {
+		name = COR_ceremony.7324.a
+		trigger_event = COR_ceremony.7325
+	}
+}
+
+COR_ceremony.7325 = {
+	type = activity_event
+	title = COR_ceremony.0322.t
+	desc = COR_ceremony.7325.desc
+	theme = crown
+	override_background = { reference = temple }
+	left_portrait = {
+		character = scope:COR_coronator
+		animation = personality_zealous
+	}
+	right_portrait = {
+		character = scope:COR_ruler
+		animation = personality_honorable
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = COR_ceremony.0323.a_hre # Hail Caesar
 	}
 }

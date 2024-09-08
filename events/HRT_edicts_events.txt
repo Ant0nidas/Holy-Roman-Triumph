@@ -26,7 +26,6 @@ HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 40
-		prestige > major_prestige_value		
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_legal_unification_var }
@@ -61,10 +60,6 @@ HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
 		}
 		every_vassal = {
 			trigger_event = HRT_edicts.0011 # Notification Event
-		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -124,7 +119,6 @@ HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
 		HRT_is_emperor_trigger = yes
 		has_variable = HRT_authority
 		var:HRT_authority >= 100
-		prestige >= massive_prestige_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_chivalric_excellence_var }
@@ -156,10 +150,6 @@ HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
 		add_character_modifier = {
 			modifier = HRT_edict_chivalric_excellence
 			years = 5
-		}
-		add_prestige = {
-			value = massive_prestige_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -219,8 +209,6 @@ HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
 		HRT_is_emperor_trigger = yes
 		has_variable = HRT_authority
 		var:HRT_authority >= 60
-		prestige >= medium_prestige_value
-		piety >= medium_piety_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_diplomatic_corps_var }
@@ -258,14 +246,6 @@ HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
 				target = root
 				modifier = HRT_edict_diplomatic_corps_opinion
 			}
-		}
-		add_prestige = {
-			value = medium_prestige_value
-			multiply = -1
-		}
-		add_piety = {
-			value = medium_piety_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -325,7 +305,6 @@ HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 80
-		prestige >= major_prestige_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_consular_taxation_var }
@@ -357,10 +336,6 @@ HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
 		add_character_modifier = {
 			modifier = HRT_edict_consular_taxation
 			years = 5
-		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -419,7 +394,6 @@ HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 100
-		prestige >= massive_prestige_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_levy_conscription_var }
@@ -451,10 +425,6 @@ HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
 		add_character_modifier = {
 			modifier = HRT_edict_levy_conscription
 			years = 5
-		}
-		add_prestige = {
-			value = massive_prestige_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -513,7 +483,6 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 75
-		prestige >= major_prestige_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_urban_rights_var }
@@ -546,7 +515,7 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 			modifier = HRT_edict_urban_rights
 			years = 5
 		}
-		every_sub_realm_county = {
+		every_realm_county = {
 			limit = {
 				tier = county
 				any_county_province = {
@@ -562,10 +531,6 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 		every_vassal = {
 			limit = { is_ai = no }
 			trigger_event = HRT_edicts.0012
-		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -624,7 +589,6 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 100
-		prestige >= massive_prestige_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_border_defense_var }
@@ -657,7 +621,7 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 			modifier = HRT_edict_border_defense
 			years = 5
 		}
-		every_sub_realm_county = {
+		every_realm_county = {
 			limit = {
 				tier = county
 				any_neighboring_county = {
@@ -675,10 +639,6 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 		every_vassal = {
 			limit = { is_ai = no }
 			trigger_event = HRT_edicts.0013
-		}
-		add_prestige = {
-			value = massive_prestige_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -737,8 +697,6 @@ HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 50
-		prestige >= minor_prestige_value
-		piety >= major_piety_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_scholastic_advancement_var }
@@ -773,14 +731,6 @@ HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
 		}
 		every_vassal = {
 			trigger_event = HRT_edicts.0014
-		}
-		add_prestige = {
-			value = minor_prestige_value
-			multiply = -1
-		}
-		add_piety = {
-			value = major_piety_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -839,7 +789,6 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 50
-		prestige >= major_prestige_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_imperial_works_var }
@@ -872,7 +821,7 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 			modifier = HRT_edict_imperial_works
 			years = 5
 		}
-		every_sub_realm_county = {
+		every_realm_county = {
 			add_county_modifier = {
 				modifier = HRT_edict_imperial_works_county
 				years = 5
@@ -880,10 +829,6 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 		}
 		every_vassal = {
 			trigger_event = HRT_edicts.0015
-		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -942,7 +887,6 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 	trigger = {
 		HRT_is_emperor_trigger = yes
 		var:HRT_authority >= 40
-		piety >= major_piety_value
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_ecclesiastical_patronage_var }
@@ -975,7 +919,7 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 			modifier = HRT_edict_ecclesiastical_patronage
 			years = 5
 		}
-		every_sub_realm_county = {
+		every_realm_county = {
 			add_county_modifier = {
 				modifier = HRT_edict_ecclesiastical_patronage_county
 				years = 5
@@ -983,10 +927,6 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 		}
 		every_vassal = {
 			trigger_event = HRT_edicts.0016
-		}
-		add_piety = {
-			value = major_piety_value
-			multiply = -1
 		}
 		hidden_effect = {
 			change_variable = {
@@ -1150,8 +1090,7 @@ HRT_edicts.1001 = {
 
 	trigger = {
 		HRT_is_emperor_trigger = yes
-		var:HRT_authority >= 60
-		prestige >= major_prestige_value
+		var:HRT_authority >= 30
 		NOR = {
 			has_character_flag = HRT_edict_open
 			has_variable = HRT_edict_proclaim_directive
@@ -1179,14 +1118,10 @@ HRT_edicts.1001 = {
 			modifier = HRT_edict_proclaim_directive_diplomacy
 			years = 3
 		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
-		}
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
-				subtract = 60
+				subtract = 30
 			}
 			set_variable = {
 				name = HRT_edict_proclaim_directive
@@ -1207,14 +1142,10 @@ HRT_edicts.1001 = {
 			modifier = HRT_edict_proclaim_directive_martial
 			years = 3
 		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
-		}
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
-				subtract = 60
+				subtract = 30
 			}
 			set_variable = {
 				name = HRT_edict_proclaim_directive
@@ -1235,14 +1166,10 @@ HRT_edicts.1001 = {
 			modifier = HRT_edict_proclaim_directive_stewardship
 			years = 3
 		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
-		}
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
-				subtract = 60
+				subtract = 30
 			}
 			set_variable = {
 				name = HRT_edict_proclaim_directive
@@ -1263,14 +1190,10 @@ HRT_edicts.1001 = {
 			modifier = HRT_edict_proclaim_directive_intrigue
 			years = 3
 		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
-		}
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
-				subtract = 60
+				subtract = 30
 			}
 			set_variable = {
 				name = HRT_edict_proclaim_directive
@@ -1291,14 +1214,10 @@ HRT_edicts.1001 = {
 			modifier = HRT_edict_proclaim_directive_learning
 			years = 3
 		}
-		add_prestige = {
-			value = major_prestige_value
-			multiply = -1
-		}
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
-				subtract = 60
+				subtract = 30
 			}
 			set_variable = {
 				name = HRT_edict_proclaim_directive

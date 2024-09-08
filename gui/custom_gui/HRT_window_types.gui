@@ -7,7 +7,7 @@ type HRT_window_special_character = widget { #For showing the Imperator and Expe
 			texture = "gfx/interface/icons/HRT_laurel_wreath.dds"
 			size = { 180 180 }
 			position = { -17 25 }
-			alpha = 0.7
+			alpha = 0.6
 		}
 	}
     icon = {
@@ -26,7 +26,7 @@ type HRT_window_special_character = widget { #For showing the Imperator and Expe
     block "portrait" {portrait_head = {parentanchor = hcenter|vcenter position = {0 5} }}
     text_single = {
         parentanchor = bottom|hcenter
-        position = {0 -20}
+        position = {-10 -20}
         text = "HRT_WINDOW_NAME"
 		fontsize = 18
     }

@@ -30,7 +30,7 @@ COR_crowned_in_barn = { #Secluded Coronation with no Pope
 COR_crowned_in_war = { 
 	icon = prestige_negative
 	clergy_opinion = -5
-	monthly_piety = -0.05
+	monthly_piety = -0.1
 }
 
 COR_extravagant_coronation = { #Extravagant coronation 20 years bonus.

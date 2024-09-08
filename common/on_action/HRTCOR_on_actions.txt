@@ -1,10 +1,10 @@
 ﻿on_game_start = {
 	on_actions = {
-		HRTCOR_setup_on_actions
+		HRTCOR_on_game_start
 	}
 }
 
-HRTCOR_setup_on_actions = {
+HRTCOR_on_game_start = {
 	effect = {
 		set_global_variable = {
 			name = HRT_is_loaded
@@ -16,7 +16,246 @@ HRTCOR_setup_on_actions = {
 			}
 			# Do nothing
 		}
+		set_global_variable = {
+			name = COR_is_loaded
+			value = yes
+		}
+		if = { #Error Destroyer 4001
+			limit = {
+				exists = global_var:COR_is_loaded
+			}
+			# Do nothing
+		}
 
+		#Close HRT Window on player death, I moved this into a story from on_death_on_action because I think it saves performance
+		every_player = {
+			create_story = HRT_on_player_death_story
+		}
+
+		## Holy Roman Triumph
+		# Get total count of heartland counties
+		title:c_aachen = {
+			set_variable = {
+				name = HRT_core_territory
+				value = 0
+			}
+			every_county_in_region = {
+				region = HRT_core_territory
+				prev = {
+					change_variable = {
+						name = HRT_core_territory
+						add = 1
+					}
+				}
+			}
+		}
+
+		# Imperial City History Effect
+		# Worms			(1074)
+		# Speyer		(1076)
+		# Frankfurt		(1151)
+		# Augsburg		(1156)
+		# Aachen		(1167)
+		# Regensburg	(1180)
+		# Ulm			(1184)
+
+		# Worms
+		if = {
+			limit = { game_start_date >= 1074.1.1 }
+			title:c_worms = {
+				create_character = {
+					template = merchant_template
+					location = title_province
+					save_scope_as = free_city_holder
+				}
+			}
+			scope:free_city_holder = {
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = title_change
+					add_claim_on_loss = no
+				}
+				title:c_worms = {
+					change_title_holder = {
+						holder = scope:free_city_holder
+						change = scope:title_change
+					}
+				}
+				HRT_grant_imperial_city_effect = yes
+			}
+		}
+		# Speyer
+		if = {
+			limit = { game_start_date >= 1076.1.1 }
+			title:c_speyer = {
+				create_character = {
+					template = merchant_template
+					location = title_province
+					save_scope_as = free_city_holder
+				}
+			}
+			scope:free_city_holder = {
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = title_change
+					add_claim_on_loss = no
+				}
+				title:c_speyer = {
+					change_title_holder = {
+						holder = scope:free_city_holder
+						change = scope:title_change
+					}
+				}
+				HRT_grant_imperial_city_effect = yes
+			}
+		}
+		# Frankfurt
+		if = {
+			limit = { game_start_date >= 1151.1.1 }
+			title:c_frankfurt = {
+				create_character = {
+					template = merchant_template
+					location = title_province
+					save_scope_as = free_city_holder
+				}
+			}
+			scope:free_city_holder = {
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = title_change
+					add_claim_on_loss = no
+				}
+				title:c_frankfurt = {
+					change_title_holder = {
+						holder = scope:free_city_holder
+						change = scope:title_change
+					}
+				}
+				HRT_grant_imperial_city_effect = yes
+			}
+		}
+		# Augsburg
+		if = {
+			limit = { game_start_date >= 1156.1.1 }
+			title:c_augsburg = {
+				create_character = {
+					template = merchant_template
+					location = title_province
+					save_scope_as = free_city_holder
+				}
+			}
+			scope:free_city_holder = {
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = title_change
+					add_claim_on_loss = no
+				}
+				title:c_augsburg = {
+					change_title_holder = {
+						holder = scope:free_city_holder
+						change = scope:title_change
+					}
+				}
+				HRT_grant_imperial_city_effect = yes
+			}
+		}
+		# Aachen
+		if = {
+			limit = { game_start_date >= 1167.1.1 }
+			title:c_aachen = {
+				create_character = {
+					template = merchant_template
+					location = title_province
+					save_scope_as = free_city_holder
+				}
+			}
+			scope:free_city_holder = {
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = title_change
+					add_claim_on_loss = no
+				}
+				title:c_aachen = {
+					change_title_holder = {
+						holder = scope:free_city_holder
+						change = scope:title_change
+					}
+				}
+				HRT_grant_imperial_city_effect = yes
+			}
+		}
+		# Regensburg
+		if = {
+			limit = { game_start_date >= 1180.1.1 }
+			title:c_regensburg = {
+				create_character = {
+					template = merchant_template
+					location = title_province
+					save_scope_as = free_city_holder
+				}
+			}
+			scope:free_city_holder = {
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = title_change
+					add_claim_on_loss = no
+				}
+				title:c_regensburg = {
+					change_title_holder = {
+						holder = scope:free_city_holder
+						change = scope:title_change
+					}
+				}
+				HRT_grant_imperial_city_effect = yes
+			}
+		}
+		# Ulm
+		if = {
+			limit = { game_start_date >= 1184.1.1 }
+			title:c_ulm = {
+				create_character = {
+					template = merchant_template
+					location = title_province
+					save_scope_as = free_city_holder
+				}
+			}
+			scope:free_city_holder = {
+				create_title_and_vassal_change = {
+					type = returned
+					save_scope_as = title_change
+					add_claim_on_loss = no
+				}
+				title:c_ulm = {
+					change_title_holder = {
+						holder = scope:free_city_holder
+						change = scope:title_change
+					}
+				}
+				change_liege = {
+					liege = title:e_hre.holder
+					change = scope:title_change
+				}
+				resolve_title_and_vassal_change = scope:title_change
+				change_government = free_imperial_city_government
+				add_realm_law_skip_effects = city_succession_law
+				create_story = HRT_imperial_city_story
+				capital_province.county = {
+					add_county_modifier = HRT_reichsstadt_1
+					set_variable = {
+						name = HRT_reichsstadt_years
+						value = 0
+					}
+					title:c_aachen = {
+						add_to_variable_list = {
+							name = HRT_reichsstaedte
+							target = prev
+						}
+					}
+				}
+			}
+		}
+
+		## Coronation Ceremonies
 		# Giveth Crowns
 		every_ruler = {
 			limit = {
@@ -39,7 +278,30 @@ HRTCOR_setup_on_actions = {
 			add_trait = COR_crowned_by_bishop
 		}
 
-		#Set variable
+		# 2.4 Jewel of Byzantium
+		character:1700 ?= { # Basil I "the Macedonian"
+			add_trait = COR_byz_crowned_by_patriarch
+			if = {
+				limit = { is_alive = yes }
+				set_variable = {
+					name = COR_coronator
+					value = character:70554 # Patriarch Photius
+				}
+			}
+		}
+		character:1732 ?= { # Konstantinos X Doukas
+			add_trait = COR_byz_crowned_by_patriarch
+			if = {
+				limit = { is_alive = yes }
+				set_variable = {
+					name = COR_coronator
+					value = character:70541 # Patriarch Michael I Cerularius
+				}
+			}
+		}
+		#TODO Byz DLC new DLC bookmark
+
+		# Set COR_years_reigned variable
 		every_ruler = {
 			limit = {
 				highest_held_title_tier >= tier_kingdom
@@ -50,14 +312,15 @@ HRTCOR_setup_on_actions = {
 					has_trait = COR_crowned_by_bishop
 					has_trait = COR_crowned_by_pope
 					has_trait = COR_crowned_by_myself
-					this = character:30228 #Louis II of Italy (gets his trait in starting event)
+					has_trait = HRT_emperor
+					#this = character:30228 #Louis II of Italy (gets his trait in starting event) #Somehow does not work
 				}
 			}
 			set_variable = {
 				name = COR_years_reigned
 				value = 0
 			}
-			# Taketh Crowns
+			# Remove Crowns
 			if = {
 				limit = {
 					has_game_rule = COR_crowns_taketh
@@ -78,6 +341,7 @@ HRTCOR_setup_on_actions = {
 							has_trait = COR_crowned_by_pope
 							has_trait = COR_crowned_by_myself
 							has_trait = HRT_emperor
+							has_trait = COR_byz_crowned_by_patriarch
 						}
 					}
 					add_character_flag = sold_crown_charmod
@@ -89,15 +353,15 @@ HRTCOR_setup_on_actions = {
 
 on_game_start_after_lobby = {
 	on_actions = {
-		HRT_setup_after_game_start_on_actions
+		HRTCOR_on_game_start_after_lobby
 	}
 }
 
-HRT_setup_after_game_start_on_actions = {
+HRTCOR_on_game_start_after_lobby = {
 	effect = {
 		if = {
 			limit = { game_start_date = 867.1.1 }
-			character:30228 ?= { # Louis II of Italy Introduction Event
+			character:30228 ?= { # Louis II of Italy
 				create_story = HRT_emperor_story
 				trigger_event = HRT.0001 # Louis Introduction Event
 			}
@@ -105,30 +369,31 @@ HRT_setup_after_game_start_on_actions = {
 		else_if = {
 			limit = { exists = title:e_hre.holder }
 			title:e_hre.holder = {
-				add_character_flag = HRT_italienzug
 				create_story = HRT_emperor_story
-				trigger_event = HRT.0002 # Generic Introduction Event
-			}
-		}
-
-		#TODO HRT_grant_roman_kingship = yes #after creation of HRE
-
-		# Get Total Count of Heartland Counties
-		title:c_aachen = {
-			set_variable = {
-				name = HRT_core_territory
-				value = 0
-			}
-			every_county_in_region = {
-				region = HRT_core_territory
-				prev = {
-					change_variable = {
-						name = HRT_core_territory
-						add = 1
+				if = {
+					limit = {
+						this = character:1316 # Heinrich IV
 					}
+					add_character_flag = HRT_italienzug
+					trigger_event = HRT.0002 # Heinrich IV Introduction Event
 				}
+				#else_if = { #TODO Byz DLC barbarossa
+				#	limit = {
+				#		this = character:Barbarossa # Barbarossa
+				#	}
+				#	trigger_event = HRT.0003 # Barbarossa Introduction Event
+				#}
+				else = {
+					create_story = HRT_emperor_story
+					#trigger_event = HRT.0010 # TODO Generic Introduction Event
+				}
+
+				## 2.2 Unity
+				#HRT_unity_effect = yes #moved to story
 			}
 		}
+
+		# TODO More Bookmarks Compat before HRE restoration
 	}
 }
 
@@ -136,121 +401,614 @@ HRT_setup_after_game_start_on_actions = {
 # Root does not exist
 yearly_global_pulse = {
 	on_actions = {
-		HRT_yearly_maintenance_pulse
+		HRT_yearly_global_pulse # Maintenance
 	}
 }
 
-HRT_yearly_maintenance_pulse = {
+HRT_yearly_global_pulse = {
 	trigger = {
 		title:c_aachen = {
-			NOT = { has_variable = HRT_dismantled }
-		}
-		OR = {
-			AND = {
-				exists = title:e_hre.holder
-				title:e_hre.holder = {
-					HRT_is_emperor_trigger = no
-				}
-			}
-			title:c_aachen.var:HRT_emperor = {
-				is_alive = no
+			NOR = {
+				has_variable = HRT_dismantled
+				has_variable = HRT_CF_apostate_active #CF Compat
 			}
 		}
 	}
 	effect = {
+		# Assigning emperor if there should be one but is not
 		if = {
-			limit = { exists = title:e_hre.holder }
-			title:e_hre.holder = {
-				create_story = HRT_emperor_story
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							AND = {
-								has_dlc_feature = tours_and_tournaments
-								has_dlc_feature = advanced_activities
-							}
-						}
-						NOR = {
-							has_trait = HRT_emperor
-							has_trait = COR_crowned_by_myself
-							this = character:1316 # Heinrich IV
+			limit = {
+				OR = {
+					AND = {
+						exists = title:e_hre.holder
+						title:e_hre.holder = {
+							HRT_is_emperor_trigger = no
 						}
 					}
-					trigger_event = {
-						id = HRT.1001
-						days = { 7 14 }
+					title:c_aachen = {
+						NAND = {
+							has_variable = HRT_emperor
+							var:HRT_emperor ?= {
+								exists = this
+								is_alive = yes
+							}
+						}
+					}
+				}
+			}
+			HRT_close_window = yes
+			if = {
+				limit = { exists = title:e_hre.holder }
+				title:e_hre.holder = {
+					if = {
+						limit = {
+							NOT = { this = faith:catholic.religious_head }
+							faith = { religion_tag = christianity_religion }
+							OR = {
+								government_has_flag = government_is_feudal
+								government_has_flag = government_is_clan
+							}
+						}
+						create_story = HRT_emperor_story
+						if = {
+							limit = {
+								NOT = { has_character_flag = HRT_italienzug }
+							}
+							trigger_event = {
+								id = HRT.1001
+								days = { 7 14 }
+							}
+						}
+					}
+				}
+			}
+			else = {
+				ordered_HRT_candidati = {
+					order_by = HRT_imperator_score
+					position = 0
+					save_temporary_scope_as = HRT_new_emperor
+					create_story = HRT_emperor_story
+					if = {
+						limit = {
+							NOT = { has_character_flag = HRT_italienzug }
+						}
+						trigger_event = {
+							id = HRT.1001
+							days = { 7 14 }
+						}
 					}
 				}
 			}
 		}
-		else = {
-			ordered_HRT_candidati = {
-				order_by = HRT_imperator_score
-				position = 0
-				save_temporary_scope_as = HRT_new_emperor
-				create_story = HRT_emperor_story
-				if = {
-					limit = {
-						OR = {
-							is_ai = yes
-							AND = {
-								has_dlc_feature = tours_and_tournaments
-								has_dlc_feature = advanced_activities
-							}
-						}
-						NOR = {
-							has_trait = HRT_emperor
-							has_trait = COR_crowned_by_myself
-						}
-					}
-					trigger_event = {
-						id = HRT.1001
-						days = { 7 14 }
-					}
-				}
-			}
-		}
-		HRT_close_window = yes
 	}
 }
 
 # Called from code once a year for "playable" (count+) characters.
 # Root is the character
 yearly_playable_pulse = {
-	events = {
-		COR_ceremony.9100 # Maintenace & Uncrowned Malus
-	}
-}
-
-# character just about to die in root scope
-on_death = {
 	on_actions = {
-		HRT_on_death
-	}
-	events = {
-		COR_ceremony.0002 # Notify ruler of coronator's death
+		COR_yearly_playable_pulse # Maintenace & Uncrowned Malus
 	}
 }
 
-#Close HRT window if open and you die
-HRT_on_death = {
+COR_yearly_playable_pulse = {
 	trigger = {
-		is_ai = no
-		exists = global_var:HRT_window_is_open
+		OR = {
+			has_variable = COR_years_reigned
+			has_character_modifier = COR_uncrowned_modifier
+			AND = {
+				NOT = { has_nickname = nick_the_crownless }
+				has_character_flag = sold_crown_charmod
+			}
+			AND = {
+				OR = {
+					HRT_is_emperor_trigger = yes
+					highest_held_title_tier >= tier_kingdom
+				}
+				faith = faith:catholic
+				government_has_flag = government_is_feudal
+				OR = {
+					AND = {
+						HRT_is_emperor_trigger = no
+						NOR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+						}
+					}
+					AND = {
+						HRT_is_emperor_trigger = yes
+						NOR = {
+							has_trait = HRT_emperor
+							has_trait = COR_crowned_by_myself
+						}
+					}
+				}
+			}
+			AND = {
+				OR = {
+					has_primary_title = title:e_byzantium
+					has_primary_title = title:e_roman_empire
+				}
+				faith = faith:orthodox
+				government_has_flag = government_is_feudal
+				NOT = { has_trait = COR_byz_crowned_by_patriarch }
+			}
+		}
 	}
 	effect = {
-		HRT_close_window = yes
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						OR = {
+							HRT_is_emperor_trigger = yes
+							highest_held_title_tier >= tier_kingdom
+						}
+						faith = faith:catholic
+						government_has_flag = government_is_feudal
+						OR = {
+							AND = {
+								HRT_is_emperor_trigger = no
+								NOR = {
+									has_trait = COR_crowned_by_priest
+									has_trait = COR_crowned_by_bishop
+									has_trait = COR_crowned_by_pope
+									has_trait = COR_crowned_by_myself
+								}
+							}
+							AND = {
+								HRT_is_emperor_trigger = yes
+								NOR = {
+									has_trait = HRT_emperor
+									has_trait = COR_crowned_by_myself
+								}
+							}
+						}
+					}
+					AND = {
+						OR = {
+							has_primary_title = title:e_byzantium
+							has_primary_title = title:e_roman_empire
+						}
+						faith = faith:orthodox
+						government_has_flag = government_is_feudal
+						NOT = { has_trait = COR_byz_crowned_by_patriarch }
+					}
+				}
+			}
+			#set variable if missing
+			if = {
+				limit = {
+					NOT = { has_variable = COR_years_reigned }
+				}
+				set_variable = {
+					name = COR_years_reigned
+					value = 0
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						is_ai = yes
+						AND = {
+							has_dlc_feature = tours_and_tournaments
+							has_dlc_feature = advanced_activities
+						}
+					}
+					has_game_rule = COR_crowns_taketh
+				}
+				#remove crown if still wearing
+				if = {
+					limit = {
+						NOT = { has_character_flag = sold_crown_charmod }
+					}
+					add_character_flag = sold_crown_charmod
+				}
+				#increase uncrowned malus for adult rulers
+				if = {
+					limit = {
+						is_adult = yes
+					}
+					if = {
+						limit = { var:COR_years_reigned < 30 }
+						change_variable = {
+							name = COR_years_reigned
+							add = 1
+						}
+						if = {
+							limit = {
+								NOR = {
+									faith = faith:orthodox # you have hard mode already
+									has_court_position = King_of_the_germans_court_position
+								}
+							}
+							add_character_modifier = {
+								modifier = COR_uncrowned_modifier
+							}
+						}
+					}
+				}
+				#remove spouses crowns
+				every_spouse = {
+					limit = {
+						NOR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+							has_trait = HRT_emperor
+							has_trait = COR_byz_crowned_by_patriarch
+							has_character_flag = sold_crown_charmod
+						}
+					}
+					add_character_flag = sold_crown_charmod
+				}
+			}
+			else = {
+				if = {
+					limit = { has_character_modifier = COR_uncrowned_modifier }
+					remove_all_character_modifier_instances = COR_uncrowned_modifier
+				}
+				if = {
+					limit = {
+						NOT = { has_nickname = nick_the_crownless }
+					}
+					remove_character_flag = sold_crown_charmod
+				}
+				every_spouse = {
+					limit = {
+						NOT = { has_nickname = nick_the_crownless }
+						has_character_flag = sold_crown_charmod
+					}
+					remove_character_flag = sold_crown_charmod
+				}
+			}
+
+			#check if officiant is valid (COR_coronator)
+			if = {
+				limit = {
+					has_variable = COR_coronator
+					NOR = {
+						has_trait = COR_crowned_by_priest
+						has_trait = COR_crowned_by_bishop
+						has_trait = COR_crowned_by_pope
+						has_trait = COR_crowned_by_myself
+						has_trait = HRT_emperor
+						has_trait = COR_byz_crowned_by_patriarch
+					}
+					var:COR_coronator = {
+						NOR = {
+							is_alive = yes
+							is_imprisoned = no
+							faith = root.faith
+							OR = {
+								has_trait = TCT_antipope
+								is_cardinal = yes
+								this = root.faith.religious_head
+								is_theocratic_lessee = yes
+								has_council_position = councillor_court_chaplain
+							}
+						}
+					}
+				}
+				save_scope_as = COR_coronator
+				send_interface_toast = {
+					type = event_toast_effect_bad
+					left_icon = var:COR_coronator
+					title = COR_officiant_invalidated.toast.t
+					custom_tooltip = COR_officiant_invalidated.toast
+				}
+				remove_character_flag = COR_flag_preparing_coronation
+				remove_variable = COR_coronation_request_cooldown
+				remove_variable = COR_coronator_rank
+				var:COR_coronator = {
+					remove_list_variable = {
+						name = COR_coronation_targets
+						target = root
+					}
+				}
+				remove_variable = COR_coronator
+			}
+		}
+
+		#give back crowns and remove modifiers if you fail to meet the criteria
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						is_ai = no
+						NOR = {
+							has_dlc_feature = tours_and_tournaments
+							has_dlc_feature = advanced_activities
+						}
+					}
+					NAND = {
+						OR = {
+							HRT_is_emperor_trigger = yes
+							highest_held_title_tier >= tier_kingdom
+						}
+						OR = {
+							faith = faith:catholic
+							AND = {
+								has_primary_title = title:e_byzantium
+								faith = faith:orthodox
+							}
+						}
+						government_has_flag = government_is_feudal
+					}
+					AND = {
+						HRT_is_emperor_trigger = no
+						OR = {
+							has_trait = COR_crowned_by_priest
+							has_trait = COR_crowned_by_bishop
+							has_trait = COR_crowned_by_pope
+							has_trait = COR_crowned_by_myself
+						}
+					}
+					AND = {
+						HRT_is_emperor_trigger = yes
+						OR = {
+							has_trait = HRT_emperor
+							has_trait = COR_crowned_by_myself
+						}
+					}
+					AND = {
+						faith = faith:orthodox
+						has_trait = COR_byz_crowned_by_patriarch
+					}
+				}
+			}
+			remove_character_flag = COR_flag_preparing_coronation
+			remove_variable = COR_years_reigned
+			remove_variable = COR_coronation_request_cooldown
+			remove_variable = COR_coronator_rank
+			if = {
+				limit = { has_character_modifier = COR_uncrowned_modifier }
+				remove_all_character_modifier_instances = COR_uncrowned_modifier
+			}
+			var:COR_coronator ?= {
+				remove_list_variable = {
+					name = COR_coronation_targets
+					target = root
+				}
+			}
+			if = {
+				limit = {
+					has_variable = COR_coronator
+					NOR = {
+						has_trait = COR_crowned_by_priest
+						has_trait = COR_crowned_by_bishop
+						has_trait = COR_crowned_by_pope
+						has_trait = COR_crowned_by_myself
+						has_trait = HRT_emperor
+						has_trait = COR_byz_crowned_by_patriarch
+					}
+				}
+				remove_variable = COR_coronator
+			}
+			if = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+				}
+				remove_character_flag = sold_crown_charmod
+			}
+			every_spouse = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+					has_character_flag = sold_crown_charmod
+				}
+				remove_character_flag = sold_crown_charmod
+			}
+		}
 	}
 }
+
+#Authority Changes for Wars
+on_war_won_attacker = {
+	on_actions = {
+		HRT_on_war_won_attacker
+		HRT_on_war_lost_defender
+	}
+}
+
+on_war_won_defender = {
+	on_actions = {
+		HRT_on_war_won_defender
+		HRT_on_war_lost_attacker
+	}
+}
+
+HRT_on_war_won_attacker = {
+	trigger = {
+		scope:attacker = { HRT_is_emperor_trigger = yes }
+	}
+	effect = {
+		title:c_aachen.var:HRT_emperor = {
+			change_variable = {
+				name = HRT_authority
+				add = HRT_authority_on_war_won_attacker_value
+			}
+			send_interface_toast = {
+				type = event_toast_effect_good
+				left_icon = scope:attacker
+				right_icon = scope:defender
+				title = HRT_on_war_won.toast.t
+				custom_tooltip = HRT_on_war_won.toast
+			}
+		}
+	}
+}
+
+HRT_on_war_lost_defender = {
+	trigger = {
+		scope:defender = { HRT_is_emperor_trigger = yes }
+	}
+	effect = {
+		title:c_aachen.var:HRT_emperor = {
+			change_variable = {
+				name = HRT_authority
+				multiply = 0.8
+			}
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				left_icon = scope:defender
+				right_icon = scope:attacker
+				title = HRT_on_war_lost.toast.t
+				custom_tooltip = HRT_on_war_lost.toast
+			}
+		}
+	}
+}
+
+HRT_on_war_won_defender = {
+	trigger = {
+		scope:defender = { HRT_is_emperor_trigger = yes }
+	}
+	effect = {
+		title:c_aachen.var:HRT_emperor = {
+			change_variable = {
+				name = HRT_authority
+				add = HRT_authority_on_war_won_defender_value
+			}
+			send_interface_toast = {
+				type = event_toast_effect_good
+				left_icon = scope:defender
+				right_icon = scope:attacker
+				title = HRT_on_war_won.toast.t
+				custom_tooltip = HRT_on_war_won.toast
+			}
+		}
+	}
+}
+
+HRT_on_war_lost_attacker = {
+	trigger = {
+		scope:attacker = { HRT_is_emperor_trigger = yes }
+	}
+	effect = {
+		title:c_aachen.var:HRT_emperor = {
+			change_variable = {
+				name = HRT_authority
+				multiply = 0.5
+			}
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				left_icon = scope:attacker
+				right_icon = scope:defender
+				title = HRT_on_war_lost.toast.t
+				custom_tooltip = HRT_on_war_lost.toast
+			}
+		}
+	}
+}
+
+# 2.5 Reichsstadt
+on_war_started = {
+	on_actions = {
+		KOH_on_war_started
+	}
+}
+
+KOH_on_war_started = {
+	effect = {
+		if = {
+			limit = {
+				exists = title:e_hre.holder
+				scope:defender = {
+					has_government = free_imperial_city_government
+					liege = title:e_hre.holder
+				}
+			}
+			scope:defender = {
+				save_scope_as = FreeCityDefender
+			}
+			title:e_hre.holder = {
+				trigger_event = {
+					id = KoH_FreeCity.1
+					days = 3
+				}
+			}
+		}
+	}
+}
+
+## character just about to die in root scope
+#on_death = {
+#	on_actions = {
+#		#HRT_on_death
+#		#COR_on_death
+#		#on_kotr_death
+#	}
+#}
+#
+##Close HRT window if open and you die
+#HRT_on_death = {
+#	trigger = {
+#		is_ai = no
+#		exists = global_var:HRT_window_is_open
+#	}
+#	effect = {
+#		HRT_close_window = yes
+#	}
+#}
+
+## Notify ruler of coronator's death
+#COR_on_death = {
+##TODO create a story for the coronator instead to save performance
+#	trigger = {
+#		has_variable_list = COR_coronation_targets
+#	}
+#	effect = {
+#		every_in_list = {
+#			variable = COR_coronation_targets
+#			limit = {
+#				is_alive = yes
+#			}
+#			trigger_event = COR_ceremony.0003
+#		}
+#	}
+#}
+
+##by Uber (KOH)
+#on_kotr_death = {
+#	trigger = {
+#		has_court_position = King_of_the_germans_court_position
+#	}	
+#	effect = {		
+#		if = {			
+#			limit = {		
+#				exists = title:k_king_of_the_germans.holder			
+#				scope:employee = title:k_king_of_the_germans.holder
+#			}		
+#			destroy_title = title:k_king_of_the_germans		
+#		}
+#	}
+#}
 
 # A title is destroyed
 # root = the holder before destruction
 # scope:landed_title = the title that is being destroyed
 # Does *not* provide scope:transfer_type
 on_title_destroyed = {
-	events = {
-		HRT.0006 # HRE title is destroyed
+	on_actions = {
+		HRT_on_title_destroyed
+	}
+}
+
+HRT_on_title_destroyed = {
+	trigger = {
+		scope:landed_title = title:e_hre
+	}
+	effect = {
+		HRT_disable_effect = yes
+		title:c_aachen = {
+			set_variable = {
+				name = HRT_dismantled
+				value = yes
+			}
+		}
 	}
 }
 
@@ -259,111 +1017,326 @@ on_title_destroyed = {
 # scope:title = the title that changes hands
 # scope:new_holder = new holder.
 on_title_lost = {
-	events = {
-		HRT.0008 # Emperor holds no kingdom pre HRE-formation
+	on_actions = {
+		HRT_on_title_lost
 	}
 }
+
+#HRT_on_title_lost = {
+#	trigger = {
+#		#HRT_is_emperor_trigger = yes
+#		OR = {
+#			AND = {
+#				scope:title = { tier = tier_kingdom }
+#				NAND = {
+#					exists = title:e_hre.holder
+#					highest_held_title_tier >= tier_kingdom
+#				}
+#			}
+#			scope:title = title:e_hre
+#		}
+#	}
+#	events = {
+#		HRT.0008 # Emperor holds no kingdom pre HRE-formation
+#	}
+#}
+
+HRT_on_title_lost = {
+	trigger = {
+		OR = {
+			AND = {
+				HRT_is_emperor_trigger = yes
+				scope:title = { tier = tier_kingdom }
+				NOR = {
+					has_primary_title = title:e_hre
+					highest_held_title_tier >= tier_kingdom
+				}
+			}
+			scope:title = title:e_hre
+		}
+	}
+	effect = {
+		HRT_close_window = yes
+		set_global_variable = {
+			name = HRT_disabled
+			value = yes
+		}
+
+		trigger_event = {
+			id = HRT.9004
+			days = 1
+		}
+	}
+}
+
+on_title_gain = {
+	on_actions = {
+		HRT_on_title_gain
+		COR_on_title_gain
+	}
+	#events = {
+	#	COR_ceremony.9000
+	#	COR_ceremony.9001
+	#}
+}
+
+#HRT_on_title_gain = { #test with effect
+#	trigger = {
+#		scope:title = title:e_hre
+#	}
+#	effect = {
+#		if = {
+#			limit = {
+#				exists = title:k_king_of_the_germans.holder
+#				this = title:k_king_of_the_germans.holder
+#			}
+#			trigger_event = {
+#				days = 1
+#				id = KOH_diets.1
+#			}
+#		}
+#		title:c_aachen = {
+#			set_variable = {
+#				name = HRT_unity_module
+#				value = yes
+#			}
+#			if = {
+#				limit = {
+#					has_variable = HRT_dismantled
+#				}
+#				remove_variable = HRT_dismantled
+#			}
+#		}
+#	}
+#
+#	events = {
+#		HRT.0007 # HRE restored but not by current emperor
+#	}
+#}
 
 # A title is transferred to a new character
 # root = the new holder
 # scope:title = the title that changes hands
 # scope:previous_holder = previous holder. Might be dead
-on_title_gain = {
-	events = {
-		HRT.0007 # HRE restored but not by current emperor
-		COR_ceremony.9000
+HRT_on_title_gain = {
+	trigger = {
+		scope:title = title:e_hre
+	}
+	effect = {
+		HRT_close_window = yes
+
+		#HRE restored but not by current emperor
+		if = {
+			limit = {
+				HRT_is_emperor_trigger = no
+				title:c_aachen = {
+					NOT = { has_variable = HRT_CF_apostate_active } #CF Compat
+				}
+			}
+
+			# Kill current emperor's story
+			if = {
+				limit = {
+					exists = title:c_aachen.var:HRT_emperor
+					NOT = { this = title:c_aachen.var:HRT_emperor }
+				}
+				title:c_aachen.var:HRT_emperor = {
+					if = {
+						limit = {
+							any_owned_story = {
+								story_type = HRT_emperor_story
+							}
+						}
+						random_owned_story = {
+							limit = { story_type = HRT_emperor_story }
+							end_story = yes
+						}
+					}
+				}
+			}
+
+			# Create story for new emperor
+			if = {
+				limit = {
+					faith = faith:catholic
+					government_has_flag = government_is_feudal
+				}
+				create_story = HRT_emperor_story
+				if = {
+					limit = {
+						NOR = {
+							has_trait = HRT_emperor
+							has_trait = COR_crowned_by_myself
+						}
+					}
+					add_character_flag = HRT_italienzug
+				}
+			}
+		}
+		
+		#CF Compat: reenable HRT window when catholic emperor reclaims the title
+		if = {
+			limit = {
+				title:c_aachen = { has_variable = HRT_CF_apostate_active }
+				faith = faith:catholic
+			}
+			title:c_aachen = { remove_variable = HRT_CF_apostate_active }
+			remove_global_variable ?= HRT_disabled
+		}
+		else_if = {
+			limit = {
+				exists = global_var:HRT_disabled
+				title:c_aachen = {
+					NOT = { has_variable = HRT_CF_apostate_active }
+				}
+			}
+			remove_global_variable = HRT_disabled
+		}
+
+		#KOH by Uber
+		if = {
+			limit = {
+				exists = title:k_king_of_the_germans.holder
+				this = title:k_king_of_the_germans.holder
+			}
+			trigger_event = {
+				days = 1
+				id = KOH_diets.1
+			}
+		}
+
+		#2.2 Unity
+		title:c_aachen = {
+			remove_variable ?= HRT_dismantled
+		}
 	}
 }
 
-## A title is inherited by a character
-## root = the new holder
-## scope:title = the title that changes hands
-## scope:previous_holder = previous holder. Should be dead
-#on_title_gain_inheritance = {
-#	events = {
-#		COR_e.0002
-#	}
-#}
-#
-## A title is usurped by a character
-## root = the new holder
-## scope:title = the title that changes hands
-## scope:previous_holder = previous holder. Shouldn't be dead
-#on_title_gain_usurpation = {
-#	events = {
-#		COR_e.0003
-#	}
-#}
+COR_on_title_gain = {
+	trigger = {
+		OR = {
+			AND = {
+				scope:title = { tier >= tier_kingdom }
+				faith = faith:catholic
+				government_has_flag = government_is_feudal
+				NOR = {
+					has_trait = COR_crowned_by_priest
+					has_trait = COR_crowned_by_bishop
+					has_trait = COR_crowned_by_pope
+					has_trait = COR_crowned_by_myself
+					has_trait = HRT_emperor
+				}
+			}
+			AND = {
+				scope:title = title:e_byzantium
+				faith = faith:orthodox
+				government_has_flag = government_is_feudal
+				NOT = { has_trait = COR_byz_crowned_by_patriarch }
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = { has_variable = COR_years_reigned }
+			}
+			set_variable = {
+				name = COR_years_reigned
+				value = 0
+			}
+		}
+		if = {
+			limit = { has_game_rule = COR_crowns_taketh }
+			add_character_flag = sold_crown_charmod
+			every_spouse = {
+				limit = {
+					NOR = {
+						has_trait = COR_crowned_by_priest
+						has_trait = COR_crowned_by_bishop
+						has_trait = COR_crowned_by_pope
+						has_trait = COR_crowned_by_myself
+						has_trait = HRT_emperor
+						has_trait = COR_byz_crowned_by_patriarch
+					}
+				}
+				add_character_flag = sold_crown_charmod
+			}
+		}
+	}
+}
+
+
 
 ##############
 # Italienzug #
 ##############
 
-on_travel_plan_complete = {
-	on_actions = {
-		HRT_on_travel_plan_complete
-	}
-}
+#on_travel_plan_complete = {
+#	on_actions = {
+#		HRT_on_travel_plan_complete
+#	}
+#}
+#
+#HRT_on_travel_plan_complete = {
+#	trigger = {
+#		current_travel_plan = { has_variable = HRT_italienzug }
+#	}
+#	effect = {
+#		current_travel_plan = {
+#			every_entourage_character = {
+#				if = {
+#					limit = {
+#						is_alive = yes
+#						has_variable = wear_armor
+#					}
+#					remove_character_flag = wear_armor
+#				}
+#			}
+#		}
+#	}
+#}
 
-HRT_on_travel_plan_complete = {
-	trigger = {
-		current_travel_plan = { has_variable = HRT_italienzug }
-	}
-	effect = {
-		current_travel_plan = {
-			every_entourage_character = {
-				if = {
-					limit = {
-						is_alive = yes
-						has_variable = wear_armor
-					}
-					remove_character_flag = wear_armor
-				}
-			}
-		}
-	}
-}
 
-
-on_travel_plan_abort = {
-	on_actions = {
-		HRT_on_travel_plan_abort
-	}
-}
-
-HRT_on_travel_plan_abort = {
-	trigger = {
-		current_travel_plan = { has_variable = HRT_italienzug }
-	}
-	effect = {
-		current_travel_plan = {
-			every_entourage_character = {
-				if = {
-					limit = {
-						is_alive = yes
-						has_variable = wear_armor
-					}
-					remove_character_flag = wear_armor
-				}
-			}
-		}
-	}
-}
+#on_travel_plan_abort = {
+#	on_actions = {
+#		HRT_on_travel_plan_abort
+#	}
+#}
+#
+#HRT_on_travel_plan_abort = {
+#	trigger = {
+#		current_travel_plan = { has_variable = HRT_italienzug }
+#	}
+#	effect = {
+#		current_travel_plan = {
+#			every_entourage_character = {
+#				if = {
+#					limit = {
+#						is_alive = yes
+#						has_variable = wear_armor
+#					}
+#					remove_character_flag = wear_armor
+#				}
+#			}
+#		}
+#	}
+#}
 
 # called for armies whenever they enter a province
 # root is the owner of the army
 # scope:army is the army
-on_army_enter_province = {
-	on_actions = {
-		HRT_on_army_enter_province
-	}
-}
-
-HRT_on_army_enter_province = {
-	events = {
-		HRT.1101
-	}
-}
+#on_army_enter_province = {
+#	on_actions = {
+#		HRT_on_army_enter_province
+#	}
+#}
+#
+#HRT_on_army_enter_province = {
+#	events = {
+#		HRT.1101
+#	}
+#}
 
 # Coronation Ceremony
 COR_ceremony_ongoing_event_pulse = {
@@ -371,6 +1344,7 @@ COR_ceremony_ongoing_event_pulse = {
 		NOT = { has_character_flag = busy_in_ceremony_event }
 		scope:activity = {
 			OR = {
+				has_activity_type = COR_byz_activity_coronation_ceremony
 				has_activity_type = activity_HRT_italienzug
 				AND = {
 					has_activity_type = COR_activity_coronation_ceremony
@@ -417,12 +1391,23 @@ COR_ceremony_ending_event_pulse = {
 	}
 }
 
+# 2.4 Jewel of Byzantium
+COR_byz_ceremony_ending_event_pulse = {
+	on_actions = { }
+	events = {
+		COR_ceremony.7322
+		COR_ceremony.7324
+	}
+}
+
 COR_ceremony_banquet_ongoing_event_pulse = {
 	trigger = {
 		NOT = { has_character_flag = busy_in_banquet_event }
 		scope:activity = {
 			OR = {
 				has_activity_type = activity_HRT_italienzug
+				# 2.4 Jewel of Byzantium
+				has_activity_type = COR_byz_activity_coronation_ceremony
 				AND = {
 					has_activity_type = COR_activity_coronation_ceremony
 					NOT = {
@@ -477,5 +1462,71 @@ COR_ceremony_banquet_ongoing_event_pulse = {
 		5 = feast_default.6101 #Shy guest
 		5 = feast_default.1002 #Gluttonous
 		3 = feast_default.5005 #You just love Garum
+	}
+}
+
+## Random Event Deck
+#five_year_playable_pulse = {
+#	on_actions = {
+#		delay = { days = { 8 288 } }
+#		HRT_events_five_yearly_pulse
+#	}
+#}
+
+#HRT_events_five_yearly_pulse = {
+#	trigger = {
+#		is_ai = no
+#		is_valid_for_narrow_yearly_events_adult = yes
+#		HRT_is_emperor_trigger = yes
+#	}
+#	random_events = {
+#		chance_of_no_event = {
+#			value = 40
+#		}
+#		#XXXXX = 0 # no of entries * 100
+#
+#		#######################################
+#		# EDICT REACTIONS
+#		#######################################
+#
+#		100 = HRT_edicts.0101
+#		100 = HRT_edicts.0102
+#		100 = HRT_edicts.0103
+#		100 = HRT_edicts.0104
+#		100 = HRT_edicts.0105
+#		100 = HRT_edicts.0106
+#		100 = HRT_edicts.0107
+#		100 = HRT_edicts.0108
+#		100 = HRT_edicts.0109
+#		100 = HRT_edicts.0110
+#
+#		#######################################
+#		# STAMMESHERZOGTUEMER
+#		#######################################
+#
+#		100 = HRT.2101
+#		100 = HRT.2102
+#		100 = HRT.2103
+#		100 = HRT.2104
+#		100 = HRT.2105
+#		100 = HRT.2106
+#		100 = HRT.2107
+#		100 = HRT.2108
+#		100 = HRT.2109
+#		100 = HRT.2110
+#	}
+#}
+
+# Compat Effects
+# Counterfactuals
+HRT_CF_action = { #CF Compat
+	effect = {
+		HRT_disable_effect = yes
+		title:c_aachen = {
+			set_variable = {
+				name = HRT_CF_apostate_active
+				value = yes
+			}
+		}
 	}
 }

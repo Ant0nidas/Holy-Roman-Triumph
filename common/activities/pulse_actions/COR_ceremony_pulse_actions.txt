@@ -11,28 +11,12 @@ COR_excellent_food = {
 		is_current_phase_active = yes
 		OR = {
 			AND = {
-				#has_activity_type = COR_activity_coronation_ceremony
 				has_activity_option = {
 					category = COR_ceremony_option_food
 					option = COR_ceremony_food_good
 				}
 			}
 			AND = {
-				#has_activity_type = COR_activity_coronation_ceremony
-				has_activity_option = {
-					category = COR_ceremony_option_food
-					option = COR_ceremony_food_normal
-				}
-			}
-			AND = {
-				#has_activity_type = COR_activity_coronation_ceremony_hof
-				has_activity_option = {
-					category = COR_ceremony_option_food
-					option = COR_ceremony_food_good
-				}
-			}
-			AND = {
-				#has_activity_type = COR_activity_coronation_ceremony_hof
 				has_activity_option = {
 					category = COR_ceremony_option_food
 					option = COR_ceremony_food_normal

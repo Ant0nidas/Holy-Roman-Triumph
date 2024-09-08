@@ -3,15 +3,15 @@
 	datacontext = "[GetVariableSystem]"
 	datacontext = "[GetPlayer]"
 	parentanchor = center
-    layer = middle
+    layer = hud_layer
 	size = { 1100 960 }
-	visible = "[And(GetVariableSystem.HasValue('HRT_window_open', 'yes'),Not(GetGlobalVariable('HRT_close_window_temp_var').IsSet))]"
+	visible = "[And(GetPlayer.IsValid,And(GetVariableSystem.HasValue('HRT_window_open', 'yes'),Not(GetGlobalVariable('HRT_close_window_temp_var').IsSet)))]"
 	using = Window_Background
 	using = Window_Decoration_Spike
 
 	state = {
 		name = _show
-		position_x = 85
+		position = { 85 0 }
 		using = Animation_FadeIn_Quick
         using = Sound_WindowShow_Standard
 		# Populate Candidati List
@@ -26,7 +26,9 @@
         using = Sound_WindowHide_Standard
 		# Clear Candidati List
 		on_start = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+		on_start = "[GetVariableSystem.Set('HRT_unity_window_open', 'no')]"
 		on_finish = "[GetScriptedGui('HRT_abort_sgui').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+		on_finish = "[GetVariableSystem.Set('HRT_reichsstaedte_widget_open', 'no')]"
 	}
 
 	container = {
@@ -34,7 +36,7 @@
 			size = { 1017 581 } #1.75:1
 			position = { 41 10 }
 			background = {
-				texture = "gfx/interface/HRT/background.png"
+				texture = "gfx/interface/HRT/background.dds"
 				spriteborder = { 6 6 }
 				shaderfile = "gfx/FX/pdxgui_default.shader"
 				alpha = 0.3
@@ -49,7 +51,7 @@
 
 					blockoverride "header_text"
 					{
-						raw_text = "HRT_Imperial_Succession"
+						text = "HRT_Imperial_Succession"
 					}
 
 					button = {
@@ -221,15 +223,45 @@
 						{
 							visible = no
 						}
-						hbox = {
-							position = { -350 -7 }
+
+						button_standard = {
+							visible = "[Not(GetScriptedGui('HRT_imperial_charters_unlocked_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+							enabled = no
+							position = { 65 9 }
 							text_single = {
-					
 								raw_text = HRT_Prince_Electors
-					
+								margin = { 9 -3 }
 								using = Font_Type_Flavor
 								using = Font_Size_Big
 							}
+							tooltip = HRT_prince_electors_missing_innovation_tt
+							using = tooltip_nw
+						}
+						button_standard = {
+							position = { 65 9 }
+							visible = "[And(And(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),Not(GetVariableSystem.HasValue('HRT_reichsstaedte_widget_open', 'yes'))),GetScriptedGui('HRT_imperial_charters_unlocked_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+							onclick = "[GetVariableSystem.Set('HRT_reichsstaedte_widget_open', 'yes')]"
+							text_single = {
+								raw_text = HRT_Prince_Electors
+								margin = { 9 -3 }
+								using = Font_Type_Flavor
+								using = Font_Size_Big
+							}
+							tooltip = HRT_prince_electors_tt
+							using = tooltip_nw
+						}
+						button_standard = {
+							position = { 65 9 }
+							visible = "[And(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetVariableSystem.HasValue('HRT_reichsstaedte_widget_open', 'yes'))]"
+							onclick = "[GetVariableSystem.Set('HRT_reichsstaedte_widget_open', 'no')]"
+							text_single = {
+								raw_text = HRT_imperial_cities
+								margin = { 16 -3 }
+								using = Font_Type_Flavor
+								using = Font_Size_Big
+							}
+							tooltip = HRT_imperial_cities_tt
+							using = tooltip_nw
 						}
 						hbox = {
 							position = { 378 -7 }
@@ -505,41 +537,99 @@
 				hbox = {
 					spacing = 20
 
+					### For Non-Emperor:
+					# Close Button
+					button_standard = {
+						raw_text = Close
+						visible = "[LessThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)1')]"
+						onclick = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
+					}
+
+					### For Emperor:
+					# Dismante HRE Button
 					button_standard = {
 						raw_text = HRT_Dismantle_HRE
-						enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_prestige_value'), '(CFixedPoint)11400')]"
-						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
+						enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_prestige_value'), '(CFixedPoint)5700')]"
+						visible = "[And(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'),Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)))]"
 						onclick = "[GetScriptedGui('HRT_dismantle_hre_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 						tooltip = HRT_dismantle_hre_tt
 						using = tooltip_nw
 					}
+
+					# Empty Buttons for Spacing
 					button_standard = {
-						alpha = 0
 						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
-					}
-					button_standard = {
-						raw_text = HRT_Close
-						onclick = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
-					}
-					button_standard = {
 						alpha = 0
-						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
 					}
-					#button_primary = {
-					#	size = { 170 35 }
-					#	
-					#	enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)10')]"
-					#	visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0')]"
-					#	
-					#	raw_text = "HRT_Enact_Resolution"
-					#	onclick = "[GetScriptedGui('HRT_edict_enact_resolution_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-					#	tooltip = "HRT_edicts_enact_resolution_tt"
+					button_standard = {
+						visible = "[And(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'),GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+						alpha = 0
+					}
+
+					## 2.5 Reichsstadt Buttons
+					#button_standard = {
+					#	raw_text = HRT_imperial_cities
+					#	visible = "[And(GetVariableSystem.HasValue('HRT_reichsstaedte_window_open', 'yes'),GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'))]"
+					#	onclick = "[GetVariableSystem.Set('HRT_reichsstaedte_window_open', 'no')]"
+					#	tooltip = HRT_imperial_cities_tt
 					#	using = tooltip_nw
 					#}
-					button_primary = {
-						size = { 170 35 }
+					# 2.2 Unity Buttons
+					button_standard = {
+						raw_text = HRT_Unity
+						enabled = "[GetScriptedGui('HRT_unity_module_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+						visible = "[And(GetVariableSystem.HasValue('HRT_unity_window_open', 'no'),GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'))]"
+						onclick = "[GetVariableSystem.Set('HRT_unity_window_open', 'yes')]"
+						tooltip = HRT_unity_tt
+						using = tooltip_nw
+					}
+					button_standard = {
+						raw_text = HRT_Unity
+						visible = "[And(GetVariableSystem.HasValue('HRT_unity_window_open', 'yes'),GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'))]"
+						onclick = "[GetVariableSystem.Set('HRT_unity_window_open', 'no')]"
+						tooltip = HRT_unity_tt
+						using = tooltip_nw
+					}
+
+					# 2.3 Hoftag Buttons
+					button_standard = {
+						#size = { 170 35 }
 						
-						enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)60')]"
+						enabled = no
+						visible = "[And(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'),Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End)))]"
+						
+						raw_text = HRT_Convene_Hoftag
+						onclick = "[GetScriptedGui('HRT_summon_hoftag_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						tooltip = "HRT_convene_hoftag_tt"
+						using = tooltip_nw
+					}
+					button_standard = {
+						#size = { 170 35 }
+						
+						enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)50')]"
+						visible = "[And(And( GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'), Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_summon_hoftag_value'), '(CFixedPoint)0')) ),GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+						
+						raw_text = HRT_Convene_Hoftag
+						onclick = "[GetScriptedGui('HRT_summon_hoftag_sgui').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						tooltip = "HRT_convene_hoftag_tt"
+						using = tooltip_nw
+					}
+					button_standard = {
+						#size = { 170 35 }
+						
+						enabled = no
+						visible = "[And(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_summon_hoftag_value'), '(CFixedPoint)0'),GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'))]"
+						
+						raw_text = HRT_Convene_Hoftag
+						tooltip = "HRT_convene_hoftag_cooldown_tt"
+						using = tooltip_nw
+					}
+
+					#Proclaim Directive Button
+					button_standard = {
+						#size = { 170 35 }
+						
+						enabled = "[GreaterThanOrEqualTo_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)30')]"
 						visible = "[And( GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'), Not(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_proclaim_directive_value'), '(CFixedPoint)0')) )]"
 						
 						raw_text = HRT_Proclaim_Directive
@@ -547,8 +637,8 @@
 						tooltip = "HRT_edicts_proclaim_directive_tt"
 						using = tooltip_nw
 					}
-					button_primary = {
-						size = { 170 35 }
+					button_standard = {
+						#size = { 170 35 }
 						
 						enabled = no
 						visible = "[GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_edict_proclaim_directive_value'), '(CFixedPoint)0')]"
@@ -661,6 +751,7 @@
 
 	#Prince-Electors
 	vbox = {
+		visible = "[And(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),Not(GetVariableSystem.HasValue('HRT_reichsstaedte_widget_open', 'yes')))]"
 		position = { -362 262 }
 
 		fixedgridbox = {
@@ -680,6 +771,78 @@
 					}
 				}
 			}
+		}
+	}
+	# 2.5 Reichsstadt
+	#Imperial Cities
+	vbox = {
+		visible = "[And(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetVariableSystem.HasValue('HRT_reichsstaedte_widget_open', 'yes'))]"
+		position = { -362 245 }
+
+		fixedgridbox = {
+			datamodel = "[GetPlayer.MakeScope.GetList('HRT_imperial_cities')]"
+			addcolumn = 90
+			addrow = 90
+			setitemsizefromcell = yes
+			datamodel_wrap = 3
+			maxhorizontalslots = 4
+			flipdirection = yes
+
+			item = {
+				widget = {
+					hbox = {
+						coa_title_medium_crown = {
+							datacontext = "[Scope.Title]"
+							widget = {
+								text_single = {
+									visible = "[LessThanOrEqualTo_CFixedPoint(Scope.Var('HRT_reichsstadt_development').GetValue,'(CFixedPoint)20')]"
+									raw_text = "@icon_domain![Scope.Var('HRT_reichsstadt_development').GetValue|0-]"
+									margin = { 50 70 }
+								}
+								text_single = {
+									visible = "[And(GreaterThan_CFixedPoint(Scope.Var('HRT_reichsstadt_development').GetValue,'(CFixedPoint)20'),LessThanOrEqualTo_CFixedPoint(Scope.Var('HRT_reichsstadt_development').GetValue,'(CFixedPoint)60'))]"
+									raw_text = "@icon_domain![Scope.Var('HRT_reichsstadt_development').GetValue|0]"
+									margin = { 50 70 }
+								}
+								text_single = {
+									visible = "[GreaterThan_CFixedPoint(Scope.Var('HRT_reichsstadt_development').GetValue,'(CFixedPoint)60')]"
+									raw_text = "@icon_domain![Scope.Var('HRT_reichsstadt_development').GetValue|0+]"
+									margin = { 50 70 }
+								}
+							}
+						}
+						
+					}
+				}
+			}
+		}
+	}
+	vbox = {
+		visible = "[And(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetVariableSystem.HasValue('HRT_reichsstaedte_widget_open', 'yes'))]"
+		position = { -360 374 }
+		button_standard = {
+			visible = "[And(And(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'),LessThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_reichsstaedte_value'), '(CFixedPoint)1')),Not(GetVariableSystem.HasValue('HRT_reichsstadt_candidates_window_open', 'yes')))]"
+			onclick = "[GetVariableSystem.Set('HRT_reichsstadt_candidates_window_open', 'yes')]"
+			text_single = {
+				raw_text = HRT_view_reichsstadt_candidates
+				margin = { 3 -2 }
+				using = Font_Type_Flavor
+				using = Font_Size_Big
+			}
+			tooltip = HRT_view_reichsstadt_candidates_tt
+			using = tooltip_nw
+		}
+		button_standard = {
+			visible = "[And(And(GreaterThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)0'),LessThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_reichsstaedte_value'), '(CFixedPoint)1')),GetVariableSystem.HasValue('HRT_reichsstadt_candidates_window_open', 'yes'))]"
+			onclick = "[GetVariableSystem.Set('HRT_reichsstadt_candidates_window_open', 'no')]"
+			text_single = {
+				raw_text = HRT_view_reichsstadt_candidates
+				margin = { 3 -2 }
+				using = Font_Type_Flavor
+				using = Font_Size_Big
+			}
+			tooltip = HRT_view_reichsstadt_candidates_tt
+			using = tooltip_nw
 		}
 	}
 	#Before Restoration

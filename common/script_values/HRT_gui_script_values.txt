@@ -189,3 +189,221 @@ HRT_edict_proclaim_directive_value = {
 		add = 1
 	}
 }
+
+#2.2 Unity
+HRT_is_formed_value = {
+	value = 0
+	if = {
+		limit = {
+			exists = title:e_hre.holder
+		}
+		add = 1
+	}
+}
+
+HRT_stammesherzogtuemer_innovation = {
+	value = 0
+	if = {
+		limit = {
+			culture = { has_innovation = innovation_stem_duchies }
+		}
+		add = 1
+	}
+}
+
+HRT_promote_unity_cd = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = HRT_promote_unity_cd
+		}
+		add = 1
+	}
+}
+
+HRT_1_2_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_1
+				exists = var:HRT_core_culture_2
+			}
+			var:HRT_core_culture_1 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_2)"
+			}
+		}
+	}
+}
+HRT_1_3_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_1
+				exists = var:HRT_core_culture_3
+			}
+			var:HRT_core_culture_1 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_3)"
+			}
+		}
+	}
+}
+HRT_1_4_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_1
+				exists = var:HRT_core_culture_4
+			}
+			var:HRT_core_culture_1 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_4)"
+			}
+		}
+	}
+}
+HRT_1_5_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_1
+				exists = var:HRT_core_culture_5
+			}
+			var:HRT_core_culture_1 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_5)"
+			}
+		}
+	}
+}
+HRT_2_3_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_2
+				exists = var:HRT_core_culture_3
+			}
+			var:HRT_core_culture_2 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_3)"
+			}
+		}
+	}
+}
+HRT_2_4_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_2
+				exists = var:HRT_core_culture_4
+			}
+			var:HRT_core_culture_2 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_4)"
+			}
+		}
+	}
+}
+HRT_2_5_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_2
+				exists = var:HRT_core_culture_5
+			}
+			var:HRT_core_culture_2 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_5)"
+			}
+		}
+	}
+}
+HRT_3_4_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_3
+				exists = var:HRT_core_culture_4
+			}
+			var:HRT_core_culture_3 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_4)"
+			}
+		}
+	}
+}
+HRT_3_5_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_3
+				exists = var:HRT_core_culture_5
+			}
+			var:HRT_core_culture_3 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_5)"
+			}
+		}
+	}
+}
+HRT_4_5_value = {
+	value = 0
+	title:c_aachen.var:HRT_emperor = {
+		if = {
+			limit = {
+				exists = var:HRT_core_culture_4
+				exists = var:HRT_core_culture_5
+			}
+			var:HRT_core_culture_4 = {
+				add = "cultural_acceptance(prev.var:HRT_core_culture_5)"
+			}
+		}
+	}
+}
+
+HRT_2_weight = {
+	value = 0
+	title:c_aachen.var:HRT_emperor.var:HRT_core_culture_2 ?= {
+		add = HRT_core_culture_count_weight_share_p
+	}
+}
+HRT_3_weight = {
+	value = 0
+	title:c_aachen.var:HRT_emperor.var:HRT_core_culture_3 ?= {
+		add = HRT_core_culture_count_weight_share_p
+	}
+}
+HRT_4_weight = {
+	value = 0
+	title:c_aachen.var:HRT_emperor.var:HRT_core_culture_4 ?= {
+		add = HRT_core_culture_count_weight_share_p
+	}
+}
+HRT_5_weight = {
+	value = 0
+	title:c_aachen.var:HRT_emperor.var:HRT_core_culture_5 ?= {
+		add = HRT_core_culture_count_weight_share_p
+	}
+}
+
+# 2.3 Hoftag
+HRT_summon_hoftag_value = {
+	value = 0
+	if = {
+		limit = { exists = title:c_aachen.var:HRT_emperor.var:HRT_convening_hoftag }
+		add = 1
+	}
+}
+
+# 2.5 Reichsstadt
+HRT_reichsstaedte_value = {
+	value = 0
+	if = {
+		limit = { 
+			exists = title:c_aachen.var:HRT_emperor.var:HRT_reichsstaedte_count
+			title:c_aachen.var:HRT_emperor.var:HRT_reichsstaedte_count >= 7
+		}
+		add = 1
+	}
+}

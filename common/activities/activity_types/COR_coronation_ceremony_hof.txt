@@ -11,6 +11,7 @@
 		exists = var:COR_coronator
 		highest_held_title_tier >= tier_kingdom
 		government_has_flag = government_is_feudal
+		faith = faith:catholic
 		is_landed = yes
 		NOR = {
 			has_trait = COR_crowned_by_priest
@@ -47,10 +48,13 @@
 	can_start_showing_failures_only = {
 		is_available = yes
 		OR = {
-			NOT = {
-				any_character_war ?= {
-					is_war_leader = root
-					is_defender = root
+			custom_tooltip = {
+				text = COR_war_defender
+				NOT = {
+					any_character_war ?= {
+						is_war_leader = root
+						is_defender = root
+					}
 				}
 			}
 			custom_tooltip = {
@@ -1278,7 +1282,6 @@
 	}
 
 	### Graphics
-	is_grand_activity = yes
 
 	map_entity = {
 		trigger = {

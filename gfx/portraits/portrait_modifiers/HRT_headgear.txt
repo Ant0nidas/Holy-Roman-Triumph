@@ -1,4 +1,4 @@
-﻿HRT_headgear_special = {
+﻿HRT_headgear = {
 
 	usage = game
 	selection_behavior = weighted_random

@@ -71,40 +71,48 @@
 
 			#Coronation
 			if = {
-				limit = { has_variable = COR_coronator }
-				remove_variable = COR_coronator
-			}
-			if = {
 				limit = {
-					NOT = { has_variable = COR_years_reigned }
-				}
-				set_variable = {
-					name = COR_years_reigned
-					value = 0
-				}
-			}
-			if = {
-				limit = { has_game_rule = COR_crowns_taketh }
-				add_character_flag = sold_crown_charmod
-				every_spouse = {
-					limit = {
-						NOR = {
-							has_trait = COR_crowned_by_priest
-							has_trait = COR_crowned_by_bishop
-							has_trait = COR_crowned_by_pope
-							has_trait = COR_crowned_by_myself
-							has_trait = HRT_emperor
-						}
+					NOR = {
+						has_trait = HRT_emperor
+						has_trait = COR_crowned_by_myself
 					}
+				}
+				if = {
+					limit = { has_variable = COR_coronator }
+					remove_variable = COR_coronator
+				}
+				if = {
+					limit = {
+						NOT = { has_variable = COR_years_reigned }
+					}
+					set_variable = {
+						name = COR_years_reigned
+						value = 0
+					}
+				}
+				if = {
+					limit = { has_game_rule = COR_crowns_taketh }
 					add_character_flag = sold_crown_charmod
+					every_spouse = {
+						limit = {
+							NOR = {
+								has_trait = COR_crowned_by_priest
+								has_trait = COR_crowned_by_bishop
+								has_trait = COR_crowned_by_pope
+								has_trait = COR_crowned_by_myself
+								has_trait = HRT_emperor
+								has_trait = COR_byz_crowned_by_patriarch
+							}
+						}
+						add_character_flag = sold_crown_charmod
+					}
 				}
 			}
 
 			#Nibelungen
 			if = {
 				limit = {
-					#is_ai = no
-					exists = dynasty
+					exists = dynasty # just in case
 					dynasty = {
 						NOT = { has_variable = HRT_edicts_issued }
 					}
@@ -114,6 +122,15 @@
 						name = HRT_edicts_issued
 						value = 0
 					}
+				}
+			}
+
+			# 2.2 Unity
+			if = {
+				limit = { exists = title:e_hre.holder }
+				trigger_event = {
+					id = HRT.2100
+					days = 1
 				}
 			}
 		}
@@ -136,7 +153,7 @@
 				}
 			}
 			player_heir ?= {
-				trigger_event = { id = HRT.0009 days = 1 }
+				trigger_event = { id = HRT.9005 days = 1 }
 			}
 			HRT_initialize_succession = yes
 		}
@@ -144,20 +161,57 @@
 	}
 
 	on_end = {
-		remove_variable = HRT_authority
-		remove_variable = HRT_authority_prestige
-		remove_variable = HRT_authority_dread
-		remove_variable = HRT_authority_years_reigned
-		remove_variable = HRT_authority_vassals_var
-		remove_variable = HRT_authority_vassals_bonus_var
-		remove_variable = HRT_authority_vassals_war_var
-		remove_variable = HRT_authority_infidels_var
-		remove_variable = HRT_authority_territory
-		remove_variable = HRT_authority_unheld_heartlands
-		remove_variable = HRT_authority_military_strength
-		remove_variable = HRT_authority_ally_military_strength
-		remove_variable = HRT_authority_artifacts
-		remove_variable = HRT_authority_cardinals
+		story_owner = {
+			if = {
+				limit = { is_alive = yes }
+				remove_variable = HRT_authority
+				remove_variable = HRT_authority_prestige
+				remove_variable = HRT_authority_dread
+				remove_variable = HRT_authority_years_reigned
+				remove_variable = HRT_authority_vassals_var
+				remove_variable = HRT_authority_vassals_bonus_var
+				remove_variable = HRT_authority_vassals_war_var
+				remove_variable = HRT_authority_infidels_var
+				remove_variable = HRT_authority_territory
+				remove_variable = HRT_authority_unheld_heartlands
+				remove_variable = HRT_authority_military_strength
+				remove_variable = HRT_authority_ally_military_strength
+				remove_variable = HRT_authority_artifacts
+				remove_variable = HRT_authority_cardinals
+				remove_variable = HRT_authority_unity
+
+				remove_character_modifier ?= HRT_edict_legal_unification
+				remove_character_modifier ?= HRT_edict_chivalric_excellence
+				remove_character_modifier ?= HRT_edict_diplomatic_corps
+				remove_character_modifier ?= HRT_edict_consular_taxation
+				remove_character_modifier ?= HRT_edict_urban_rights
+				remove_character_modifier ?= HRT_edict_border_defense
+				remove_character_modifier ?= HRT_edict_scholastic_advancement
+				remove_character_modifier ?= HRT_edict_imperial_works
+				remove_character_modifier ?= HRT_edict_ecclesiastical_patronage
+
+				remove_character_modifier ?= HRT_edict_proclaim_directive_diplomacy
+				remove_character_modifier ?= HRT_edict_proclaim_directive_martial
+				remove_character_modifier ?= HRT_edict_proclaim_directive_stewardship
+				remove_character_modifier ?= HRT_edict_proclaim_directive_intrigue
+				remove_character_modifier ?= HRT_edict_proclaim_directive_learning
+
+				remove_character_modifier ?= HRT_preparing_for_unification_war
+
+				remove_character_modifier ?= HRT_unity_festival
+				remove_character_modifier ?= HRT_unity_marriage
+				remove_character_modifier ?= HRT_unity_contracts
+				remove_character_modifier ?= HRT_unity_trade
+
+				remove_character_modifier ?= HRT_hoftag_gather_support_mod
+			}
+			if = {
+				limit = {
+					this ?= title:c_aachen.var:HRT_emperor
+				}
+				title:c_aachen = { remove_variable = HRT_emperor }
+			}
+		}
 	}
 
 	effect_group = {
@@ -269,7 +323,7 @@
 						}
 					}
 					#Territory Bonus
-					every_sub_realm_county = {
+					every_realm_county = {
 						prev = {
 							change_variable = {
 								name = HRT_authority_territory
@@ -330,6 +384,20 @@
 						}
 					}
 
+					#2.5 Reichsstadt
+					title:c_aachen = {
+						if = {
+							limit = { has_variable_list = HRT_reichsstaedte }
+							every_in_list = {
+								variable = HRT_reichsstaedte
+								set_variable = {
+									name = HRT_reichsstadt_development
+									value = development_level
+								}
+							}
+						}
+					}
+
 					#Prevent exceeding authority range (0-100)
 					if = {
 						limit = { HRT_authority_limiter_value <= 0 }
@@ -355,21 +423,26 @@
 				}
 
 				#Pope opinion of candidati parked here to prevent errors, sorry
-				every_HRT_candidati = {
-					save_scope_as = HRT_candidatus
-					faith:catholic.religious_head ?= {
-						if = {
-							limit = {
-								save_temporary_opinion_value_as = {
-									name = popinion
-									target = scope:HRT_candidatus
+				if = {
+					limit = {
+						NOT = { exists = title:e_hre.holder }
+					}
+					every_HRT_candidati = {
+						save_scope_as = HRT_candidatus
+						faith:catholic.religious_head ?= {
+							if = {
+								limit = {
+									save_temporary_opinion_value_as = {
+										name = popinion
+										target = scope:HRT_candidatus
+									}
+									exists = scope:popinion
 								}
-								exists = scope:popinion
-							}
-							scope:HRT_candidatus = {
-								set_variable = {
-									name = HRT_popinion
-									value = scope:popinion
+								scope:HRT_candidatus = {
+									set_variable = {
+										name = HRT_popinion
+										value = scope:popinion
+									}
 								}
 							}
 						}
@@ -388,7 +461,6 @@
 				story_owner = {
 					is_ai = yes
 					HRT_authority_progressbar_value >= 100
-					prestige > major_prestige_value
 				}
 			}
 			effect = {
@@ -405,6 +477,10 @@
 								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
 							}
 							10 = {
+								modifier = {
+									add = 90
+									is_at_war = yes
+								}
 								trigger_event = HRT_edicts.0002 # Imperial Decree of Chivalric Excellence
 							}
 							10 = {
@@ -423,14 +499,19 @@
 								trigger_event = HRT_edicts.0006 # Edict of Urban Rights and Privileges
 							}
 							10 = {
+								modifier = {
+									add = 90
+									is_at_war = yes
+								}
 								trigger_event = HRT_edicts.0005 # Imperial Levy Conscription Order
 							}
 							10 = {
+								modifier = {
+									add = 90
+									is_at_war = yes
+								}
 								trigger_event = HRT_edicts.0007 # Border Defense Temporary Directive
 							}
-							#9 = {
-							#	trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
-							#}
 						}
 					}
 					else_if = {
@@ -445,6 +526,10 @@
 								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
 							}
 							10 = {
+								modifier = {
+									add = 90
+									is_at_war = yes
+								}
 								trigger_event = HRT_edicts.0002 # Imperial Decree of Chivalric Excellence
 							}
 							10 = {
@@ -456,9 +541,6 @@
 							10 = {
 								trigger_event = HRT_edicts.0010 # Edict of Ecclesiastical Patronage
 							}
-							#14 = {
-							#	trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
-							#}
 						}
 					}
 					else_if = {
@@ -466,13 +548,13 @@
 							culture = { has_cultural_era_or_later = culture_era_early_medieval }
 						}
 						random_list = {
-							10 = {
+							30 = {
 								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
 							}
-							10 = {
+							30 = {
 								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
 							}
-							10 = {
+							5 = {
 								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
 							}
 						}
@@ -489,8 +571,8 @@
 			trigger = {
 				story_owner = {
 					is_ai = yes
+					is_at_war = no
 					HRT_authority_progressbar_value >= 75
-					prestige > major_prestige_value
 				}
 			}
 			effect = {
@@ -558,18 +640,26 @@
 							culture = { has_cultural_era_or_later = culture_era_early_medieval }
 						}
 						random_list = {
-							20 = {
+							30 = {
 								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
 							}
-							20 = {
+							30 = {
 								trigger_event = HRT_edicts.0004 # Consular Taxation Directive
 							}
 							5 = {
 								trigger_event = HRT_edicts.1001 # Proclamation of Imperial Directive
 							}
+							10 = { }
 						}
 					}
-					else = { trigger_event = HRT_edicts.1001 } # Proclamation of Imperial Directive
+					else = {
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.1001  # Proclamation of Imperial Directive
+							}
+							40 = { }
+						}
+					}
 				}
 			}
 		}
@@ -581,12 +671,24 @@
 			trigger = {
 				story_owner = {
 					is_ai = yes
-					HRT_authority_progressbar_value >= 40
-					prestige > major_prestige_value
+					is_at_war = no
+					HRT_authority_progressbar_value >= 50
 				}
 			}
 			effect = {
 				story_owner = {
+					if = { # 2.3 Hoftag
+						limit = {
+							exists = title:e_hre.holder
+							NOR = {
+								has_character_flag = HRT_held_hoftag
+								has_character_flag = HRT_preparing_hoftag
+								has_variable = HRT_convening_hoftag
+							}
+							var:HRT_authority_years_reigned > 8
+						}
+						trigger_event = HRT_hoftag.0001
+					}
 					if = {
 						limit = {
 							culture = { has_cultural_era_or_later = culture_era_high_medieval }
@@ -603,18 +705,29 @@
 					}
 					else_if = {
 						limit = {
-							NOT = {
-								culture = { has_cultural_era_or_later = culture_era_early_medieval }
-							}
+							culture = { has_cultural_era_or_later = culture_era_early_medieval }
 						}
-						trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.0001 # Edict of Legal Unification
+							}
+							10 = { }
+						}
+					}
+					else = {
+						random_list = {
+							10 = {
+								trigger_event = HRT_edicts.1001  # Proclamation of Imperial Directive
+							}
+							40 = { }
+						}
 					}
 				}
 			}
 		}
 	}
 
-	effect_group = {
+	effect_group = { # Put everything related to maintenance here
 		years = 1
 		triggered_effect = {
 			trigger = { always = yes }
@@ -623,6 +736,170 @@
 					change_variable = {
 						name = HRT_authority_years_reigned
 						add = 1
+					}
+
+					if = {
+						limit = { exists = title:e_hre.holder }
+						trigger_event = HRT.2100 # Unity Effect
+						# 2.5 Reichsstadt
+						title:c_aachen = {
+							if = {
+								limit = { has_variable_list = HRT_reichsstaedte }
+								every_in_list = {
+									variable = HRT_reichsstaedte
+									change_variable = {
+										name = HRT_reichsstadt_years
+										add = 1
+									}
+									if = {
+										limit = {
+											var:HRT_reichsstadt_years >= 15
+											has_county_modifier = HRT_reichsstadt_1
+										}
+										remove_county_modifier = HRT_reichsstadt_1
+										add_county_modifier = HRT_reichsstadt_2
+									}
+									else_if = {
+										limit = {
+											var:HRT_reichsstadt_years >= 30
+											has_county_modifier = HRT_reichsstadt_2
+										}
+										remove_county_modifier = HRT_reichsstadt_2
+										add_county_modifier = HRT_reichsstadt_3
+									}
+								}
+							}
+						}
+					}
+
+					# Misc Backup
+					if = {
+						limit  = {
+							NOT = { has_title = title:e_hre }
+						}
+						if = {
+							limit = {
+								OR = {
+									exists = title:e_hre.holder # someone else restored the hre
+									highest_held_title_tier = tier_empire # you restored an empire that is not the hre, well done
+									is_landed = no
+									#Faith conditions.
+									this = faith.religious_head
+									NOT = {
+										faith = { religion_tag = christianity_religion }	
+									}
+									AND = {	#No need for a competing empire if your faith controls the ERE.
+										exists = title:e_byzantium.holder
+										faith = title:e_byzantium.holder.faith
+									}
+									#Government conditions.
+									NOR = {
+										government_has_flag = government_is_feudal
+										government_has_flag = government_is_clan
+									}
+								}
+							}
+							HRT_close_window = yes
+							#TODO add notification
+							if = {
+								limit = {
+									highest_held_title_tier = tier_empire
+									NOT = { exists = title:e_hre.holder }
+								}
+								title:c_aachen = {
+									set_variable = {
+										name = HRT_dismantled
+										value = yes
+									}
+								}
+							}
+							if = {
+								limit = { exists = title:e_hre.holder }
+								title:e_hre.holder = {
+									if = {
+										limit = {
+											NOT = { this = faith.religious_head }
+											faith = { religion_tag = christianity_religion }
+											OR = {
+												government_has_flag = government_is_feudal
+												government_has_flag = government_is_clan
+											}
+										}
+										create_story = HRT_emperor_story
+										if = {
+											limit = {
+												NOT = { has_character_flag = HRT_italienzug }
+											}
+											trigger_event = {
+												id = HRT.1001
+												days = { 7 14 }
+											}
+										}
+									}
+								}
+							}
+							else_if = {
+								limit = {
+									NOT = { highest_held_title_tier = tier_empire }
+								}
+								ordered_HRT_candidati = {
+									order_by = HRT_imperator_score
+									position = 0
+									save_temporary_scope_as = HRT_new_emperor
+									create_story = HRT_emperor_story
+									if = {
+										limit = {
+											NOT = { has_character_flag = HRT_italienzug }
+										}
+										trigger_event = {
+											id = HRT.1001
+											days = { 7 14 }
+										}
+									}
+								}
+							}
+							# Kill current emperor's story
+							random_owned_story = {
+								limit = { story_type = HRT_emperor_story }
+								end_story = yes
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#Trigger Coronation when leading an army in Rome
+	effect_group = {
+		weeks = 1
+		triggered_effect = {
+			trigger = {
+				story_owner = {
+					is_ai = no
+					NOR = {
+						has_trait = COR_crowned_by_myself
+						has_trait = HRT_emperor
+					}
+				}
+			}
+			effect = {
+				story_owner = {
+					if = {
+						limit = {
+							NOT = { has_variable = HRT_declined_travel_coronation }
+							is_commanding_army = yes
+							OR = {
+								has_character_flag = HRT_italienzug
+								has_variable = COR_years_reigned
+							}
+							has_variable = COR_coronator
+							var:COR_coronator = faith:catholic.religious_head
+							exists = faith:catholic.religious_head.capital_province
+							location = faith:catholic.religious_head.capital_province
+						}
+						location = { save_scope_as = location }
+						trigger_event = HRT.1102
 					}
 				}
 			}

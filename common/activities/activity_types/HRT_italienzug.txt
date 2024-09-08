@@ -40,10 +40,13 @@
 	can_start_showing_failures_only = {
 		is_capable_adult = yes
 		OR = {
-			NOT = {
-				any_character_war ?= {
-					is_war_leader = root
-					is_defender = root
+			custom_tooltip = {
+				text = COR_war_defender
+				NOT = {
+					any_character_war ?= {
+						is_war_leader = root
+						is_defender = root
+					}
 				}
 			}
 			custom_tooltip = {
@@ -730,9 +733,11 @@
 					weight = {
 						add = pilgrimage_entourage_base_set_weighting_value
 						add = pilgrimage_entourage_extras_set_weighting_value
+						add = pilgrimage_entourage_sodding_everyone_set_weighting_value
 					}
-					max = 20
-					ai_max = 15
+
+					max = 30
+					ai_max = 20
 					invite_rule_order = 1
 				}
 
@@ -772,7 +777,7 @@
 						add = pilgrimage_entourage_sodding_everyone_set_weighting_value
 					}
 
-					max = 30
+					max = 40
 					ai_max = 20
 					invite_rule_order = 1
 				}
@@ -1439,22 +1444,21 @@
 		}
 	}
 
-	#on_leave_travel_state = {
-	#	scope:host.current_travel_plan = {
-	#		every_entourage_character = {
-	#			if = {
-	#				limit = {
-	#					is_alive = yes
-	#					has_variable = wear_armor
-	#				}
-	#				remove_character_flag = wear_armor
-	#			}
-	#		}
-	#	}
-	#}
+	on_leave_travel_state = {
+		scope:host.current_travel_plan = {
+			every_entourage_character = {
+				if = {
+					limit = {
+						is_alive = yes
+						has_variable = wear_armor
+					}
+					remove_character_flag = wear_armor
+				}
+			}
+		}
+	}
 
 	on_enter_travel_state = {
-		scope:activity ?= {
 			scope:host.current_travel_plan = {
 				set_variable = {
 					name = HRT_italienzug
@@ -1469,7 +1473,6 @@
 					add_character_flag = wear_armor
 				}
 			}
-		}
 	}
 
 	on_complete = {
@@ -1490,23 +1493,11 @@
 				}
 			}
 		}
-		scope:host.current_travel_plan = {
-			every_entourage_character = {
-				limit = {
-					can_be_knight_trigger = {
-						ARMY_OWNER = scope:host
-					}
-				}
-				add_character_flag = wear_armor
-			}
-		}
 	}
 
 	###################
 	# GRAPHICS
 	###################
-
-	is_grand_activity = yes
 
 	map_entity = {
 		trigger = {

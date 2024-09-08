@@ -32,3 +32,21 @@ HRT_king_of_the_romans = { }
 HRT_princely_elective = { }
 
 HRT_investiture_controversy = { }
+
+# 2.2 Unity
+HRT_stammesherzogtum = {
+	alias = { HRT_stammesherzogtuemer }
+}
+HRT_cohesion = {
+	alias = { HRT_unity }
+}
+
+# 2.3 Hoftag
+HRT_hoftag = { }
+
+# 2.5 Reichsstadt
+HRT_reichsstadt = {
+	alias = { HRT_reichsstaedte HRT_imperial_city HRT_imperial_cities }
+}
+
+HRT_imperial_immediacy = { }

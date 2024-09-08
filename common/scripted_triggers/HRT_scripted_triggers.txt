@@ -2,6 +2,7 @@
 	HRT_is_emperor_trigger = no
 	is_male = yes
 	exists = dynasty
+	NOT = { this = faith.religious_head }
 	faith = { religion_tag = christianity_religion }
 	NOR = {
 		has_trait = HRT_decline_succession
@@ -17,15 +18,20 @@
 		}
 	}
 	OR = {
-		is_close_or_extended_family_of = title:c_aachen.var:HRT_emperor
+		AND = {
+			exists = title:c_aachen.var:HRT_emperor
+			is_close_or_extended_family_of = title:c_aachen.var:HRT_emperor
+		}
 		has_variable = HRT_prince_var
 		has_claim_on = title:e_hre
 		AND = {
 			is_landed = yes
 			highest_held_title_tier >= tier_duchy
 			any_realm_province = { geographical_region = HRT_core_territory }
-			government_has_flag = government_is_feudal
-			NOT = { this = faith:catholic.religious_head } #Nice try, Mr. Pope
+			OR = {
+				government_has_flag = government_is_feudal
+				government_has_flag = government_is_clan
+			}
 		}
 	}
 }
@@ -56,5 +62,8 @@ HRT_is_involved_trigger = {
 				}
 			}
 		}
+		# 2.4 Jewel of Byzantine
+		has_title = title:e_byzantium
+		has_title = title:e_roman_empire
 	}
 }

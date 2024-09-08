@@ -164,3 +164,53 @@ COR_crowned_by_myself = {
 		}
 	}
 }
+
+# 2.4 Jewel of Byzantium
+COR_byz_crowned_by_patriarch = {
+	category = fame
+
+	clergy_opinion = 5
+	#zealot_opinion = 5
+
+	monthly_prestige = 0.25
+	monthly_piety = 0.25
+	
+	shown_in_ruler_designer = no
+	random_creation = 0
+
+	name = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_COR_byz_crowned_by_patriarch_name
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = COR_coronator
+				}
+				desc = trait_COR_byz_crowned_by_patriarch_with_name
+			}
+			desc = trait_COR_byz_crowned_by_patriarch_name
+		}
+	}
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this }
+				}
+				desc = trait_COR_byz_crowned_by_patriarch_desc
+			}
+			triggered_desc = {
+                trigger = {
+                    has_variable = COR_coronator
+                }
+                desc = trait_COR_byz_crowned_by_patriarch_with_name_desc
+            }
+			desc = trait_COR_byz_crowned_by_patriarch_character_desc
+		}
+	}
+}

@@ -154,7 +154,7 @@ types WOKValueBreakdown_HRT  {
                 margin_bottom = 5
                 wok_breakdown_box_HRT  = {
                     blockoverride "text"     {text = HRT_authority_change}
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_change_value_gui')|L]"}
+                    blockoverride "value"    {text = "HRT_authority_change_value"}
                 }
 				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_constrained_reach'),'(CFixedPoint)1')]"
@@ -208,6 +208,11 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_grand_tour_bonus')|0=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
+					#visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_reichsstadt_bonus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_authority_reichsstadt_bonus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_reichsstadt_bonus')|L=+]"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_loss_waged_vassal_wars_malus'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_loss_waged_vassal_wars_malus} 
                     blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_loss_waged_vassal_wars_malus')|L=+]"}
@@ -221,11 +226,11 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "text"     {text = HRT_authority_territory_bonus} 
                     blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_territory_bonus')|L=+]"}
 				}
-				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus'),'(CFixedPoint)0')]"
-                    blockoverride "text"     {text = HRT_authority_unheld_heartlands_malus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus')|L=+]"}
-				}
+				#wok_cardinal_breakdown_box_HRT  = {
+					#visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus'),'(CFixedPoint)0')]"
+                    #blockoverride "text"     {text = HRT_authority_unheld_heartlands_malus} 
+                    #blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus')|L=+]"}
+				#}
 				wok_cardinal_breakdown_box_HRT  = {
 					#visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_cardinals_bonus'),'(CFixedPoint)0')]"
 					visible = "[GetGlobalVariable('Trinity_is_loaded').IsSet]"
@@ -273,6 +278,25 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "value"    {text = "HRT_authority_child_malus_value"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_authority_multiplicators} 
+                    #blockoverride "value"    {text = "HRT_authority_legitimacy_modifier_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_authority_legitimacy_modifier} 
+                    blockoverride "value"    {text = "HRT_authority_legitimacy_modifier_value"}
+				}
+				##2.2 Unity
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_is_formed_value'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_authority_unity_bonus} 
+                    blockoverride "value"    {text = "HRT_authority_unity_modifier_value"}
+				}
+				##/2.2 Unity
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_authority_edict_modifier} 
+                    blockoverride "value"    {text = "HRT_authority_edict_modifier_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_game_rule_bonus_one_and_a_half'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_game_rule_bonus} 
                     blockoverride "value"    {text = "setting_HRT_authority_one_and_a_half"}
@@ -281,10 +305,6 @@ types WOKValueBreakdown_HRT  {
 					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_game_rule_bonus_twice'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_game_rule_bonus} 
                     blockoverride "value"    {text = "setting_HRT_authority_twice"}
-				}
-				wok_cardinal_breakdown_box_HRT  = {
-                    blockoverride "text"     {text = HRT_authority_edict_modifier} 
-                    blockoverride "value"    {text = "HRT_authority_edict_modifier_value"}
 				}
             }
         }

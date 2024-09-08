@@ -189,7 +189,7 @@ HRT_dismantle_hre_sgui = {
 			}
 		}
 		else = {
-			trigger_event = HRT.0003
+			trigger_event = HRT.9001
 		}
 	}
 }
@@ -199,11 +199,138 @@ HRT_dismantle_hre_sgui = {
 HRT_is_involved_sgui = {
 	scope = character
 	is_shown = {
-		HRT_is_involved_trigger = yes
-		NOT = {
+		is_ai = no
+		NOR = {
 			title:c_aachen = {
 				has_variable = HRT_dismantled
+				has_variable = HRT_CF_apostate_active #CF Compat
 			}
+		}
+		HRT_is_involved_trigger = yes
+	}
+}
+
+# 2.2 Unity
+HRT_unity_module_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_formed_gui
+		has_variable = HRT_authority_unity
+	}
+}
+
+HRT_promote_unity_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT.2001
+	}
+}
+
+# 2.3 Hoftag
+HRT_summon_hoftag_sgui = {
+	scope = character
+
+	effect = {
+		trigger_event = HRT_hoftag.0001
+	}
+}
+
+# 2.5 Reichsstadt
+HRT_reichsstadt_module_sgui = {
+    scope = character
+	is_shown = {
+		has_variable = HRT_formed_gui
+	}
+}
+
+HRT_get_reichsstadt_candidates_sgui = {
+	scope = character
+
+	effect = {
+		every_vassal_or_below = {
+			limit = {
+				NOT = { has_government = free_imperial_city_government }
+				is_ai = yes
+				is_landed = yes
+				can_be_granted_titles_by = { RULER = root }
+				NOT = { is_at_war_with = root }
+				is_claimant = no
+				any_held_title = {
+					tier = tier_county
+					count = 1
+				}
+				NOT = {
+					any_close_or_extended_family_member = {
+						is_landed = yes
+					}
+				}
+				any_heir_title = {
+					count < 1
+					tier >= tier_county
+				}
+				any_held_title = {
+					count = 1
+					tier = tier_county
+					OR = {
+						any_county_province = {
+							has_holding_type = city_holding
+						}
+						development_level > 20
+					}
+				}
+				any_held_title = {
+					count = 1
+					tier = tier_county
+					any_county_province = {
+						culture = {
+							has_innovation = innovation_HRT_imperial_charter
+						}
+					}
+				}
+				NOT = {
+					title:e_hre = {
+						any_elector = {
+							this = root
+						}
+					}
+				}
+				NOT = { government_has_flag = government_is_theocracy }
+				trigger_if = {
+					limit = {
+						scope:recipient = {
+							is_ruler = no
+						}
+					}
+					scope:recipient = {
+						is_imprisoned = no
+					}
+				}
+			}
+			root = {
+				add_to_variable_list = {
+					name = HRT_reichsstadt_candidates
+					target = prev
+				}
+			}
+		}
+	}
+}
+
+HRT_clear_reichsstadt_candidates_sgui = {
+	scope = character
+
+	effect = {
+		clear_variable_list = HRT_reichsstadt_candidates
+	}
+}
+
+HRT_imperial_charters_unlocked_sgui = {
+	scope = character
+
+	is_shown = {
+		culture = {
+			has_innovation = innovation_HRT_imperial_charter
 		}
 	}
 }

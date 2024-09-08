@@ -172,7 +172,7 @@ emperor_karling_dynasty_bonus = {
 }
 emperor_is_imperial_dynasty_bonus = {
 	value = 0
-	if =		{limit = {exists = this exists = dynasty dynasty = title:c_aachen.var:HRT_emperor.dynasty} add = emperor_score_imperial_dynasty}
+	if =		{limit = {exists = this exists = dynasty exists = title:c_aachen.var:HRT_emperor dynasty = title:c_aachen.var:HRT_emperor.dynasty} add = emperor_score_imperial_dynasty}
 }
 emperor_location_bonus = {
 	value = 0
