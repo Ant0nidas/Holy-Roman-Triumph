@@ -54,10 +54,49 @@ HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
 	option = {
 		name = HRT_edicts.0001.a
 		add_internal_flag = special
-		add_character_modifier = {
-			modifier = HRT_edict_legal_unification
-			years = 5
+
+		if = {
+			limit = { HRT_has_centralization_0_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_legal_unification_0
+				years = 5
+			}
 		}
+		else_if = {
+			limit = { HRT_has_centralization_1_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_legal_unification_1
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_2_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_legal_unification_2
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_3_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_legal_unification_3
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_4_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_legal_unification_4
+				years = 5
+			}
+		}
+		else = { # Backup, just in case
+			add_character_modifier = {
+				modifier = HRT_edict_legal_unification_3
+				years = 5
+			}
+		}
+
 		every_vassal = {
 			trigger_event = HRT_edicts.0011 # Notification Event
 		}
@@ -74,20 +113,10 @@ HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -147,10 +176,49 @@ HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
 	option = {
 		name = HRT_edicts.0002.a
 		add_internal_flag = special
-		add_character_modifier = {
-			modifier = HRT_edict_chivalric_excellence
-			years = 5
+
+		if = {
+			limit = { HRT_has_centralization_0_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_chivalric_excellence_0
+				years = 5
+			}
 		}
+		else_if = {
+			limit = { HRT_has_centralization_1_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_chivalric_excellence_1
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_2_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_chivalric_excellence_2
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_3_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_chivalric_excellence_3
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_4_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_chivalric_excellence_4
+				years = 5
+			}
+		}
+		else = { # Backup, just in case
+			add_character_modifier = {
+				modifier = HRT_edict_consular_taxation_3
+				years = 5
+			}
+		}
+
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
@@ -164,20 +232,10 @@ HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -237,14 +295,82 @@ HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
 	option = {
 		name = HRT_edicts.0003.a
 		add_internal_flag = special
-		add_character_modifier = {
-			modifier = HRT_edict_diplomatic_corps
-			years = 5
+
+		if = {
+			limit = { HRT_has_centralization_0_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_diplomatic_corps_0
+				years = 5
+			}
+			faith:catholic.religious_head = {
+				add_opinion = {
+					target = root
+					modifier = HRT_edict_diplomatic_corps_opinion_0
+				}
+			}
 		}
-		faith:catholic.religious_head = {
-			add_opinion = {
-				target = root
-				modifier = HRT_edict_diplomatic_corps_opinion
+		else_if = {
+			limit = { HRT_has_centralization_1_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_diplomatic_corps_1
+				years = 5
+			}
+			faith:catholic.religious_head = {
+				add_opinion = {
+					target = root
+					modifier = HRT_edict_diplomatic_corps_opinion_1
+				}
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_2_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_diplomatic_corps_2
+				years = 5
+			}
+			faith:catholic.religious_head = {
+				add_opinion = {
+					target = root
+					modifier = HRT_edict_diplomatic_corps_opinion_2
+				}
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_3_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_diplomatic_corps_3
+				years = 5
+			}
+			faith:catholic.religious_head = {
+				add_opinion = {
+					target = root
+					modifier = HRT_edict_diplomatic_corps_opinion_3
+				}
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_4_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_diplomatic_corps_4
+				years = 5
+			}
+			faith:catholic.religious_head = {
+				add_opinion = {
+					target = root
+					modifier = HRT_edict_diplomatic_corps_opinion_4
+				}
+			}
+		}
+		else = { # Backup, just in case
+			add_character_modifier = {
+				modifier = HRT_edict_diplomatic_corps_3
+				years = 5
+			}
+			faith:catholic.religious_head = {
+				add_opinion = {
+					target = root
+					modifier = HRT_edict_diplomatic_corps_opinion_3
+				}
 			}
 		}
 		hidden_effect = {
@@ -260,20 +386,10 @@ HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -333,10 +449,49 @@ HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
 	option = {
 		name = HRT_edicts.0004.a
 		add_internal_flag = special
-		add_character_modifier = {
-			modifier = HRT_edict_consular_taxation
-			years = 5
+		
+		if = {
+			limit = { HRT_has_centralization_0_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_consular_taxation_0
+				years = 5
+			}
 		}
+		else_if = {
+			limit = { HRT_has_centralization_1_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_consular_taxation_1
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_2_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_consular_taxation_2
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_3_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_consular_taxation_3
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_4_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_consular_taxation_4
+				years = 5
+			}
+		}
+		else = { # Backup, just in case
+			add_character_modifier = {
+				modifier = HRT_edict_consular_taxation_3
+				years = 5
+			}
+		}
+
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
@@ -350,20 +505,10 @@ HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -422,10 +567,49 @@ HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
 	option = {
 		name = HRT_edicts.0005.a
 		add_internal_flag = special
-		add_character_modifier = {
-			modifier = HRT_edict_levy_conscription
-			years = 5
+
+		if = {
+			limit = { HRT_has_centralization_0_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_levy_conscription_0
+				years = 5
+			}
 		}
+		else_if = {
+			limit = { HRT_has_centralization_1_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_levy_conscription_1
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_2_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_levy_conscription_2
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_3_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_levy_conscription_3
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_4_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_levy_conscription_4
+				years = 5
+			}
+		}
+		else = { # Backup, just in case
+			add_character_modifier = {
+				modifier = HRT_edict_levy_conscription_3
+				years = 5
+			}
+		}
+
 		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
@@ -439,20 +623,10 @@ HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -522,9 +696,46 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 					has_holding_type = city_holding
 				}
 			}
-			add_county_modifier = {
-				modifier = HRT_edict_urban_rights_county
-				years = 5
+			if = {
+				limit = { HRT_has_centralization_0_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_urban_rights_county_0
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_1_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_urban_rights_county_1
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_2_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_urban_rights_county_2
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_3_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_urban_rights_county_3
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_4_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_urban_rights_county_4
+					years = 5
+				}
+			}
+			else = { # Backup, just in case
+				add_county_modifier = {
+					modifier = HRT_edict_urban_rights_county_3
+					years = 5
+				}
 			}
 			change_county_control = -5
 		}
@@ -545,20 +756,10 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -631,9 +832,46 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 					}
 				}
 			}
-			add_county_modifier = {
-				modifier = HRT_edict_border_defense_county
-				years = 5
+			if = {
+				limit = { HRT_has_centralization_0_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_border_defense_county_0
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_1_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_border_defense_county_1
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_2_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_border_defense_county_2
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_3_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_border_defense_county_3
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_4_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_border_defense_county_4
+					years = 5
+				}
+			}
+			else = { # Backup, just in case
+				add_county_modifier = {
+					modifier = HRT_edict_border_defense_county_3
+					years = 5
+				}
 			}
 		}
 		every_vassal = {
@@ -653,20 +891,10 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -725,10 +953,49 @@ HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
 	option = {
 		name = HRT_edicts.0008.a
 		add_internal_flag = special
-		add_character_modifier = {
-			modifier = HRT_edict_scholastic_advancement
-			years = 5
+
+		if = {
+			limit = { HRT_has_centralization_0_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_scholastic_advancement_0
+				years = 5
+			}
 		}
+		else_if = {
+			limit = { HRT_has_centralization_1_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_scholastic_advancement_1
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_2_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_scholastic_advancement_2
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_3_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_scholastic_advancement_3
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_4_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_scholastic_advancement_4
+				years = 5
+			}
+		}
+		else = { # Backup, just in case
+			add_character_modifier = {
+				modifier = HRT_edict_scholastic_advancement_3
+				years = 5
+			}
+		}
+
 		every_vassal = {
 			trigger_event = HRT_edicts.0014
 		}
@@ -745,20 +1012,10 @@ HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -822,9 +1079,46 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 			years = 5
 		}
 		every_realm_county = {
-			add_county_modifier = {
-				modifier = HRT_edict_imperial_works_county
-				years = 5
+			if = {
+				limit = { HRT_has_centralization_0_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_imperial_works_county_0
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_1_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_imperial_works_county_1
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_2_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_imperial_works_county_2
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_3_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_imperial_works_county_3
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_4_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_imperial_works_county_4
+					years = 5
+				}
+			}
+			else = { # Backup, just in case
+				add_county_modifier = {
+					modifier = HRT_edict_imperial_works_county_3
+					years = 5
+				}
 			}
 		}
 		every_vassal = {
@@ -843,20 +1137,10 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}
@@ -915,14 +1199,90 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 	option = {
 		name = HRT_edicts.0010.a
 		add_internal_flag = special
-		add_character_modifier = {
-			modifier = HRT_edict_ecclesiastical_patronage
-			years = 5
-		}
-		every_realm_county = {
-			add_county_modifier = {
-				modifier = HRT_edict_ecclesiastical_patronage_county
+
+		if = {
+			limit = { HRT_has_centralization_0_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_ecclesiastical_patronage_0
 				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_1_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_ecclesiastical_patronage_1
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_2_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_ecclesiastical_patronage_2
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_3_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_ecclesiastical_patronage_3
+				years = 5
+			}
+		}
+		else_if = {
+			limit = { HRT_has_centralization_4_trigger = yes } 
+			add_character_modifier = {
+				modifier = HRT_edict_ecclesiastical_patronage_4
+				years = 5
+			}
+		}
+		else = { # Backup, just in case
+			add_character_modifier = {
+				modifier = HRT_edict_ecclesiastical_patronage_3
+				years = 5
+			}
+		}
+
+		every_realm_county = {
+			if = {
+				limit = { HRT_has_centralization_0_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_ecclesiastical_patronage_county_0
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_1_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_ecclesiastical_patronage_county_1
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_2_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_ecclesiastical_patronage_county_2
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_3_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_ecclesiastical_patronage_county_3
+					years = 5
+				}
+			}
+			else_if = {
+				limit = { HRT_has_centralization_4_trigger = yes } 
+				add_county_modifier = {
+					modifier = HRT_edict_ecclesiastical_patronage_county_4
+					years = 5
+				}
+			}
+			else = { # Backup, just in case
+				add_county_modifier = {
+					modifier = HRT_edict_ecclesiastical_patronage_county_3
+					years = 5
+				}
 			}
 		}
 		every_vassal = {
@@ -941,20 +1301,10 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 				}
 			}
 			#Nibelungen
-			if = {
-				limit = {
-					#is_ai = no
-					exists = dynasty
-					dynasty = {
-						has_variable = HRT_edicts_issued
-						var:HRT_edicts_issued < 10
-					}
-				}
-				dynasty ?= {
-					change_variable = {
-						name = HRT_edicts_issued
-						add = 1
-					}
+			dynasty ?= {
+				change_variable = {
+					name = HRT_edicts_issued
+					add = 1
 				}
 			}
 		}

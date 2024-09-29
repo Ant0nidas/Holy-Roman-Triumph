@@ -4,7 +4,9 @@
 	special = holder
 	tier = barony
 	priority = 7
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 baron_free_city_republic_female = {
@@ -13,14 +15,18 @@ baron_free_city_republic_female = {
 	special = holder
 	tier = barony
 	priority = 7
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 barony_free_city_republic = {
 	type = title
 	tier = barony
-	top_liege = no
 	priority = 7
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 count_free_city_republic_male = {
@@ -29,7 +35,9 @@ count_free_city_republic_male = {
 	special = holder
 	tier = county
 	priority = 17
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 count_free_city_republic_female = {
@@ -38,14 +46,18 @@ count_free_city_republic_female = {
 	special = holder
 	tier = county
 	priority = 17
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 county_free_city_republic = {
 	type = title
 	tier = county
 	priority = 17
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 duke_free_city_republic_male = {
@@ -54,7 +66,9 @@ duke_free_city_republic_male = {
 	special = holder
 	tier = duchy
 	priority = 27
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 duke_free_city_republic_female = {
@@ -63,14 +77,18 @@ duke_free_city_republic_female = {
 	special = holder
 	tier = duchy
 	priority = 27
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 duchy_free_city_republic = {
 	type = title
 	tier = duchy
 	priority = 28
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 king_free_city_republic_male = {
@@ -79,6 +97,9 @@ king_free_city_republic_male = {
 	special = holder
 	tier = kingdom
 	priority = 47
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 king_free_city_republic_female = {
@@ -87,13 +108,18 @@ king_free_city_republic_female = {
 	special = holder
 	tier = kingdom
 	priority = 47
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 kingdom_free_city_republic = {
 	type = title
 	tier = kingdom
-	top_liege = no
 	priority = 47
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 emperor_free_city_republic_male = {
@@ -102,7 +128,9 @@ emperor_free_city_republic_male = {
 	special = holder
 	tier = empire
 	priority = 102
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 emperor_free_city_republic_female = {
@@ -111,13 +139,17 @@ emperor_free_city_republic_female = {
 	special = holder
 	tier = empire
 	priority = 102
-	top_liege = no
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }
 empire_free_city_republic = {
 	type = title
 	tier = empire
-	top_liege = no
 	priority = 102
+	flavourization_rules = { 
+		top_liege = no
+	}
 	governments = { free_imperial_city_government }
 }

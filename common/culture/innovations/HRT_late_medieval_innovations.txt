@@ -14,13 +14,17 @@ innovation_HRT_imperial_charter = {
 				has_cultural_pillar = heritage_frankish
 				has_cultural_pillar = heritage_latin
 			}
-			OR = {
-				culture_head ?= {
+			culture_head ?= {
+				OR = {
 					this ?= title:e_hre.holder
 					is_vassal_or_below_of = title:e_hre.holder
 				}
 			}
 		}
+	}
+
+	character_modifier = {
+		development_growth_factor = 0.05
 	}
 
 	custom = innovation_HRT_imperial_charter_custom_desc

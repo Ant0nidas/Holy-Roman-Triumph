@@ -19,64 +19,76 @@ authority_gain_per_territory_multiplier					= 0.002
 authority_loss_per_unheld_heartlands_multiplier			= -0.2
 authority_loss_per_unheld_heartlands					= -0.07
 
-HRT_authority_limiter_value = {
-	value = var:HRT_authority
-	add = HRT_authority_change_value
-}
-
 HRT_authority_change_value = {
 	value = 0
 	if = {
 		limit = {
 			title:c_aachen.var:HRT_emperor ?= {
-				exists = this
 				is_alive = yes
 			}
 		}
-		#Bonuses
+		# Total Gain
 		add = {
-			add = HRT_authority_prestige_bonus
-			add = HRT_authority_dread_bonus
-			add = HRT_authority_gain_years_reigned_bonus
-			add = HRT_authority_vassal_bonus
-			#add = HRT_authority_held_castle_bonus
-			add = HRT_authority_territory_bonus
-			add = HRT_authority_ally_bonus
-			add = HRT_authority_artifact_bonus
-			add = HRT_authority_grand_tour_bonus
-			add = HRT_authority_cardinals_bonus
-			# 2.5 Reichsstadt
-			add = HRT_authority_reichsstadt_bonus
-
-			multiply = HRT_authority_free_investiture_bonus
-			multiply = HRT_authority_papal_investiture_malus
-			multiply = HRT_authority_constrained_reach
-			multiply = HRT_authority_uncrowned_malus
-			multiply = HRT_authority_imprisoned_malus
-			multiply = HRT_authority_criminal_malus
-			multiply = HRT_authority_serious_disease_malus
-			#Legitimacy
-			multiply = HRT_authority_legitimacy_modifier
-			# 2.2 Unity
-			if = { limit = { exists = title:c_aachen.var:HRT_emperor.var:HRT_authority_unity } multiply = HRT_authority_unity_bonus }
-			#Edicts
-			multiply = HRT_authority_edict_modifier
-			#Game Rule
-			multiply = HRT_authority_game_rule_bonus_one_and_a_half
-			multiply = HRT_authority_game_rule_bonus_twice
+			value = HRT_authority_total_gain_value
+			# 3.1 centralization
+			multiply = HRT_authority_centralization_modifier
 		}
-
-		#Maluses
-		add = HRT_authority_loss_waged_vassal_wars_malus
-		add = HRT_authority_infidel_malus
-		#add = HRT_authority_unheld_heartlands_malus
-		add = HRT_authority_excommunicated_malus
-
-		multiply = HRT_authority_child_malus
+		# Total Loss
+		add = HRT_authority_total_loss_value
 
 		min = HRT_authority_min
 		max = HRT_authority_max
 	}
+}
+
+HRT_authority_total_gain_value = {
+	value = 0
+	add = HRT_authority_prestige_bonus
+	add = HRT_authority_dread_bonus
+	add = HRT_authority_gain_years_reigned_bonus
+	add = HRT_authority_vassal_bonus
+	#add = HRT_authority_held_castle_bonus
+	add = HRT_authority_territory_bonus
+	add = HRT_authority_ally_bonus
+	add = HRT_authority_artifact_bonus
+	add = HRT_authority_grand_tour_bonus
+	add = HRT_authority_cardinals_bonus
+	# 2.5 Reichsstadt
+	add = HRT_authority_reichsstadt_bonus
+	#TCT Compat
+	multiply = HRT_authority_free_investiture_bonus
+	multiply = HRT_authority_papal_investiture_malus
+	#/TCT Compat
+	multiply = HRT_authority_constrained_reach
+	multiply = HRT_authority_uncrowned_malus
+	multiply = HRT_authority_imprisoned_malus
+	multiply = HRT_authority_child_malus
+	# Multiplicators
+	#Legitimacy
+	multiply = HRT_authority_legitimacy_modifier
+	# 2.2 Unity
+	if = { limit = { exists = title:c_aachen.var:HRT_emperor.var:HRT_authority_unity } multiply = HRT_authority_unity_bonus }
+	#Edicts
+	multiply = HRT_authority_edict_modifier
+	#Game Rule
+	multiply = HRT_authority_game_rule_bonus_one_and_a_half
+	multiply = HRT_authority_game_rule_bonus_twice
+}
+
+HRT_authority_total_gain_value_gui = {
+	value = HRT_authority_total_gain_value
+	multiply = HRT_authority_centralization_modifier
+}
+
+HRT_authority_total_loss_value = {
+	value = 0
+	add = HRT_authority_absent_sovereign_malus
+	add = HRT_authority_loss_waged_vassal_wars_malus
+	add = HRT_authority_infidel_malus
+	#add = HRT_authority_unheld_heartlands_malus
+	add = HRT_authority_excommunicated_malus
+	add = HRT_authority_criminal_malus
+	add = HRT_authority_serious_disease_malus
 }
 
 HRT_authority_constrained_reach = {
@@ -316,13 +328,16 @@ HRT_authority_reichsstadt_bonus = {
 #2.2 Unity
 HRT_authority_unity_bonus = {
 	value = 0
-	title:e_hre.holder ?= {
-		add = var:HRT_authority_unity
+	if = {
+		limit = {
+			title:e_hre.holder ?= { has_variable = HRT_authority_unity }
+		}
+		add = title:e_hre.holder.var:HRT_authority_unity
 		divide = 50
 	}
 }
 HRT_authority_criminal_malus = {
-	value = 1
+	value = 0
 	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
@@ -335,12 +350,12 @@ HRT_authority_criminal_malus = {
 					has_trait = kinslayer
 				}
 			}
-			subtract = 0.2
+			add = -1
 		}
 	}
 }
 HRT_authority_serious_disease_malus = {
-	value = 1
+	value = 0
 	title:c_aachen.var:HRT_emperor ?= {
 		if = {
 			limit = {
@@ -352,7 +367,7 @@ HRT_authority_serious_disease_malus = {
 					has_trait = incapable
 				}
 			}
-			subtract = 0.2
+			add = -1
 		}
 	}
 }
@@ -363,13 +378,44 @@ HRT_authority_grand_tour_bonus = {
 		if = {
 			limit = {
 				involved_activity ?= {
-					#root = activity_host
 					has_activity_type = activity_tour
+				}
+			}
+			add = 2
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_character_modifier = mega_itinerant_liege_modifier
+					has_character_modifier = itinerant_liege_modifier
 				}
 			}
 			add = 1
 		}
 	}
+}
+
+HRT_authority_absent_sovereign_malus = {
+	value = 0
+	if = {
+		limit = {
+			title:c_aachen.var:HRT_emperor ?= {
+				is_ai = no
+				has_variable = HRT_authority_years_without_tour
+			}
+		}
+		if = {
+			limit = { title:c_aachen.var:HRT_emperor.var:HRT_authority_years_without_tour > 5 }
+			add = title:c_aachen.var:HRT_emperor.var:HRT_authority_years_without_tour
+			subtract = 5
+			multiply = -0.1
+			if =		{ limit = { HRT_has_centralization_1_trigger = yes } multiply = 0.8 }
+			else_if =	{ limit = { HRT_has_centralization_2_trigger = yes } multiply = 0.6 }
+			else_if =	{ limit = { HRT_has_centralization_3_trigger = yes } multiply = 0.4 }
+			else_if =	{ limit = { HRT_has_centralization_4_trigger = yes } multiply = 0.2 }
+		}
+	}
+	min = -3
 }
 
 HRT_authority_uncrowned_malus = {
@@ -421,20 +467,20 @@ HRT_authority_child_malus = {
 HRT_authority_legitimacy_modifier = {
 	value = 1
 	if = { limit = { title:c_aachen.var:HRT_emperor ?= { highest_held_title_tier = tier_empire } }
-		if =		{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 0 } }			multiply = 0.1 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 1 } }			multiply = 0.2 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 2 } }			multiply = 0.4 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 3 } }			multiply = 0.8 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 4 } }			multiply = 1 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 5 } }			multiply = 1.2 }
+		if =		{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 0 } }		multiply = 0.1 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 1 } }		multiply = 0.2 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 2 } }		multiply = 0.4 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 3 } }		multiply = 0.8 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 4 } }		multiply = 1 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 5 } }		multiply = 1.2 }
 	}
 	else = {
-		if =		{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 0 } }			multiply = 0.2 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 1 } }			multiply = 0.4 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 2 } }			multiply = 0.8 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 3 } }			multiply = 1 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 4 } }			multiply = 1.2 }
-		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 5 } }			multiply = 1.6 }
+		if =		{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 0 } }		multiply = 0.2 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 1 } }		multiply = 0.4 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 2 } }		multiply = 0.8 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 3 } }		multiply = 1 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 4 } }		multiply = 1.2 }
+		else_if =	{ limit = { title:c_aachen.var:HRT_emperor ?= { legitimacy_level ?= 5 } }		multiply = 1.6 }
 	}
 }
 
@@ -446,6 +492,17 @@ HRT_authority_edict_modifier = {
 	if = { limit = { title:c_aachen = { has_variable = HRT_edict_scholastic_advancement_var } }		multiply = 0.5 }
 }
 
+# 3.1 centralization
+HRT_authority_centralization_modifier = {
+	value = 1
+	if = {
+		limit = { HRT_is_centralizing_trigger = yes }
+	if = 		{ limit = {title:c_aachen.var:HRT_emperor.var:HRT_centralization_effort_value ?= 0}	multiply = 0.75	}
+	else_if =	{ limit = {title:c_aachen.var:HRT_emperor.var:HRT_centralization_effort_value ?= 1}	multiply = 0.5 	}
+	else_if = 	{ limit = {title:c_aachen.var:HRT_emperor.var:HRT_centralization_effort_value ?= 2}	multiply = 0.25	}
+	}
+}
+
 HRT_authority_min = {
 	value = -5
 	if = { limit = { title:c_aachen = { has_variable = HRT_edict_consular_taxation_var } }			add = -1 }
@@ -454,7 +511,7 @@ HRT_authority_min = {
 }
 HRT_authority_max = {
 	value = 5
-	if = { limit = { title:c_aachen = { has_variable = HRT_edict_legal_unification_var } }			add = 1 }
+	if = { limit = { title:c_aachen = { has_variable = HRT_edict_legal_unification_var } }			add = -1 }
 	if = { limit = { title:c_aachen = { has_variable = HRT_edict_chivalric_excellence_var } }		add = -1 }
 	if = { limit = { title:c_aachen = { has_variable = HRT_edict_diplomatic_corps_var } }			add = -1 }
 	if = { limit = { title:c_aachen = { has_variable = HRT_edict_consular_taxation_var } }			add = -1 }
@@ -513,6 +570,12 @@ HRT_authority_game_rule_bonus_twice = {
 		}
 		multiply = 2
 	}
+}
+
+#Limiter
+HRT_authority_limiter_value = {
+	value = var:HRT_authority
+	add = HRT_authority_change_value
 }
 
 #GUI

@@ -278,31 +278,40 @@ HRT_get_reichsstadt_candidates_sgui = {
 						}
 						development_level > 20
 					}
-				}
-				any_held_title = {
-					count = 1
-					tier = tier_county
-					any_county_province = {
-						culture = {
-							has_innovation = innovation_HRT_imperial_charter
+					title:c_aachen = {
+						NOT = {
+							is_target_in_variable_list = {
+								name = HRT_reichsstaedte
+								target = prev
+							}
 						}
 					}
 				}
-				NOT = {
-					title:e_hre = {
-						any_elector = {
-							this = root
+				save_temporary_scope_as = vassal
+				OR = {
+					NOT = {
+						title:e_hre = {
+							any_elector = {
+								this = scope:vassal
+							}
 						}
 					}
+					AND = {
+						title:e_hre = {
+							any_elector = {
+								this = scope:vassal
+							}
+						}
+						government_has_flag = government_is_theocracy
+					}
 				}
-				NOT = { government_has_flag = government_is_theocracy }
 				trigger_if = {
 					limit = {
-						scope:recipient = {
+						scope:vassal = {
 							is_ruler = no
 						}
 					}
-					scope:recipient = {
+					scope:vassal = {
 						is_imprisoned = no
 					}
 				}
@@ -332,5 +341,134 @@ HRT_imperial_charters_unlocked_sgui = {
 		culture = {
 			has_innovation = innovation_HRT_imperial_charter
 		}
+	}
+}
+
+# 3.1 centralization
+HRT_open_council_sgui = {
+	scope = character
+
+	effect = {
+		open_view_data = {
+			view = council_window
+		}
+	}
+}
+
+HRT_is_emperor_sgui = { #Why didn't I use this before
+	scope = character
+
+	is_shown = {
+		HRT_is_emperor_trigger = yes
+	}
+}
+
+HRT_is_centralizing_trigger_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_is_centralizing_trigger = yes
+	}
+}
+
+HRT_centralizing_effort_low_sgui = {
+	scope = character
+
+	is_shown = {
+		var:HRT_centralization_effort_value = 0
+	}
+	effect = {
+		set_variable = {
+			name = HRT_centralization_effort_value
+			value = 1
+		}
+	}
+}
+
+HRT_centralizing_effort_medium_sgui = {
+	scope = character
+
+	is_shown = {
+		var:HRT_centralization_effort_value = 1
+	}
+	effect = {
+		set_variable = {
+			name = HRT_centralization_effort_value
+			value = 2
+		}
+	}
+}
+
+HRT_centralizing_effort_high_sgui = {
+	scope = character
+
+	is_shown = {
+		var:HRT_centralization_effort_value = 2
+	}
+	effect = {
+		set_variable = {
+			name = HRT_centralization_effort_value
+			value = 0
+		}
+	}
+}
+
+HRT_has_centralization_0_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_has_centralization_0_trigger = yes
+	}
+}
+HRT_has_centralization_1_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_has_centralization_1_trigger = yes
+	}
+}
+HRT_has_centralization_2_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_has_centralization_2_trigger = yes
+	}
+}
+HRT_has_centralization_3_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_has_centralization_3_trigger = yes
+	}
+}
+HRT_has_centralization_4_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_has_centralization_4_trigger = yes
+	}
+}
+
+HRT_centralization_decreasing_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_centralization_progressbar_change_value < 0
+		HRT_centralization_reduction_imminent_trigger = no
+	}
+}
+HRT_centralization_increasing_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_centralization_progressbar_change_value > 0
+		HRT_centralization_reduction_imminent_trigger = no
+	}
+}
+HRT_centralization_reduction_imminent_sgui = {
+	scope = character
+
+	is_shown = {
+		HRT_centralization_reduction_imminent_trigger = yes
 	}
 }

@@ -26,6 +26,9 @@
 			title:c_aachen = {
 				NOT = { has_variable = HRT_CF_apostate_active } #CF Compat
 			}
+			any_HRT_candidati = {
+				count > 0
+			}
 		}
 		ordered_HRT_candidati = {
 			order_by = HRT_imperator_score
@@ -188,27 +191,34 @@ HRT_update_window_effect = {
 				}
 			}
 		}
-		# Expectatus (highest scoring Candidatus)
-		ordered_HRT_candidati = {
-			order_by = HRT_imperator_score
-			position = 0
-			save_scope_as = 0
-		}
-		# 3 highest scoring Candidati
-		ordered_HRT_candidati = {
-			order_by = HRT_imperator_score
-			position = 1
-			save_scope_as = 1
-		}
-		ordered_HRT_candidati = {
-			order_by = HRT_imperator_score
-			position = 2
-			save_scope_as = 2
-		}
-		ordered_HRT_candidati = {
-			order_by = HRT_imperator_score
-			position = 3
-			save_scope_as = 3
+		if = {
+			limit = {
+				any_HRT_candidati = {
+					count > 0
+				}
+			}
+			# Expectatus (highest scoring Candidatus)
+			ordered_HRT_candidati = {
+				order_by = HRT_imperator_score
+				position = 0
+				save_scope_as = 0
+			}
+			# 3 highest scoring Candidati
+			ordered_HRT_candidati = {
+				order_by = HRT_imperator_score
+				position = 1
+				save_scope_as = 1
+			}
+			ordered_HRT_candidati = {
+				order_by = HRT_imperator_score
+				position = 2
+				save_scope_as = 2
+			}
+			ordered_HRT_candidati = {
+				order_by = HRT_imperator_score
+				position = 3
+				save_scope_as = 3
+			}
 		}
 	}
 
@@ -346,6 +356,18 @@ HRT_update_window_effect = {
 		}
 	}
 
+	# Set up player story cycles for on_death effect
+	every_player = {
+		limit = {
+			NOT = {
+				any_owned_story = {
+					story_type = HRT_on_player_death_story
+				}
+			}
+		}
+		create_story = HRT_on_player_death_story
+	}
+
 	#GUI
 	set_global_variable = {
 		name = HRT_window_is_open
@@ -355,9 +377,13 @@ HRT_update_window_effect = {
 
 #HRT window on state hide
 HRT_clear_variables_effect = {
-	every_HRT_candidati = {
-		limit = { has_variable = HRT_prince_var }
-		remove_variable = HRT_prince_var
+	if = {
+		limit = {
+			any_HRT_candidati = {
+				count > 0
+			}
+		}
+		every_HRT_candidati = { remove_variable = HRT_prince_var }
 	}
 	if = {
 		limit = {
@@ -381,10 +407,7 @@ HRT_clear_variables_effect = {
 	}
 	#GUI
 	remove_global_variable = HRT_window_is_open
-	if = {
-		limit = { exists = global_var:HRT_close_window_temp_var }
-		remove_global_variable = HRT_close_window_temp_var
-	}
+	remove_global_variable = HRT_close_window_temp_var
 }
 
 #Close HRT Window if open
@@ -394,6 +417,12 @@ HRT_close_window = {
 		set_global_variable = {
 			name = HRT_close_window_temp_var
 			value = yes
+		}
+		title:c_aachen.culture = {
+			trigger_event = {
+				id = HRT.9006
+				days = 1
+			}
 		}
 	}
 }
@@ -468,232 +497,291 @@ HRT_nibelungen_search_completed_log_entry_effect = {
 
 ### 2.2 Unity ###
 HRT_unity_effect = {
-	# Clear all variables
-	title:c_aachen = {
-		if = {
-			limit = { has_variable_list = HRT_core_cultures }
-		}
-		every_in_list = {
-			variable = HRT_core_cultures
-			change_variable ?= {
-				name = HRT_core_culture_count
-				multiply = 0
-			}
-			change_variable ?= {
-				name = HRT_core_culture_count_weight
-				multiply = 0
-			}
-		}
-		clear_variable_list = HRT_core_cultures
-	}
-	
-	# Count cultures and add to list
-	every_realm_county = {
-		culture = {
-			if = {
-				limit = {
-					NOT = { has_variable = HRT_core_culture_count }
-				}
-				set_variable = {
-					name = HRT_core_culture_count
-					value = 0
-				}
-			}
-			if = {
-				limit = {
-					NOT = { has_variable = HRT_core_culture_count_weight }
-				}
-				set_variable = {
-					name = HRT_core_culture_count_weight
-					value = 0
-				}
-			}
-			change_variable = {
-				name = HRT_core_culture_count
-				add = 1
-			}
-			change_variable = {
-				name = HRT_core_culture_count_weight
-				add = 1
-			}
+	if = {
+		limit = { exists = title:e_hre.holder }
+		title:e_hre.holder = {
+			# Clear all variables
 			title:c_aachen = {
 				if = {
+					limit = { has_variable_list = HRT_core_cultures }
+				}
+				every_in_list = {
+					variable = HRT_core_cultures
+					change_variable ?= {
+						name = HRT_core_culture_count
+						multiply = 0
+					}
+					change_variable ?= {
+						name = HRT_core_culture_count_weight
+						multiply = 0
+					}
+				}
+				clear_variable_list = HRT_core_cultures
+			}
+
+			# Count cultures and add to list
+			culture = {
+				if = {
 					limit = {
-						NOT = {
-							is_target_in_variable_list = {
-								name = HRT_core_cultures
-								target = prev
+						NOT = { has_variable = HRT_core_culture_count }
+					}
+					set_variable = {
+						name = HRT_core_culture_count
+						value = 0
+					}
+				}
+				if = {
+					limit = {
+						NOT = { has_variable = HRT_core_culture_count_weight }
+					}
+					set_variable = {
+						name = HRT_core_culture_count_weight
+						value = 0
+					}
+				}
+				change_variable = {
+					name = HRT_core_culture_count
+					add = 1
+				}
+				change_variable = {
+					name = HRT_core_culture_count_weight
+					add = 1
+				}
+				title:c_aachen = {
+					if = {
+						limit = {
+							NOT = {
+								is_target_in_variable_list = {
+									name = HRT_core_cultures
+									target = prev
+								}
+							}
+						}
+						add_to_variable_list = {
+							name = HRT_core_cultures
+							target = prev
+						}
+					}
+				}
+			}
+			every_realm_county = {
+				culture = {
+					if = {
+						limit = {
+							culture_head ?= {
+								OR = {
+									this ?= title:e_hre.holder
+									is_vassal_or_below_of = title:e_hre.holder
+								}
+							}
+						}
+						if = {
+							limit = {
+								NOT = { has_variable = HRT_core_culture_count }
+							}
+							set_variable = {
+								name = HRT_core_culture_count
+								value = 0
+							}
+						}
+						if = {
+							limit = {
+								NOT = { has_variable = HRT_core_culture_count_weight }
+							}
+							set_variable = {
+								name = HRT_core_culture_count_weight
+								value = 0
+							}
+						}
+						change_variable = {
+							name = HRT_core_culture_count
+							add = 1
+						}
+						change_variable = {
+							name = HRT_core_culture_count_weight
+							add = 1
+						}
+						title:c_aachen = {
+							if = {
+								limit = {
+									NOT = {
+										is_target_in_variable_list = {
+											name = HRT_core_cultures
+											target = prev
+										}
+									}
+								}
+								add_to_variable_list = {
+									name = HRT_core_cultures
+									target = prev
+								}
 							}
 						}
 					}
-					add_to_variable_list = {
-						name = HRT_core_cultures
-						target = prev
-					}
 				}
 			}
-		}
-	}
 
-	# Modify values
-	title:c_aachen = {
-		#Add 50% bonus to historical tribes
-		every_in_list = {
-			variable = HRT_core_cultures
-			limit = {
-				OR = {
-					this = culture:franconian
-					any_parent_culture_or_above = {
-						this = culture:franconian
+			# Modify values
+			title:c_aachen = {
+				#Add 50% bonus to historical tribes
+				every_in_list = {
+					variable = HRT_core_cultures
+					limit = {
+						OR = {
+							this = culture:franconian
+							any_parent_culture_or_above = {
+								this = culture:franconian
+							}
+							this = culture:saxon
+							any_parent_culture_or_above = {
+								this = culture:saxon
+							}
+							this = culture:swabian
+							any_parent_culture_or_above = {
+								this = culture:swabian
+							}
+							this = culture:bavarian
+							any_parent_culture_or_above = {
+								this = culture:bavarian
+							}
+							this = title:e_hre.holder.culture
+						}
 					}
-					this = culture:saxon
-					any_parent_culture_or_above = {
-						this = culture:saxon
+					change_variable = {
+						name = HRT_core_culture_count
+						add = HRT_core_culture_value_half
 					}
-					this = culture:swabian
-					any_parent_culture_or_above = {
-						this = culture:swabian
+				}
+				#Give malus to non-germans
+				every_in_list = {
+					variable = HRT_core_cultures
+					limit = {
+						NOR = {
+							has_cultural_pillar = heritage_central_germanic
+							has_cultural_pillar = heritage_latin
+							has_cultural_pillar = heritage_frankish
+							this = title:e_hre.holder.culture
+						}
 					}
-					this = culture:bavarian
-					any_parent_culture_or_above = {
-						this = culture:bavarian
+					change_variable = {
+						name = HRT_core_culture_count
+						subtract = HRT_core_culture_value_half
 					}
-					this = title:e_hre.holder.culture
+				}
+				#Finally, make sure the Kaiser's culture is always at first place
+				every_in_list = {
+					variable = HRT_core_cultures
+					limit = {
+						this = title:e_hre.holder.culture
+					}
+					change_variable = {
+						name = HRT_core_culture_count
+						add = 8192 # 8-)
+					}
+				}
+			
+				# Grab cultures
+				ordered_in_list = {
+					variable = HRT_core_cultures
+					order_by = { value = var:HRT_core_culture_count }
+					position = 0
+					save_scope_as = HRT_core_culture_1
+				}
+				ordered_in_list = {
+					variable = HRT_core_cultures
+					order_by = { value = var:HRT_core_culture_count }
+					position = 1
+					save_scope_as = HRT_core_culture_2
+				}
+				ordered_in_list = {
+					variable = HRT_core_cultures
+					order_by = { value = var:HRT_core_culture_count }
+					position = 2
+					save_scope_as = HRT_core_culture_3
+				}
+				ordered_in_list = {
+					variable = HRT_core_cultures
+					order_by = { value = var:HRT_core_culture_count }
+					position = 3
+					save_scope_as = HRT_core_culture_4
+				}
+				ordered_in_list = {
+					variable = HRT_core_cultures
+					order_by = { value = var:HRT_core_culture_count }
+					position = 4
+					save_scope_as = HRT_core_culture_5
 				}
 			}
-			change_variable = {
-				name = HRT_core_culture_count
-				add = HRT_core_culture_value_half
-			}
-		}
-		#Give malus to non-germans
-		every_in_list = {
-			variable = HRT_core_cultures
-			limit = {
-				NOR = {
-					has_cultural_pillar = heritage_central_germanic
-					has_cultural_pillar = heritage_latin
-					has_cultural_pillar = heritage_frankish
-					this = title:e_hre.holder.culture
+
+			if = {
+				limit = {
+					exists = scope:HRT_core_culture_1
+				}
+				set_variable = {
+					name = HRT_core_culture_1
+					value = scope:HRT_core_culture_1
 				}
 			}
-			change_variable = {
-				name = HRT_core_culture_count
-				subtract = HRT_core_culture_value_half
+			if = {
+				limit = {
+					exists = scope:HRT_core_culture_2
+					NOT = {
+						scope:HRT_core_culture_2 = scope:HRT_core_culture_1
+					}
+				}
+				set_variable = {
+					name = HRT_core_culture_2
+					value = scope:HRT_core_culture_2
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:HRT_core_culture_3
+					NOR = {
+						scope:HRT_core_culture_3 = scope:HRT_core_culture_1
+						scope:HRT_core_culture_3 = scope:HRT_core_culture_2
+					}
+				}
+				set_variable = {
+					name = HRT_core_culture_3
+					value = scope:HRT_core_culture_3
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:HRT_core_culture_4
+					NOR = {
+						scope:HRT_core_culture_4 = scope:HRT_core_culture_1
+						scope:HRT_core_culture_4 = scope:HRT_core_culture_2
+						scope:HRT_core_culture_4 = scope:HRT_core_culture_3
+					}
+				}
+				set_variable = {
+					name = HRT_core_culture_4
+					value = scope:HRT_core_culture_4
+				}
+			}
+			if = {
+				limit = {
+					exists = scope:HRT_core_culture_5
+					NOR = {
+						scope:HRT_core_culture_5 = scope:HRT_core_culture_1
+						scope:HRT_core_culture_5 = scope:HRT_core_culture_2
+						scope:HRT_core_culture_5 = scope:HRT_core_culture_3
+						scope:HRT_core_culture_5 = scope:HRT_core_culture_4
+					}
+				}
+				set_variable = {
+					name = HRT_core_culture_5
+					value = scope:HRT_core_culture_5
+				}
+			}
+			# Get final variable on emperor
+			set_variable = {
+				name = HRT_authority_unity
+				value = HRT_total_unity_value
 			}
 		}
-		#Finally, make sure the Kaiser's culture is always at first place
-		every_in_list = {
-			variable = HRT_core_cultures
-			limit = {
-				this = title:e_hre.holder.culture
-			}
-			change_variable = {
-				name = HRT_core_culture_count
-				add = 8192 # 8-)
-			}
-		}
-	
-		# Grab cultures
-		ordered_in_list = {
-			variable = HRT_core_cultures
-			order_by = { value = var:HRT_core_culture_count }
-			position = 0
-			save_scope_as = HRT_core_culture_1
-		}
-		ordered_in_list = {
-			variable = HRT_core_cultures
-			order_by = { value = var:HRT_core_culture_count }
-			position = 1
-			save_scope_as = HRT_core_culture_2
-		}
-		ordered_in_list = {
-			variable = HRT_core_cultures
-			order_by = { value = var:HRT_core_culture_count }
-			position = 2
-			save_scope_as = HRT_core_culture_3
-		}
-		ordered_in_list = {
-			variable = HRT_core_cultures
-			order_by = { value = var:HRT_core_culture_count }
-			position = 3
-			save_scope_as = HRT_core_culture_4
-		}
-		ordered_in_list = {
-			variable = HRT_core_cultures
-			order_by = { value = var:HRT_core_culture_count }
-			position = 4
-			save_scope_as = HRT_core_culture_5
-		}
-	}
-	
-	if = {
-		limit = {
-			exists = scope:HRT_core_culture_1
-		}
-		set_variable = {
-			name = HRT_core_culture_1
-			value = scope:HRT_core_culture_1
-		}
-	}
-	if = {
-		limit = {
-			exists = scope:HRT_core_culture_2
-			NOT = {
-				scope:HRT_core_culture_2 = scope:HRT_core_culture_1
-			}
-		}
-		set_variable = {
-			name = HRT_core_culture_2
-			value = scope:HRT_core_culture_2
-		}
-	}
-	if = {
-		limit = {
-			exists = scope:HRT_core_culture_3
-			NOR = {
-				scope:HRT_core_culture_3 = scope:HRT_core_culture_1
-				scope:HRT_core_culture_3 = scope:HRT_core_culture_2
-			}
-		}
-		set_variable = {
-			name = HRT_core_culture_3
-			value = scope:HRT_core_culture_3
-		}
-	}
-	if = {
-		limit = {
-			exists = scope:HRT_core_culture_4
-			NOR = {
-				scope:HRT_core_culture_4 = scope:HRT_core_culture_1
-				scope:HRT_core_culture_4 = scope:HRT_core_culture_2
-				scope:HRT_core_culture_4 = scope:HRT_core_culture_3
-			}
-		}
-		set_variable = {
-			name = HRT_core_culture_4
-			value = scope:HRT_core_culture_4
-		}
-	}
-	if = {
-		limit = {
-			exists = scope:HRT_core_culture_5
-			NOR = {
-				scope:HRT_core_culture_5 = scope:HRT_core_culture_1
-				scope:HRT_core_culture_5 = scope:HRT_core_culture_2
-				scope:HRT_core_culture_5 = scope:HRT_core_culture_3
-				scope:HRT_core_culture_5 = scope:HRT_core_culture_4
-			}
-		}
-		set_variable = {
-			name = HRT_core_culture_5
-			value = scope:HRT_core_culture_5
-		}
-	}
-	# Get final variable on emperor
-	set_variable = {
-		name = HRT_authority_unity
-		value = HRT_total_unity_value
 	}
 }
 
@@ -736,34 +824,54 @@ HRT_disable_effect = {
 				}
 			}
 		}
+		# 3.1 centralization
+		set_variable = {
+			name = HRT_centralization
+			value = { 5 20 }
+		}
 	}
 }
 
-# 2.5 Reichsstadt
-HRT_grant_imperial_city_effect = {
-	change_liege = {
-		liege = title:e_hre.holder
-		change = scope:title_change
+# 3.1 Centralization
+HRT_assign_centralization_character_modifier_effect = {
+	if = {
+		limit = { HRT_has_centralization_0_trigger = yes }
+		add_character_modifier = HRT_centralization_0_mod
+		remove_character_modifier ?= HRT_centralization_1_mod
+		remove_character_modifier ?= HRT_centralization_2_mod
+		remove_character_modifier ?= HRT_centralization_3_mod
+		remove_character_modifier ?= HRT_centralization_4_mod
 	}
-	resolve_title_and_vassal_change = scope:title_change
-	change_government = free_imperial_city_government
-	add_realm_law_skip_effects = city_succession_law
-	create_story = HRT_imperial_city_story
-	capital_province.county = {
-		add_county_modifier = HRT_reichsstadt_1
-		set_variable = {
-			name = HRT_reichsstadt_years
-			value = 0
-		}
-		set_variable = {
-			name = HRT_reichsstadt_development
-			value = development_level
-		}
-		title:c_aachen = {
-			add_to_variable_list = {
-				name = HRT_reichsstaedte
-				target = prev
-			}
-		}
+	else_if = {
+		limit = { HRT_has_centralization_1_trigger = yes }
+		add_character_modifier = HRT_centralization_1_mod
+		remove_character_modifier ?= HRT_centralization_0_mod
+		remove_character_modifier ?= HRT_centralization_2_mod
+		remove_character_modifier ?= HRT_centralization_3_mod
+		remove_character_modifier ?= HRT_centralization_4_mod
+	}
+	else_if = {
+		limit = { HRT_has_centralization_2_trigger = yes }
+		add_character_modifier = HRT_centralization_2_mod
+		remove_character_modifier ?= HRT_centralization_1_mod
+		remove_character_modifier ?= HRT_centralization_0_mod
+		remove_character_modifier ?= HRT_centralization_3_mod
+		remove_character_modifier ?= HRT_centralization_4_mod
+	}
+	else_if = {
+		limit = { HRT_has_centralization_3_trigger = yes }
+		add_character_modifier = HRT_centralization_3_mod
+		remove_character_modifier ?= HRT_centralization_1_mod
+		remove_character_modifier ?= HRT_centralization_2_mod
+		remove_character_modifier ?= HRT_centralization_0_mod
+		remove_character_modifier ?= HRT_centralization_4_mod
+	}
+	else_if = {
+		limit = { HRT_has_centralization_4_trigger = yes }
+		add_character_modifier = HRT_centralization_4_mod
+		remove_character_modifier ?= HRT_centralization_1_mod
+		remove_character_modifier ?= HRT_centralization_2_mod
+		remove_character_modifier ?= HRT_centralization_3_mod
+		remove_character_modifier ?= HRT_centralization_0_mod
 	}
 }

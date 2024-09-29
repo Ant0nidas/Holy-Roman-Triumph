@@ -354,3 +354,62 @@ COR_tooltip_disburse_ceremony_host_activity_rewards = {
 		accolade = { add_glory = minor_glory_gain }
 	}
 }
+
+COR_uncrowned_legitimacy_effect = {
+	if = {
+		limit = {
+			is_ai = no
+			is_valid_for_legitimacy_change = yes
+		}
+		if = {
+			limit = { var:COR_years_reigned = 1 }
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = legitimacy_loss_toast
+				left_icon = root
+				add_legitimacy = miniscule_legitimacy_loss
+				custom_tooltip = COR_uncrowned_legitimacy_effect.toast
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					var:COR_years_reigned = 2
+					var:COR_years_reigned = 15
+				}
+			}
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = legitimacy_loss_toast
+				left_icon = root
+				add_legitimacy = minor_legitimacy_loss
+				custom_tooltip = COR_uncrowned_legitimacy_effect.toast
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					var:COR_years_reigned = 3
+					var:COR_years_reigned = 25
+				}
+			}
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = legitimacy_loss_toast
+				left_icon = root
+				add_legitimacy = medium_legitimacy_loss
+				custom_tooltip = COR_uncrowned_legitimacy_effect.toast
+			}
+		}
+		else_if = {
+			limit = { var:COR_years_reigned = 4 }
+			send_interface_toast = {
+				type = event_toast_effect_bad
+				title = legitimacy_loss_toast
+				left_icon = root
+				add_legitimacy = major_legitimacy_loss
+				custom_tooltip = COR_uncrowned_legitimacy_effect.toast
+			}
+		}
+	}
+}

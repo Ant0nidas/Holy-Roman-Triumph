@@ -308,7 +308,12 @@
 		}
 
 		# Remove flag to re-enable Organize a Coronation Ceremony Decision
-		scope:host = { remove_character_flag = COR_flag_preparing_coronation }
+		scope:host = {
+			if = {
+				limit = { is_alive = yes }
+				remove_character_flag = COR_flag_preparing_coronation
+			}
+		}
 
 		#Accolades' modifiers' removal
 		if = {
@@ -322,6 +327,7 @@
 			scope:activity = {
 				every_attending_character = {
 					limit = {
+						is_alive = yes
 						has_character_modifier = accolade_charmer_party_modifier
 					}
 					remove_character_modifier = accolade_charmer_party_modifier
@@ -339,6 +345,7 @@
 			scope:activity = {
 				every_attending_character = {
 					limit = {
+						is_alive = yes
 						has_character_modifier = accolade_charmer_party_high_modifier
 					}
 					remove_character_modifier = accolade_charmer_party_high_modifier
@@ -1450,7 +1457,7 @@
 				if = {
 					limit = {
 						is_alive = yes
-						has_variable = wear_armor
+						has_character_flag = wear_armor
 					}
 					remove_character_flag = wear_armor
 				}

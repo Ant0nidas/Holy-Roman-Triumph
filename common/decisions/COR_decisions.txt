@@ -1,6 +1,8 @@
 ﻿COR_prepare_coronation_ceremony_decision = {
-	picture = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
-	major = yes
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
+	}
+	decision_group_type = major
 	ai_check_interval = 8 #check only once every 8 months.
 	desc = COR_prepare_coronation_ceremony_decision_desc
 
@@ -348,8 +350,10 @@
 
 # 2.4 Jewel of Byzantium
 COR_byz_prepare_coronation_ceremony_decision = {
-	picture = "gfx/interface/illustrations/decisions/decision_found_kingdom.dds"
-	major = yes
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/ep3_decision_hold_triumph.dds"
+	}
+	decision_group_type = major
 	ai_check_interval = 3 #check only once every 3 months.
 	desc = COR_byz_prepare_coronation_ceremony_decision_desc
 
@@ -368,8 +372,17 @@ COR_byz_prepare_coronation_ceremony_decision = {
 			has_primary_title = title:e_roman_empire
 		}
 		faith = faith:orthodox
-		government_has_flag = government_is_feudal
+		OR = {
+			government_has_flag = government_is_feudal
+			government_has_flag = government_is_administrative
+		}
 		is_landed = yes
+		# 1.13 Roads to Power Compat
+		NOT = {
+			any_memory = {
+				has_memory_type = deposed_liege_memory
+			}
+		}
 	}
 
 	is_valid_showing_failures_only = {

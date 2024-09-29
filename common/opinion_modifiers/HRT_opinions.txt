@@ -1,15 +1,25 @@
-﻿HRT_edict_diplomatic_corps_opinion = {
+﻿HRT_edict_diplomatic_corps_opinion_0 = {
+	opinion = 5
+	years = 5
+}
+HRT_edict_diplomatic_corps_opinion_1 = {
+	opinion = 10
+	years = 5
+}
+HRT_edict_diplomatic_corps_opinion_2 = {
+	opinion = 15
+	years = 5
+}
+HRT_edict_diplomatic_corps_opinion_3 = {
 	opinion = 20
+	years = 5
+}
+HRT_edict_diplomatic_corps_opinion_4 = {
+	opinion = 25
 	years = 5
 }
 
 HRT_dismantled_hre_opinion = {
 	opinion = -25
 	years = 10
-}
-
-HRT_granted_vassal_independence_opinion = {
-	opinion = -25
-	years = 20
-	decaying = yes
 }

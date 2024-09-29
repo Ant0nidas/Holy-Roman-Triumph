@@ -1,6 +1,7 @@
 ﻿HRT_prepare_unification_war_decision = {
-	picture = "gfx/interface/illustrations/decisions/fp2_decision_struggle_opening.dds"
-	major = no
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/fp2_decision_struggle_opening.dds"
+	}
 	ai_check_interval = 6
 
 	cooldown = { years = 20 }
@@ -61,8 +62,9 @@
 }
 
 HRT_decline_succession_decision = {
-	picture = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
-	major = no
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
 	ai_check_interval = 0
 
 	is_shown = {
@@ -72,7 +74,7 @@ HRT_decline_succession_decision = {
 			has_trait = HRT_decline_succession
 			title:c_aachen = { has_variable = HRT_dismantled }
 		}
-		HRT_is_involved_trigger = yes
+		HRT_is_eligible_candidatus = yes
 	}
 
 	is_valid = {
@@ -89,8 +91,9 @@ HRT_decline_succession_decision = {
 }
 
 HRT_accept_succession_decision = {
-	picture = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
-	major = no
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
+	}
 	ai_check_interval = 0
 
 	is_shown = {
@@ -113,8 +116,9 @@ HRT_accept_succession_decision = {
 
 # Nibelungen
 HRT_nibelungen_start_decision = {
-	picture = "gfx/interface/illustrations/decisions/decision_legend.dds"
-	major = no
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_legend.dds"
+	}
 	ai_check_interval = 0
 
 	cooldown = { months = 5 }

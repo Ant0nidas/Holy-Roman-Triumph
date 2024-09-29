@@ -2,7 +2,7 @@
     name = "HRT_reichsstadt_candidated_window"
     parentanchor = center
     layer = middle
-	size = { 550 960 }
+	size = { 550 1108 }
 
 	using = Window_Background
 	using = Window_Decoration_Spike
@@ -10,7 +10,7 @@
 
 	state = {
 		name = _show
-		position = { 85 0 }
+		position = { 105 0 }
 		using = Animation_FadeIn_Quick
         using = Sound_WindowShow_Standard
 		on_start = "[GetVariableSystem.Set('HRT_reichsstadt_candidates_window_open', 'yes')]"

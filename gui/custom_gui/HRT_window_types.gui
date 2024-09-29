@@ -119,7 +119,7 @@ visible = "[Not(GetScriptedGui('HRT_formed_sgui').IsShown(GuiScope.SetRoot(GetPl
 types HRT_button_authority_types {
 	type HRT_button_authority = button {
 		size = { 90 160 }
-		position = { 880 620 }
+		position = { 880 780 }
 		block "effect_name"
 		{
 			effectname = "NoHighlight"
@@ -199,5 +199,513 @@ type HRT_button_edict_framed = button_normal
 		gfxtype = togglepushbuttongfx
         effectname = "NoHighlight"
 	}
+
+	# 3.1 centralization
+type HRT_centralization_bar = button_standard
+	{
+	state = {
+		name = _mouse_hierarchy_enter
+		on_start = "[PdxGuiWidget.FindChild('centralization_text_hover').TriggerAnimation('show')]"
+	}
+	state = {
+		name = _mouse_hierarchy_leave
+		on_start = "[PdxGuiWidget.FindChild('centralization_text_hover').TriggerAnimation('hide')]"
+	}
+	block "enabled"
+	{
+	enabled = yes
+	}
+	hbox = {
+		block "arrow"
+		{
+		widget = {
+			icon = {
+				size = { 30 40 }
+				position = { -15 -60 }
+				texture = "gfx/interface/window_dynasty_house/small_arrow.dds"
+				alpha = 1
+				text_single = {
+					parentanchor = center
+					position = { 0 -10 }
+					block "raw_text"
+					{
+					raw_text = 0
+					}
+					align = center
+				}
+			}
+		}
+		}
+		icon = {
+			block "max_width"
+			{
+				max_width = 195
+			}
+			max_height = 40
+			block "texture"
+			{
+			texture = "gfx/interface/progressbars/house_unity/antagonistic.dds"
+			}
+			modify_texture = { #Non-adoption dark
+				block "modify_texture_visibility"
+				{
+				visible = no
+				}
+				texture = "gfx/interface/buttons/button_standard_overlay.dds"
+				blend_mode = multiply
+				spriteType = corneredTiled
+				alpha = 0.75
+			}
+
+			spriteborder = { 6 6 }
+			spriteType = Corneredtiled
+			text_single = {
+				block "text_visibility"
+				{
+				visible = "[LessThan_CFixedPoint( GetPlayer.MakeScope.ScriptValue('HRT_authority_progressbar_value'), '(CFixedPoint)100' )]"
+				}
+				parentanchor = hcenter|vcenter
+				block "text"
+				{
+				text = "HRT_centralization_0"
+				}
+				using = Font_Size_Medium
+				align = nobaseline
+				background = {
+					using = Background_Area_Dark
+					margin = { 10 0 }
+				}
+			}
+			widget = {
+				name = "centralization_text_hover"
+				alpha = 0
+				
+				state = {
+					name = "show"
+					alpha = 1
+				}
+				
+				state = {
+					name = "hide"
+					alpha = 0
+				}
+				
+				text_single = {
+					block "text_hover_visibility"
+					{
+					visible = yes
+					}
+					parentanchor = hcenter|vcenter
+					widgetanchor = hcenter|vcenter
+					block "text_hover"
+					{
+					text = "HRT_centralization_0"
+					}
+					using = Font_Size_Medium
+					align = nobaseline
+					position = { 98 20 }
+					background = {
+						using = Background_Area_Dark
+						margin = { 10 0 }
+					}
+				}
+			}
+			animation_attention_bar = {
+				block "active_visibility"
+				{
+				visible = no
+				}
+			}
+			### Horizontal Wipe Animation Left
+			icon = {
+				block "wipe_left_animation"
+				{
+				visible = no
+				}
+				size = { 100% 90% }
+				parentanchor = vcenter
+				texture = "gfx/interface/colors/white.dds"
+				alpha = 0
+
+				modify_texture = {
+					name = "horizontal_wipe"
+					texture = "gfx/interface/progressbars/progressbar_center_glow_white_decrease.dds"
+					blend_mode = alphamultiply
+				}
+
+				state = {
+					name = a
+					next = b
+					trigger_on_create = yes
+					duration = 0
+					alpha = 0
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { -0.5 0 }
+					}
+				}
+
+				state = {
+					name = b
+					next = c
+					duration = 1
+					alpha = 1
+					on_finish = "[PdxGuiTriggerAllAnimations('grandeur_bar_glow')]"
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { 1 0 }
+					}
+				}
+
+				state = {
+					name = c
+					next = a
+					duration = 0.5
+					alpha = 0
+					delay = 1.5
+				}
+			}
+
+			### Horizontal Wipe Animation Left (Red)
+			icon = {
+				block "wipe_left_animation_red"
+				{
+				visible = no
+				}
+				size = { 100% 90% }
+				parentanchor = vcenter
+				texture = "gfx/interface/colors/red.dds"
+				alpha = 0
+
+				modify_texture = {
+					name = "horizontal_wipe"
+					texture = "gfx/interface/progressbars/progressbar_center_glow_white_decrease.dds"
+					blend_mode = alphamultiply
+				}
+
+				state = {
+					name = a
+					next = b
+					trigger_on_create = yes
+					duration = 0
+					alpha = 0
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { -0.5 0 }
+					}
+				}
+
+				state = {
+					name = b
+					next = c
+					duration = 1
+					alpha = 1
+					on_finish = "[PdxGuiTriggerAllAnimations('grandeur_bar_glow')]"
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { 1 0 }
+					}
+				}
+
+				state = {
+					name = c
+					next = a
+					duration = 0.5
+					alpha = 0
+					delay = 1.5
+				}
+			}
+
+			### Horizontal Wipe Animation Right
+			icon = {
+				block "wipe_right_animation"
+				{
+				visible = no
+				}
+				size = { 100% 90% }
+				parentanchor = vcenter
+				texture = "gfx/interface/colors/white.dds"
+				alpha = 0
+
+				modify_texture = {
+					name = "horizontal_wipe"
+					texture = "gfx/interface/progressbars/progressbar_center_glow_white_increase.dds"
+					blend_mode = alphamultiply
+				}
+
+				state = {
+					name = a
+					next = b
+					trigger_on_create = yes
+					duration = 0
+					alpha = 0
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { 0.5 0 }
+					}
+				}
+
+				state = {
+					name = b
+					next = c
+					duration = 1
+					alpha = 1
+					on_finish = "[PdxGuiTriggerAllAnimations('grandeur_bar_glow')]"
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { -1 0 }
+					}
+				}
+
+				state = {
+					name = c
+					next = a
+					duration = 0.5
+					alpha = 0
+					delay = 1.5
+				}
+			}
+		}
+	}
+}
+
+type HRT_centralization_stage_0_tooltip = object_tooltip_pop_out {
+	alwaystransparent = no
+	blockoverride "header_additions" { }
+	blockoverride "title_text" {
+		margin = { 0 8 }
+		text = "HRT_centralization_0"
+		default_format = "#T"
+	}
+	blockoverride "main_description" {
+		textbox = {
+			name = "main_description"
+			layoutpolicy_horizontal = expanding
+			max_width = 400
+			margin_top = 5
+			margin_bottom = 15
+			using = DefaultTooltipText
+			multiline = yes
+			text = "HRT_centralization_0_desc"
+			fonttintcolor = "[TooltipInfo.GetTintColor]"
+			alwaystransparent = no
+		}
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 3
+			margin_bottom = 10
+			text_label_left  = {
+				layoutpolicy_horizontal = expanding
+				margin_left = 16
+				text = "HRT_centralization_EFFECTS_TITLE"
+			}
+			text_multi = {
+				layoutpolicy_horizontal = expanding
+				max_width = 400
+				autoresize = yes
+				text = "HRT_centralization_0_effects"
+			}
+		}
+	}
+	blockoverride "concept_link" {
+		text = "[HRT_centralization_level|E]"
+	}
+}
+
+type HRT_centralization_stage_1_tooltip = object_tooltip_pop_out {
+	alwaystransparent = no
+	blockoverride "header_additions" { }
+	blockoverride "title_text" {
+		margin = { 0 8 }
+		text = "HRT_centralization_1"
+		default_format = "#T"
+	}
+	blockoverride "main_description" {
+		textbox = {
+			name = "main_description"
+			layoutpolicy_horizontal = expanding
+			max_width = 400
+			margin_top = 5
+			margin_bottom = 15
+			using = DefaultTooltipText
+			multiline = yes
+			text = "HRT_centralization_1_desc"
+			fonttintcolor = "[TooltipInfo.GetTintColor]"
+			alwaystransparent = no
+		}
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 3
+			margin_bottom = 10
+			text_label_left  = {
+				layoutpolicy_horizontal = expanding
+				margin_left = 16
+				text = "HRT_centralization_EFFECTS_TITLE"
+			}
+			text_multi = {
+				layoutpolicy_horizontal = expanding
+				max_width = 400
+				autoresize = yes
+				text = "HRT_centralization_1_effects"
+			}
+		}
+	}
+	blockoverride "concept_link" {
+		text = "[HRT_centralization_level|E]"
+	}
+}
+type HRT_centralization_stage_2_tooltip = object_tooltip_pop_out {
+	alwaystransparent = no
+	blockoverride "header_additions" { }
+	blockoverride "title_text" {
+		margin = { 0 8 }
+		text = "HRT_centralization_2"
+		default_format = "#T"
+	}
+	blockoverride "main_description" {
+		textbox = {
+			name = "main_description"
+			layoutpolicy_horizontal = expanding
+			max_width = 400
+			margin_top = 5
+			margin_bottom = 15
+			using = DefaultTooltipText
+			multiline = yes
+			text = "HRT_centralization_2_desc"
+			fonttintcolor = "[TooltipInfo.GetTintColor]"
+			alwaystransparent = no
+		}
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 3
+			margin_bottom = 10
+			text_label_left  = {
+				layoutpolicy_horizontal = expanding
+				margin_left = 16
+				text = "HRT_centralization_EFFECTS_TITLE"
+			}
+			text_multi = {
+				layoutpolicy_horizontal = expanding
+				max_width = 400
+				autoresize = yes
+				text = "HRT_centralization_2_effects"
+			}
+		}
+	}
+	blockoverride "concept_link" {
+		text = "[HRT_centralization_level|E]"
+	}
+}
+type HRT_centralization_stage_3_tooltip = object_tooltip_pop_out {
+	alwaystransparent = no
+	blockoverride "header_additions" { }
+	blockoverride "title_text" {
+		margin = { 0 8 }
+		text = "HRT_centralization_3"
+		default_format = "#T"
+	}
+	blockoverride "main_description" {
+		textbox = {
+			name = "main_description"
+			layoutpolicy_horizontal = expanding
+			max_width = 400
+			margin_top = 5
+			margin_bottom = 15
+			using = DefaultTooltipText
+			multiline = yes
+			text = "HRT_centralization_3_desc"
+			fonttintcolor = "[TooltipInfo.GetTintColor]"
+			alwaystransparent = no
+		}
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 3
+			margin_bottom = 10
+			text_label_left  = {
+				layoutpolicy_horizontal = expanding
+				margin_left = 16
+				text = "HRT_centralization_EFFECTS_TITLE"
+			}
+			text_multi = {
+				layoutpolicy_horizontal = expanding
+				max_width = 400
+				autoresize = yes
+				text = "HRT_centralization_3_effects"
+			}
+		}
+	}
+	blockoverride "concept_link" {
+		text = "[HRT_centralization_level|E]"
+	}
+}
+type HRT_centralization_stage_4_tooltip = object_tooltip_pop_out {
+	alwaystransparent = no
+	blockoverride "header_additions" { }
+	blockoverride "title_text" {
+		margin = { 0 8 }
+		text = "HRT_centralization_4"
+		default_format = "#T"
+	}
+	blockoverride "main_description" {
+		textbox = {
+			name = "main_description"
+			layoutpolicy_horizontal = expanding
+			max_width = 400
+			margin_top = 5
+			margin_bottom = 15
+			using = DefaultTooltipText
+			multiline = yes
+			text = "HRT_centralization_4_desc"
+			fonttintcolor = "[TooltipInfo.GetTintColor]"
+			alwaystransparent = no
+		}
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			spacing = 3
+			margin_bottom = 10
+			text_label_left  = {
+				layoutpolicy_horizontal = expanding
+				margin_left = 16
+				text = "HRT_centralization_EFFECTS_TITLE"
+			}
+			text_multi = {
+				layoutpolicy_horizontal = expanding
+				max_width = 400
+				autoresize = yes
+				text = "HRT_centralization_4_effects"
+			}
+		}
+	}
+	blockoverride "concept_link" {
+		text = "[HRT_centralization_level|E]"
+	}
+}
+
+type HRT_progressbar_transparent = progressbar {
+	min = 0
+	max = 100
+	value = 35
+	size = { 50 20 }
+
+	progresstexture = "gfx/interface/progressbars/progress_transparent.dds"
+	noprogresstexture = "gfx/interface/progressbars/progress_transparent.dds"
+
+	spriteType = Corneredtiled
+	spriteborder = { 6 6 }
+
+	icon = {
+		name = "overlay"
+		texture = "gfx/interface/progressbars/progress_transparent.dds"
+		spriteType = Corneredstretched
+		spriteborder = { 2 2 }
+		size = { 100% 100% }
+	}
+}
 
 }

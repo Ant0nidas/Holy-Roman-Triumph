@@ -3340,6 +3340,7 @@ COR_ceremony_ewan.0041 = {
 	}
 
 	immediate = {
+		save_scope_as = root
 		# Save the spouses for ease of reference.
 		scope:host = { save_scope_as = spouse_1 }
 		# And, if we've got one, our intent target.
@@ -3452,7 +3453,10 @@ COR_ceremony_ewan.0041 = {
 					title = ep2_wedding_ewan.0041.e.tt.success
 					scope:activity = {
 						every_attending_character = {
-							limit = { is_ruler = yes }
+							limit = {
+								is_ruler = yes
+								NOT = { this = scope:root }
+							}
 							custom = custom.every_landed_activity_guest
 							reverse_add_opinion = {
 								target = root

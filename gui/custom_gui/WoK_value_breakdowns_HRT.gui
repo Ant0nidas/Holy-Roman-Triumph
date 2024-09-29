@@ -156,86 +156,58 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "text"     {text = HRT_authority_change}
                     blockoverride "value"    {text = "HRT_authority_change_value"}
                 }
+
+				# Total Gain
+
+				wok_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_authority_total_gain}
+                    blockoverride "value"    {text = "HRT_authority_total_gain_value"}
+                }
 				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_constrained_reach'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_constrained_reach_malus} 
                     blockoverride "value"    {text = "HRT_authority_constrained_reach_malus_value"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-                    #visible = "[GreaterThan_CFixedPoint(EmptyScope.ScriptValue('authority_gain_per_prestige'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_prestige_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_prestige_bonus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_prestige_bonus')|=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-                    #visible = "[GreaterThan_CFixedPoint(EmptyScope.ScriptValue('authority_gain_per_dread'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_dread_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_dread_bonus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_dread_bonus')|=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-                    blockoverride "text"     {text = HRT_authority_years_reigned_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_gain_years_reigned_bonus')|L=+]"}
+                    blockoverride "text"     {text = HRT_authority_years_reigned_bonus}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_gain_years_reigned_bonus')|=+]"}
 				}
-                #wok_cardinal_breakdown_box_HRT  = {
-                #    blockoverride "text"     {text = HRT_candidatus_event_bonus } 
-                #    blockoverride "value"    {text = "[TopScope.ScriptValue('emperor_recent_event_modifier')|0=+]"}
-				#}
 				wok_cardinal_breakdown_box_HRT  = {
                     blockoverride "text"     {text = HRT_authority_vassal_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_vassal_bonus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_vassal_bonus')|=+]"}
 				}
-				#wok_cardinal_breakdown_box_HRT  = {
-                #    blockoverride "text"     {text = HRT_authority_held_castle_bonus} 
-                #    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_held_castle_bonus_gui')|L=+]"}
-				#}
 				wok_cardinal_breakdown_box_HRT  = {
-					#visible = "[GreaterThan_CFixedPoint(EmptyScope.ScriptValue('HRT_authority_ally_bonus_gui'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_ally_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_ally_bonus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_ally_bonus')|=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-					#visible = "[GreaterThan_CFixedPoint(EmptyScope.ScriptValue('HRT_authority_artifact_bonus_gui'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_artifact_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_artifact_bonus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_artifact_bonus')|=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_missing_reichskrone_malus'),'(CFixedPoint)0')]"
-                    blockoverride "text"     {text = HRT_authority_missing_reichskrone_malus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_missing_reichskrone_malus')|0=+]"}
-				}
-				wok_cardinal_breakdown_box_HRT  = {
-					#visible = "[GreaterThan_CFixedPoint(EmptyScope.ScriptValue('HRT_authority_grand_tour_bonus_gui'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_grand_tour_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_grand_tour_bonus')|0=+]"}
+                    blockoverride "value"    {text = "HRT_authority_grand_tour_bonus_value"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-					#visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_reichsstadt_bonus'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_reichsstadt_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_reichsstadt_bonus')|L=+]"}
-				}
-				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_loss_waged_vassal_wars_malus'),'(CFixedPoint)0')]"
-                    blockoverride "text"     {text = HRT_authority_loss_waged_vassal_wars_malus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_loss_waged_vassal_wars_malus')|L=+]"}
-				}
-				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_infidel_malus'),'(CFixedPoint)0')]"
-                    blockoverride "text"     {text = HRT_authority_infidel_malus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_infidel_malus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_reichsstadt_bonus')|=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
                     blockoverride "text"     {text = HRT_authority_territory_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_territory_bonus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_territory_bonus')|=+]"}
 				}
-				#wok_cardinal_breakdown_box_HRT  = {
-					#visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus'),'(CFixedPoint)0')]"
-                    #blockoverride "text"     {text = HRT_authority_unheld_heartlands_malus} 
-                    #blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus')|L=+]"}
-				#}
 				wok_cardinal_breakdown_box_HRT  = {
-					#visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_cardinals_bonus'),'(CFixedPoint)0')]"
 					visible = "[GetGlobalVariable('Trinity_is_loaded').IsSet]"
                     blockoverride "text"     {text = HRT_authority_cardinals_bonus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_cardinals_bonus')|L=+]"}
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_cardinals_bonus')|=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_papal_investiture_malus'),'(CFixedPoint)1')]"
@@ -248,24 +220,14 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "value"    {text = "HRT_authority_free_investiture_bonus_value"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_excommunicated_malus'),'(CFixedPoint)0')]"
-                    blockoverride "text"     {text = HRT_authority_excommunicated_malus} 
-                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_excommunicated_malus')|0=+]"}
-				}
-				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_criminal_malus'),'(CFixedPoint)1')]"
-                    blockoverride "text"     {text = HRT_candidatus_is_criminal_malus} 
-                    blockoverride "value"    {text = "HRT_authority_constrained_reach_malus_value"}
-				}
-				wok_cardinal_breakdown_box_HRT  = {
-					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_serious_disease_malus'),'(CFixedPoint)1')]"
-                    blockoverride "text"     {text = HRT_candidatus_serious_disease_malus} 
-                    blockoverride "value"    {text = "HRT_authority_constrained_reach_malus_value"}
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_missing_reichskrone_malus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_authority_missing_reichskrone_malus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_missing_reichskrone_malus')|0=+]"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_uncrowned_malus'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_uncrowned_malus} 
-                    blockoverride "value"    {text = "HRT_authority_uncrowned_malus_value"}
+                    blockoverride "value"    {text = "HRT_authority_centralization_malus_50"} #-50%
 				}
 				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_imprisoned_malus'),'(CFixedPoint)1')]"
@@ -277,25 +239,43 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "text"     {text = HRT_authority_child_malus} 
                     blockoverride "value"    {text = "HRT_authority_child_malus_value"}
 				}
+				#3.1 centralization
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[And(EqualTo_CFixedPoint(TopScope.ScriptValue('HRT_centralization_effort_value'),'(CFixedPoint)25'),GetScriptedGui('HRT_is_centralizing_trigger_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+                    blockoverride "text"     {text = HRT_authority_centralization_malus} 
+                    blockoverride "value"    {text = "HRT_authority_centralization_malus_25"} #-25%
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[And(EqualTo_CFixedPoint(TopScope.ScriptValue('HRT_centralization_effort_value'),'(CFixedPoint)50'),GetScriptedGui('HRT_is_centralizing_trigger_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+                    blockoverride "text"     {text = HRT_authority_centralization_malus} 
+                    blockoverride "value"    {text = "HRT_authority_centralization_malus_50"} #-50%
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[And(EqualTo_CFixedPoint(TopScope.ScriptValue('HRT_centralization_effort_value'),'(CFixedPoint)75'),GetScriptedGui('HRT_is_centralizing_trigger_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+                    blockoverride "text"     {text = HRT_authority_centralization_malus} 
+                    blockoverride "value"    {text = "HRT_authority_centralization_malus_75"} #-75%
+				}
+				#/3.1 centralization
+				# Multiplicators
 				wok_cardinal_breakdown_box_HRT  = {
                     blockoverride "text"     {text = HRT_authority_multiplicators} 
-                    #blockoverride "value"    {text = "HRT_authority_legitimacy_modifier_value"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
                     blockoverride "text"     {text = HRT_authority_legitimacy_modifier} 
                     blockoverride "value"    {text = "HRT_authority_legitimacy_modifier_value"}
 				}
-				##2.2 Unity
+				#2.2 Unity
 				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_is_formed_value'),'(CFixedPoint)0')]"
                     blockoverride "text"     {text = HRT_authority_unity_bonus} 
                     blockoverride "value"    {text = "HRT_authority_unity_modifier_value"}
 				}
-				##/2.2 Unity
+				#/2.2 Unity
 				wok_cardinal_breakdown_box_HRT  = {
                     blockoverride "text"     {text = HRT_authority_edict_modifier} 
                     blockoverride "value"    {text = "HRT_authority_edict_modifier_value"}
 				}
+				#Game Rules
 				wok_cardinal_breakdown_box_HRT  = {
 					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_game_rule_bonus_one_and_a_half'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_game_rule_bonus} 
@@ -305,6 +285,144 @@ types WOKValueBreakdown_HRT  {
 					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_game_rule_bonus_twice'),'(CFixedPoint)1')]"
                     blockoverride "text"     {text = HRT_authority_game_rule_bonus} 
                     blockoverride "value"    {text = "setting_HRT_authority_twice"}
+				}
+
+				# Total Loss
+
+				wok_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_authority_total_loss}
+                    blockoverride "value"    {text = "HRT_authority_total_loss_value"}
+                }
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_absent_sovereign_malus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_authority_absent_sovereign_malus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_absent_sovereign_malus')|L=+]"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_loss_waged_vassal_wars_malus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_authority_loss_waged_vassal_wars_malus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_loss_waged_vassal_wars_malus')|L=+]"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_infidel_malus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_authority_infidel_malus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_infidel_malus')|L=+]"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_excommunicated_malus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_authority_excommunicated_malus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_excommunicated_malus')|0=+]"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_criminal_malus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_candidatus_is_criminal_malus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_criminal_malus')|0=+]"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_serious_disease_malus'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = HRT_candidatus_serious_disease_malus} 
+                    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_serious_disease_malus')|0=+]"}
+				}
+
+				# Unused, stored here
+				#wok_cardinal_breakdown_box_HRT  = {
+				#	visible = "[LessThan_CFixedPoint(TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus'),'(CFixedPoint)0')]"
+                #    blockoverride "text"     {text = HRT_authority_unheld_heartlands_malus} 
+                #    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_unheld_heartlands_malus')|L=+]"}
+				#}
+				#wok_cardinal_breakdown_box_HRT  = {
+                #    blockoverride "text"     {text = HRT_authority_held_castle_bonus} 
+                #    blockoverride "value"    {text = "[TopScope.ScriptValue('HRT_authority_held_castle_bonus_gui')|L=+]"}
+				#}
+				#wok_cardinal_breakdown_box_HRT  = {
+                #    blockoverride "text"     {text = HRT_candidatus_event_bonus } 
+                #    blockoverride "value"    {text = "[TopScope.ScriptValue('emperor_recent_event_modifier')|0=+]"}
+				#}
+            }
+        }
+    }
+
+	type HRT_centralization_score_breakdown_tooltip = widget {
+        size = { 320 20 }
+        alwaystransparent = no
+        layoutpolicy_vertical = expanding
+        using = DefaultTooltipBackground
+        vbox = { 
+            restrictparent_min = yes
+            margin = { 5 5 }
+            vbox = {
+                layoutpolicy_horizontal = expanding
+                background = {
+                    using = Background_Area_Border_Solid
+                }
+                margin = { 5 0 }
+                margin_bottom = 5
+                wok_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = HRT_centralization_change}
+                    blockoverride "value"    {text = "HRT_centralization_progressbar_change_value"}
+                }
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "COURT_GRANDEUR_CHANGE_TOWARDS_BASE"} 
+                    blockoverride "value"    {text = "HRT_baseline_pull_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_chancellor_task_centralization_efforts"} 
+                    blockoverride "value"    {text = "HRT_centralization_efforts_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_centralization_perk"} 
+                    blockoverride "value"    {text = "HRT_centralization_perk_value"}
+				}
+            }
+        }
+    }
+
+	type HRT_centralization_baseline_score_breakdown_tooltip = widget {
+        size = { 320 20 }
+        alwaystransparent = no
+        layoutpolicy_vertical = expanding
+        using = DefaultTooltipBackground
+        vbox = { 
+            restrictparent_min = yes
+            margin = { 5 5 }
+            vbox = {
+                layoutpolicy_horizontal = expanding
+                background = {
+                    using = Background_Area_Border_Solid
+                }
+                margin = { 5 0 }
+                margin_bottom = 5
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_centralization_baseline"} 
+                    blockoverride "value"    {text = "HRT_centralization_baseline_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_baseline_development"} 
+                    blockoverride "value"    {text = "HRT_baseline_development_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_authority_unity_bonus"} 
+                    blockoverride "value"    {text = "HRT_baseline_unity_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_authority_edict_modifier"} 
+                    blockoverride "value"    {text = "HRT_baseline_edict_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_baseline_popinion"} 
+                    blockoverride "value"    {text = "HRT_baseline_popinion_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_baseline_vopinion"} 
+                    blockoverride "value"    {text = "HRT_baseline_vopinion_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_baseline_cultural_era"} 
+                    blockoverride "value"    {text = "HRT_baseline_cultural_era_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
+                    blockoverride "text"     {text = "HRT_authority_legitimacy_modifier"} 
+                    blockoverride "value"    {text = "HRT_baseline_legitimacy_value"}
 				}
             }
         }

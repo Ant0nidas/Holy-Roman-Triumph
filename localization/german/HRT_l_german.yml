@@ -112,11 +112,16 @@
  #Important Actions #
  ####################
  
- action_max_authority_reached_label: "@empire_icon! You have reached Imperial Authority Limit"
- action_max_authority_reached: "@empire_icon! You have reached [HRT_imperial_authority|E] Limit"
+ action_max_authority_reached_label: "@empire_icon! Maximum [HRT_imperial_authority] reached"
+ action_max_authority_reached: "@empire_icon! Maximum [HRT_imperial_authority] reached"
  action_max_authority_reached_desc: "Consider enacting an [HRT_imperial_edict|E] or proclaiming an [HRT_imperial_directive|E]."
- action_max_authority_reached_click: "#i Click to open Authority Window#!"
+ action_max_authority_reached_click: "#I Click to open Realm View and open Holy Roman Triumph window from there#!"
  
+ action_centralization_reduction_imminent_label: "@bad_icon! Decentralization imminent"
+ action_centralization_reduction_imminent: "@bad_icon! Decentralization imminent"
+ action_centralization_reduction_imminent_desc: "You will lose one [HRT_centralization_level|E] in #V [EmptyScope.ScriptValue('HRT_centralization_reduction_months_left')|0]#! months.\n\n#help Assign a [councillor|E] to perform the #V $HRT_chancellor_task_centralization_efforts$#! task to prevent reduction to a lower [HRT_centralization_level]."
+ action_centralization_reduction_imminent_click: "#I Click to open Council View#!"
+
  ##############
  # Game Rules #
  ##############
@@ -164,10 +169,10 @@
  game_concept_HRT_vassal_count_desc: "[duke|E] and [king|E] [vassals|E] contribute to this score."
  
  game_concept_HRT_uncrowned: "Uncrowned"
- game_concept_HRT_uncrowned_desc: "The Emperor has yet to commence the [HRT_italienzug|E] and get formally crowned and legitimized by the Pope."
+ game_concept_HRT_uncrowned_desc: "The Emperor has yet to commence the [Glossary('Italienzug','game_concept_HRT_italienzug_desc')] and get formally crowned and legitimized by the Pope."
  
  game_concept_HRT_italienzug: "Italienzug"
- game_concept_HRT_italienzug_desc: "An Italienzug (also known as #italic Romfahrt#! or #italic Romzug#!, Latin #italic expeditio italica#!) was the expedition undertaken by an elected [HRT_king_of_the_romans|E] to be crowned Holy Roman emperor in the City of Rome."
+ game_concept_HRT_italienzug_desc: "An Italienzug (also known as #italic Romfahrt#! or #italic Romzug#!, Latin #italic expeditio italica#!) was the expedition undertaken by an elected [Glossary('King of the Romans','game_concept_HRT_king_of_the_romans_desc')] to be crowned Holy Roman emperor in the City of Rome."
  
  game_concept_HRT_king_of_the_romans: "King of the Romans"
  game_concept_HRT_king_of_the_romans_desc: "King of the Romans (Latin: #italic Rex Romanorum#!; German: #italic König der Römer#!) was the title used by the king of Germany following his election by the princes ([electors|E]) from the reign of Henry II (1002–1024) onward.\nThe title originally referred to any German king between his election and royal coronation in Germany until he was crowned Holy Roman Emperor by the Pope. The title was also used to designate the successor to the throne elected during the lifetime of a sitting Emperor."
@@ -180,23 +185,48 @@
  
  game_concept_HRT_stammesherzogtum: "Stammesherzogtum"
  game_concept_HRT_stammesherzogtuemer: "Stammesherzogtümer"
- game_concept_HRT_stammesherzogtum_desc: "#italic #V The five largest and most influential cultures in the Holy Roman Empire form the current bulk of the Stammesherzogtümer.#!#!\n\nThey refer to the stem [duchies|E] in early medieval Germany, which were large territorial units ruled by dukes and based on ancient tribal divisions.\nThese duchies, historically including Saxony, Bavaria, Swabia, Franconia, and Lorraine, were significant political entities in the 9th and 10th centuries, playing crucial roles in the formation of the Holy Roman Empire. They were characterized by a degree of autonomy and were often led by powerful local families who maintained their own armies and governance structures.\n\nOver the centuries, the few Stammesherzogtümer from the time of Otto I evolved into a confusing array of various secular and ecclesiastical dominions, which were held together solely by their loyalty to the Kaiser and belief in his holy mission, but were otherwise independent.\n\n#italic The [HRT_unity|E] between the German tribes affects your [HRT_imperial_authority_change|E]. Use [HRT_imperial_authority|E] to promote [cultural_acceptance|E] and steer the destiny of the Holy Roman Empire.#!"
+ game_concept_HRT_stammesherzogtum_desc: "They refer to the stem duchies in early medieval Germany, which were large territorial units ruled by dukes and based on ancient tribal divisions.\nThese duchies, historically including Saxony, Bavaria, Swabia, Franconia, and Lorraine, were significant political entities in the 9th and 10th centuries, playing crucial roles in the formation of the Holy Roman Empire. They were characterized by a degree of autonomy and were often led by powerful local families who maintained their own armies and governance structures.\nOver the centuries, the few Stammesherzogtümer from the time of Otto I evolved into a confusing array of various secular and ecclesiastical dominions, which were held together solely by their loyalty to the Emperor and belief in his holy mission, but were otherwise independent."
  
  game_concept_HRT_cohesion: "Cohesion"
  game_concept_HRT_unity: "Unity"
- game_concept_HRT_cohesion_desc: "Cohesion, or Unity, refers to the delicate balance among the [HRT_stammesherzogtuemer|E]. Despite their cultural and political differences, these duchies were bound together by mutual loyalty to the Kaiser and a shared belief in his divine mission. This cohesion was essential for maintaining stability and asserting collective strength against external threats, requiring a ruler of exceptional skill to navigate the complexities of their alliances and rivalries.\n\n#italic The [HRT_unity] between the German tribes affects your [HRT_imperial_authority_change|E]. Use [HRT_imperial_authority|E] to promote [cultural_acceptance|E] and steer the destiny of the Holy Roman Empire.#!"
+ game_concept_HRT_cohesion_desc: "Cohesion, or Unity, refers to the delicate balance among the [Glossary('Stammesherzogtümer','game_concept_HRT_stammesherzogtum_desc')]. Despite their cultural and political differences, these duchies were bound together by mutual loyalty to the Emperor and a shared belief in his divine mission. This cohesion was essential for maintaining stability and asserting collective strength against external threats, requiring a ruler of exceptional skill to navigate the complexities of their alliances and rivalries.\n\n#help The five largest and most influential cultures in the Holy Roman Empire form the current bulk of the Stammesherzogtümer.\n\nThe [HRT_unity] between the German tribes affects your [HRT_imperial_authority_change|E]. Use [HRT_imperial_authority|E] to promote [cultural_acceptance|E] and steer the destiny of the Holy Roman Empire.#!"
  
  game_concept_HRT_hoftag: "Hoftag"
- game_concept_HRT_hoftag_desc: "A Hoftag (pl. Hoftage) was the name given to an informal and irregular assembly convened by the [HRT_king_of_the_romans|E], the Holy Roman Emperor or one of the Princes ([electors|E]) of the Empire.\n\nHistorically, a distinction between the counsel given by the princes and their legal consent to a decision was difficult to make. However, it was from their obligation to advise, that the right soon emerged for the princes to be consulted on important matters concerning the empire, such as the declaration of an imperial military campaign."
+ game_concept_HRT_hoftag_desc: "A Hoftag (pl. Hoftage) was the name given to an informal and irregular assembly convened by the [Glossary('King of the Romans','game_concept_HRT_king_of_the_romans_desc')], the Holy Roman Emperor or one of the Princes ([electors|E]) of the Empire.\n\nHistorically, a distinction between the counsel given by the princes and their legal consent to a decision was difficult to make. However, it was from their obligation to advise, that the right soon emerged for the princes to be consulted on important matters concerning the empire, such as the declaration of an imperial military campaign."
  
  game_concept_HRT_reichsstadt: "Reichsstadt"
  game_concept_HRT_reichsstaedte: "Reichsstädte"
  game_concept_HRT_imperial_city: "Imperial City"
  game_concept_HRT_imperial_cities: "Imperial Cities"
- game_concept_HRT_reichsstadt_desc: "In the Holy Roman Empire, the collective term #bold free and imperial cities#! (German: #italic Freie und Reichsstädte#!), briefly worded #bold free imperial city#! (#italic Freie Reichsstadt#!, Latin: #italic urbs imperialis libera#!), was used to denote a self-ruling city that had a certain amount of autonomy and was represented during a [HRT_hoftag|E].\n\nAn Imperial City held the status of [HRT_imperial_immediacy|E], and was subordinate only to the Holy Roman Emperor, as opposed to a territorial city or town (#italic Landstadt#!) which was subordinate to a territorial prince – be it an ecclesiastical lord (prince-bishop, prince-abbot) or a secular prince ([duke|E] (#italic Herzog#!), margrave, [count|E] (#italic Graf#!), etc.).\n\n#italic Requires the #V $innovation_HRT_imperial_charter$#! [innovation|E] (High Medieval Era).#!\n\n#italic The [development|E] level of the Imperial Cities effects your [HRT_imperial_authority_change|E]. Use the #V Grant Imperial City Status#! character [interaction|E] to promote a [county|E] into a Reichsstadt.#!"
+ game_concept_HRT_reichsstadt_desc: "In the Holy Roman Empire, the collective term #bold free and imperial cities#! (German: #italic Freie und Reichsstädte#!), briefly worded #bold free imperial city#! (#italic Freie Reichsstadt#!, Latin: #italic urbs imperialis libera#!), was used to denote a self-ruling city that had a certain amount of autonomy and was represented during a [Glossary('Hoftag','game_concept_HRT_hoftag_desc')].\n\nAn Imperial City held the status of [Glossary('Reichsunmittelbarkeit','game_concept_HRT_imperial_immediacy_desc')], and was subordinate only to the Holy Roman Emperor, as opposed to a territorial city or town (#italic Landstadt#!) which was subordinate to a territorial prince – be it an ecclesiastical lord (prince-bishop, prince-abbot) or a secular prince ([duke|E] (#italic Herzog#!), margrave, [count|E] (#italic Graf#!), etc.).\n\n#help Requires the $innovation_HRT_imperial_charter$ [innovation|E] (High Medieval Era)#!"
  
  game_concept_HRT_imperial_immediacy: "Imperial Immediacy"
  game_concept_HRT_imperial_immediacy_desc: "In the Holy Roman Empire, #bold imperial immediacy#! (German: #italic Reichsunmittelbarkeit#! or #italic Reichsfreiheit#!) was the status of an individual or a territory which was defined as 'immediate' (#italic unmittelbar#!) to Emperor and Empire (#italic Kaiser und Reich#!) and not to any other intermediate authorities, while one that did not possess that status was defined as 'mediate' (#italic mittelbar#!)."
+ 
+ game_concept_HRT_centralization: "Centralization"
+ game_concept_HRT_centralization_desc: "Throughout its history, the Holy Roman Empire was a battleground of power between the Emperor and his vassals. While emperors sought to expand their [HRT_imperial_authority|E] and centralize control, the nobility often resisted, favoring a decentralized system that protected their privileges and autonomy. The balance of power shifted with every reign, creating a constant struggle over rights, obligations, and imperial influence.\n\nThe value ranges from 0 and 200, and over time will settle at its Baseline value. It's monthly change is capped at +3 and -2. The Baseline is affected by things like [HRT_cohesion|E], while the progress depends on how much is spent on #V Centralization Efforts#!.\n\nA portion of Centralization is lost upon [succession|E]."
+ 
+ game_concept_HRT_centralization_level: "Centralization Level"
+ game_concept_HRT_centralization_levels: "Centralization Levels"
+ game_concept_HRT_centralization_level_desc: "$game_concept_HRT_centralization_level$ is the current state of [HRT_centralization|E]. Active level changes as Centralization increases or decreases, and each level increases the effectiveness of [HRT_imperial_edicts|E]."
+ 
+ game_concept_HRT_centralization_baseline: "Centralization Baseline"
+ game_concept_HRT_baseline: "Baseline"
+ game_concept_HRT_centralization_baseline_desc: "[HRT_centralization|E] has a Baseline which it will decay towards if exceeded, or or grow towards if it falls below."
+ 
+ game_concept_HRT_centralization_development: "$game_concept_development$"
+ game_concept_HRT_centralization_development_desc: "In the context of [HRT_centralization], this measures both the [development|E] of the Emperor's residence and the difference between this [development] and the average [development] of all direct [vassal|E] [capitals|E]."
+ 
+ game_concept_HRT_absent_sovereign: "Absent Sovereign"
+ game_concept_HRT_absent_sovereign_desc: "The itinerant regime (#italic [Glossary('Reisekönigtum','game_concept_HRT_reisekoenigtum_desc')]#!) was the usual form of royal or imperial government in the Holy Roman Empire from the Frankish period and up to late medieval times. Emperors failing to commence a [GetActivityType('activity_tour').GetName] diminish control over rebellious nobles and regional princes, risk losing influence and face reduced loyalty from [vassals|E].\n\n#help Obtain the #V $itinerant_liege_modifier$#! [character_modifier|E] after a successful [GetActivityType('activity_tour').GetName] to remove this malus. Having a high [HRT_centralization_level|E] reduces the negative impact.#!"
+ 
+ game_concept_HRT_reisekoenigtum: "Reisekönigtum"
+ game_concept_HRT_itinerant_court: "Itinerant Court"
+ game_concept_HRT_reisekoenigtum_desc: "An Itinerant Court was a migratory form of government shared in European kingdoms during the Early Middle Ages. It was an alternative to having a capital city, a permanent political center governed by a kingdom. The itinerant court system of ruling a country is strongly associated with German history, where the emergence of a capital city took an unusually long time. The Holy Roman Emperors constantly traveled, with their family and court, through the empire.\n\nThe Holy Roman Empire did not have a capital city. The emperors owned their varying dynastic lands, including castles, but could not limit themselves to these if they wanted to keep control of their large empire, including its often-rebellious regional princes. Therefore, the emperor and other princes ruled by constantly changing their residences. The Merovingian kings of the Frankish Empire already practiced this system, and the subsequent Carolingian dynasty adopted both the custom and its associated palaces (#italic Kaiserpfalz#!).\n\n#help Hold a [GetActivityType('activity_tour').GetName] or obtain the #V $itinerant_liege_modifier$#! [character_modifier|E] after a successful Tour to receive this bonus.#!"
+ 
+ ############
+ # Glossary #
+ ############
  
  #############
  # Artifacts #
@@ -312,6 +342,8 @@
  
  HRT.0002.desc: "You are #V Romanorum Imperator Augustus#! of the the Holy Roman Empire. Your reign is defined by the need to consolidate [HRT_imperial_authority|E] amidst a complex web of feudal relations. Your control over the Empire's vast territories is challenged by assertive dukes and princes, each wielding considerable power in their own right.\nThe [HRT_investiture_controversy|E] looms large over your reign, pitting the ambitions of the Papacy against the prerogatives of your Imperial Crown.\n\nYour ability to maneuver through these tumultuous times will determine whether the Holy Roman Empire emerges strengthened or falls prey to the forces of division and external pressures."
  
+ HRT.0003.desc: "You are #V Romanorum Imperator Augustus#! Frederick I Barbarossa, reigning over the Holy Roman Empire. Your rule is characterized by a determined effort to reinforce [HRT_imperial_authority|E] across the Empire's vast and varied territories. After restoring stability in Germany, you must shift your focus to Italy, where it is imperative to assert imperial rights over the wealthy and influential northern city-states, aiming to revive the glory of the ancient empire.\n\nThe obstacles you face are significant. The Lombard League, a formidable alliance of Italian cities, stands resolutely against your attempts to impose imperial control. Tensions with the Papacy add another layer of complexity, as you strive to maintain the delicate balance between spiritual leadership and imperial sovereignty."
+ 
  HRT.0011.t: "Unification of Legacy"
  HRT.0011.desc: "Despite the heavenly mandate, there are still those who believe they can evade the grasp of my imperial authority. This cannot be tolerated any longer! With the law and legitimacy on my side, I hereby order the insubordinate to my rightful rule to kneel before my supremacy. Those failing to follow my command must be subdued by force, lest the very foundations of the Roman Empire weaken."
  HRT.0011.a: "Let them see the errors in their ways!"
@@ -340,8 +372,8 @@
  #####################
  
  HRT.1001.t: "The New Emperor"
- HRT.1001.desc.a: "In the wake of Emperor [HRTdeceasedemperor.GetFirstNameNicknamed]'s passing, a void was left at the very heart of Christendom. Throughout the lands of the Roman Empire, whispers of my ascending prowess have not gone unheard. With profound reverence the herald proclaims that they have chosen me to bear the weighty mantle of Emperor. Such an honor, however, comes with its sacred traditions. It is now incumbent upon me to undertake the time-honored [HRT_italienzug|E], a journey to the heart of Rome, where the Pope himself awaits to crown me in a grand coronation ceremony at the very steps of St. Peter's Basilica."
- HRT.1001.desc.b: "Throughout the lands of the Roman Empire, whispers of my ascending prowess have not gone unheard. With profound reverence the herald proclaims that they have chosen me to bear the weighty mantle of Emperor. Such an honor, however, comes with its sacred traditions. It is now incumbent upon me to undertake the time-honored [HRT_italienzug|E], a journey to the heart of Rome, where the Pope himself awaits to crown me in a grand coronation ceremony at the very steps of St. Peter's Basilica."
+ HRT.1001.desc.a: "In the wake of Emperor [HRTdeceasedemperor.GetFirstNameNicknamed]'s passing, a void was left at the very heart of Christendom. Throughout the lands of the Roman Empire, whispers of my ascending prowess have not gone unheard. With profound reverence the herald proclaims that they have chosen me to bear the weighty mantle of Emperor. Such an honor, however, comes with its sacred traditions. It is now incumbent upon me to undertake the time-honored [Glossary('Italienzug','game_concept_HRT_italienzug_desc')], a journey to the heart of Rome, where the Pope himself awaits to crown me in a grand coronation ceremony at the very steps of St. Peter's Basilica."
+ HRT.1001.desc.b: "Throughout the lands of the Roman Empire, whispers of my ascending prowess have not gone unheard. With profound reverence the herald proclaims that they have chosen me to bear the weighty mantle of Emperor. Such an honor, however, comes with its sacred traditions. It is now incumbent upon me to undertake the time-honored [Glossary('Italienzug','game_concept_HRT_italienzug_desc')], a journey to the heart of Rome, where the Pope himself awaits to crown me in a grand coronation ceremony at the very steps of St. Peter's Basilica."
  HRT.1001.a: "Let's not waste time."
  HRT.1001.a.tooltip: "Start preparing for your Coronation Ceremony"
  HRT.1001.b: "Muster the expeditionary forces!"
@@ -349,7 +381,7 @@
  HRT.1001.c: "Maybe this is not the right time..."
  
  HRT.1102.t: "Advent in [location.GetName]"
- HRT.1102.desc: "The expedition has arrived in [location.GetName] and it is now my divine right to receive the Imperial Crown before God.\nA spectacle of unparalleled magnitude unfolds as I am beginning to lead the vast assembly through town, the vibrant pageantry capturing the essence of celebration. The [HRT_italienzug|E] nears its destination."
+ HRT.1102.desc: "The expedition has arrived in [location.GetName] and it is now my divine right to receive the Imperial Crown before God.\nA spectacle of unparalleled magnitude unfolds as I am beginning to lead the vast assembly through town, the vibrant pageantry capturing the essence of celebration. The [Glossary('Italienzug','game_concept_HRT_italienzug_desc')] nears its destination."
  HRT.1102.a: "Lead the march to the church!"
  HRT.1102.b: "This is not the right time."
  
@@ -637,12 +669,11 @@
  
  #Character Interaction
  HRT_grant_imperial_city_status_interaction: "Grant Imperial City Status"
- HRT_grant_imperial_city_status_desc: "Promote [recipient.GetCapitalLocation.GetTitle.GetNameNoTierNoTooltip] to a [HRT_reichsstadt|E] and appoint [recipient.GetShortUINameNoTooltip] as its governor, granting [recipient.GetHerHim] autonomy and direct vassalage under you"
+ HRT_grant_imperial_city_status_desc: "Promote [recipient.GetCapitalLocation.GetTitle.GetNameNoTierNoTooltip] to a [Glossary('Reichsstadt','game_concept_HRT_reichsstadt_desc')] and appoint [recipient.GetShortUINameNoTooltip] as its governor, granting [recipient.GetHerHim] autonomy and direct vassalage under you"
  HRT_grant_imperial_city_status_interaction_authority_req: "You need #V [EmptyScope.ScriptValue('HRT_maximum_authority_value')|0]#! [HRT_imperial_authority|E]"
  HRT_county_must_have_culture_tt: "[CHARACTER.GetPrimaryTitle.GetNameNoTooltip] must be of a [culture|E] that has the $innovation_HRT_imperial_charter$ innovation."
  NOT_HRT_too_many_republics_tt: "You already have 7 Free Imperial Cities"
  HRT_is_elector_prince_tt: "[CHARACTER.GetNameNoTooltip] is an Elector-Prince!"
- HRT_granted_vassal_independence_opinion: "Granted My Vassal Independence"
  HRT_grant_imperial_city_status_interaction_notification: "Granted Imperial City Status"
  
  #Modifiers
@@ -687,3 +718,28 @@
  
  HRT_in_romanorum_regem_electus: "in Romanorum regem electus"
  HRT_in_romanorum_regem_electus_desc: "[CHARACTER.GetShortUINameNoTooltipNoFormat|U] has been elected King of the Romans and is expected to ascend to emperorship."
+ 
+ # 3.1 centralization
+ #Modifiers
+ HRT_centralization_0_mod: "Centralization: $HRT_centralization_0$"
+ HRT_centralization_1_mod: "Centralization: $HRT_centralization_1$"
+ HRT_centralization_2_mod: "Centralization: $HRT_centralization_2$"
+ HRT_centralization_3_mod: "Centralization: $HRT_centralization_3$"
+ HRT_centralization_4_mod: "Centralization: $HRT_centralization_4$"
+ 
+ #Council Tasks
+ #chancellor
+ HRT_chancellor_task_centralization_efforts: "Centralization Efforts"
+ HRT_steward_task_centralization_efforts: "$HRT_chancellor_task_centralization_efforts$"
+ 
+ HRT_task_centralization_efforts_effect_desc: "Converts #V [GetPlayer.MakeScope.ScriptValue('HRT_centralization_effort_value')|0]%#! of monthly [HRT_imperial_authority|E] gain to [HRT_centralization|E] progress\nPrevents reduction to a lower [HRT_centralization_level|E]\n\n#help Set the conversion rate in the Holy Roman Triumph window#!"
+ HRT_task_centralization_efforts_effect_desc_bureaucrats_bonus: "\n$TAB$[GetDynastyPerk('erudition_legacy_5').GetName]: #P +10%#!"
+ 
+ HRT_centralization_maxed_out: "[HRT_centralization|E] is already at maximum!"
+ HRT_centralization_already_performing: "Already centralizing!"
+ 
+ #Notifications
+ HRT_on_centralization_level_lost.toast.t: "Decentralized"
+ HRT_on_centralization_level_lost.toast: "Your have lost a [HRT_centralization_level|E]!\nAnother step back toward the familiar chaos."
+ HRT_on_centralization_level_gained.toast.t: "Centralized"
+ HRT_on_centralization_level_gained.toast: "Your have gained a [HRT_centralization_level|E]!\nThe Empire draws closer to unity."

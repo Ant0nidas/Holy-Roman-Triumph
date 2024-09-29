@@ -50,3 +50,18 @@ HRT_reichsstadt = {
 }
 
 HRT_imperial_immediacy = { }
+
+# 3.1 centralization
+HRT_centralization = { }
+HRT_centralization_level = {
+	alias = { HRT_centralization_levels }
+}
+HRT_centralization_baseline = {
+	alias = { HRT_baseline }
+}
+HRT_centralization_development = { }
+
+HRT_absent_sovereign = { }
+HRT_reisekoenigtum = {
+	alias = { HRT_itinerant_court }
+}

@@ -6,6 +6,7 @@
 # 0011 - 0020	Decision Events
 # 1001 - 1010	Italienzug Notification
 # 2001 - 2100	Unity Events
+# 3001 - 3100	Centralization
 # 9001 - 9999	Mechanical and on_action
 #################################
 
@@ -42,6 +43,13 @@ HRT.0001 = { # Louis II of Italy (867)
 				}
 				remove_character_flag = sold_crown_charmod
 			}
+			# 3.1 centralization
+			title:c_aachen = {
+				change_variable = {
+					name = HRT_centralization
+					add = { 1 39 }
+				}
+			}
 		}
 	}
 
@@ -66,26 +74,77 @@ HRT.0002 = { # Heinrich IV (1066)
 	theme = crown
 	left_portrait =	root
 
-	immediate = { }
+	immediate = { 
+		hidden_effect = {
+			# 3.1 centralization
+			title:c_aachen = {
+				change_variable = {
+					name = HRT_centralization
+					add = { 81 119 }
+				}
+			}
+		}
+	}
 
 	option = {
 		name = HRT.0001.a
 	}
 }
 
-#HRT.0003 = { # Barbarossa
-#	type = character_event
-#	title = HRT.0001.t
-#	desc = HRT.0003.desc
-#	theme = crown
-#	left_portrait =	root
-#
-#	immediate = { }
-#
-#	option = {
-#		name = HRT.0001.a
-#	}
-#}
+HRT.0003 = { # Barbarossa
+	type = character_event
+	title = HRT.0001.t
+	desc = HRT.0003.desc
+	theme = crown
+
+	left_portrait =	root
+
+	immediate = {
+		hidden_effect = {
+			set_variable = {
+				name = COR_coronator
+				value = character:71809 # Pope Hadrianus IV
+			}
+			if = {
+				limit = { has_character_modifier = COR_uncrowned_modifier }
+				remove_all_character_modifier_instances = COR_uncrowned_modifier
+			}
+			remove_variable = COR_years_reigned
+			if = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+				}
+				remove_character_flag = sold_crown_charmod
+			}
+			every_spouse = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+					has_character_flag = sold_crown_charmod
+				}
+				remove_character_flag = sold_crown_charmod
+			}
+			# 3.1 centralization
+			title:c_aachen = {
+				change_variable = {
+					name = HRT_centralization
+					add = { 121 159 }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = HRT.0001.a
+		add_trait = HRT_emperor
+	}
+
+	after = {
+		change_variable = {
+			name = HRT_authority_years_reigned
+			add = 23
+		}
+	}
+}
 
 #HRT.0010 = { # Generic
 #	type = character_event
@@ -259,6 +318,7 @@ HRT.1001 = {
 	left_portrait =	root
 
 	trigger = {
+		NOT = { has_character_flag = HRT_italienzug }
 		OR = {
 			is_ai = yes
 			AND = {
@@ -1536,243 +1596,6 @@ HRT.2014 = { # Trade and Commerce
 	}
 }
 
-# Unity Effect
-HRT.2100 = {
-	hidden = yes
-
-	immediate = {
-		title:e_hre.holder = {
-			# Clear all variables
-			title:c_aachen = {
-				if = {
-					limit = { has_variable_list = HRT_core_cultures }
-				}
-				every_in_list = {
-					variable = HRT_core_cultures
-					change_variable ?= {
-						name = HRT_core_culture_count
-						multiply = 0
-					}
-					change_variable ?= {
-						name = HRT_core_culture_count_weight
-						multiply = 0
-					}
-				}
-				clear_variable_list = HRT_core_cultures
-			}
-			
-			# Count cultures and add to list
-			every_realm_county = {
-				culture = {
-					if = {
-						limit = {
-							NOT = { has_variable = HRT_core_culture_count }
-						}
-						set_variable = {
-							name = HRT_core_culture_count
-							value = 0
-						}
-					}
-					if = {
-						limit = {
-							NOT = { has_variable = HRT_core_culture_count_weight }
-						}
-						set_variable = {
-							name = HRT_core_culture_count_weight
-							value = 0
-						}
-					}
-					change_variable = {
-						name = HRT_core_culture_count
-						add = 1
-					}
-					change_variable = {
-						name = HRT_core_culture_count_weight
-						add = 1
-					}
-					title:c_aachen = {
-						if = {
-							limit = {
-								NOT = {
-									is_target_in_variable_list = {
-										name = HRT_core_cultures
-										target = prev
-									}
-								}
-							}
-							add_to_variable_list = {
-								name = HRT_core_cultures
-								target = prev
-							}
-						}
-					}
-				}
-			}
-		
-			# Modify values
-			title:c_aachen = {
-				#Add 50% bonus to historical tribes
-				every_in_list = {
-					variable = HRT_core_cultures
-					limit = {
-						OR = {
-							this = culture:franconian
-							any_parent_culture_or_above = {
-								this = culture:franconian
-							}
-							this = culture:saxon
-							any_parent_culture_or_above = {
-								this = culture:saxon
-							}
-							this = culture:swabian
-							any_parent_culture_or_above = {
-								this = culture:swabian
-							}
-							this = culture:bavarian
-							any_parent_culture_or_above = {
-								this = culture:bavarian
-							}
-							this = title:e_hre.holder.culture
-						}
-					}
-					change_variable = {
-						name = HRT_core_culture_count
-						add = HRT_core_culture_value_half
-					}
-				}
-				#Give malus to non-germans
-				every_in_list = {
-					variable = HRT_core_cultures
-					limit = {
-						NOR = {
-							has_cultural_pillar = heritage_central_germanic
-							has_cultural_pillar = heritage_latin
-							has_cultural_pillar = heritage_frankish
-							this = title:e_hre.holder.culture
-						}
-					}
-					change_variable = {
-						name = HRT_core_culture_count
-						subtract = HRT_core_culture_value_half
-					}
-				}
-				#Finally, make sure the Kaiser's culture is always at first place
-				every_in_list = {
-					variable = HRT_core_cultures
-					limit = {
-						this = title:e_hre.holder.culture
-					}
-					change_variable = {
-						name = HRT_core_culture_count
-						add = 8192 # 8-)
-					}
-				}
-			
-				# Grab cultures
-				ordered_in_list = {
-					variable = HRT_core_cultures
-					order_by = { value = var:HRT_core_culture_count }
-					position = 0
-					save_scope_as = HRT_core_culture_1
-				}
-				ordered_in_list = {
-					variable = HRT_core_cultures
-					order_by = { value = var:HRT_core_culture_count }
-					position = 1
-					save_scope_as = HRT_core_culture_2
-				}
-				ordered_in_list = {
-					variable = HRT_core_cultures
-					order_by = { value = var:HRT_core_culture_count }
-					position = 2
-					save_scope_as = HRT_core_culture_3
-				}
-				ordered_in_list = {
-					variable = HRT_core_cultures
-					order_by = { value = var:HRT_core_culture_count }
-					position = 3
-					save_scope_as = HRT_core_culture_4
-				}
-				ordered_in_list = {
-					variable = HRT_core_cultures
-					order_by = { value = var:HRT_core_culture_count }
-					position = 4
-					save_scope_as = HRT_core_culture_5
-				}
-			}
-			
-			if = {
-				limit = {
-					exists = scope:HRT_core_culture_1
-				}
-				set_variable = {
-					name = HRT_core_culture_1
-					value = scope:HRT_core_culture_1
-				}
-			}
-			if = {
-				limit = {
-					exists = scope:HRT_core_culture_2
-					NOT = {
-						scope:HRT_core_culture_2 = scope:HRT_core_culture_1
-					}
-				}
-				set_variable = {
-					name = HRT_core_culture_2
-					value = scope:HRT_core_culture_2
-				}
-			}
-			if = {
-				limit = {
-					exists = scope:HRT_core_culture_3
-					NOR = {
-						scope:HRT_core_culture_3 = scope:HRT_core_culture_1
-						scope:HRT_core_culture_3 = scope:HRT_core_culture_2
-					}
-				}
-				set_variable = {
-					name = HRT_core_culture_3
-					value = scope:HRT_core_culture_3
-				}
-			}
-			if = {
-				limit = {
-					exists = scope:HRT_core_culture_4
-					NOR = {
-						scope:HRT_core_culture_4 = scope:HRT_core_culture_1
-						scope:HRT_core_culture_4 = scope:HRT_core_culture_2
-						scope:HRT_core_culture_4 = scope:HRT_core_culture_3
-					}
-				}
-				set_variable = {
-					name = HRT_core_culture_4
-					value = scope:HRT_core_culture_4
-				}
-			}
-			if = {
-				limit = {
-					exists = scope:HRT_core_culture_5
-					NOR = {
-						scope:HRT_core_culture_5 = scope:HRT_core_culture_1
-						scope:HRT_core_culture_5 = scope:HRT_core_culture_2
-						scope:HRT_core_culture_5 = scope:HRT_core_culture_3
-						scope:HRT_core_culture_5 = scope:HRT_core_culture_4
-					}
-				}
-				set_variable = {
-					name = HRT_core_culture_5
-					value = scope:HRT_core_culture_5
-				}
-			}
-			# Get final variable on emperor
-			set_variable = {
-				name = HRT_authority_unity
-				value = HRT_total_unity_value
-			}
-		}
-	}
-}
-
 ##############
 # Mechanical #
 ##############
@@ -1949,4 +1772,173 @@ HRT.9005 = {
 		set_player_character = scope:title_recipient
 	}
 	option = { name = great_holy_war.0070.b }
+}
+
+#Close Window delayed effect
+HRT.9006 = {
+	scope = culture
+	hidden = yes
+
+	immediate = {
+		remove_global_variable = HRT_close_window_temp_var
+	}
+}
+
+################################
+# Emperor Story Delayed Effect #
+################################
+HRT.9100 = {
+	hidden = yes
+
+	immediate = {
+		#Vassal Values
+		every_vassal = {
+			#Total Vassal Count
+			prev = {
+				change_variable = {
+					name = HRT_authority_vassals_var
+					add = 1
+				}
+			}
+			#Vassal Bonus per Tier
+			if = {
+				limit = { highest_held_title_tier = tier_kingdom }
+				prev = {
+					change_variable = {
+						name = HRT_authority_vassals_bonus_var
+						add = authority_gain_per_vassal_kingdom_bonus
+					}
+				}
+			}
+			else_if = {
+				limit = { highest_held_title_tier = tier_duchy }
+				prev = {
+					change_variable = {
+						name = HRT_authority_vassals_bonus_var
+						add = authority_gain_per_vassal_duchy_bonus
+					}
+				}
+			}
+			#Vassals Waging War Malus
+			if = {
+				limit = { is_at_war = yes }
+				prev = {
+					change_variable = {
+						name = HRT_authority_vassals_war_var
+						add = authority_loss_per_waged_vassal_war
+					}
+				}
+			}
+			#Infidel Vassal Malus
+			if = {
+				limit = { NOT = { faith = prev.faith } }
+				prev = {
+					change_variable = {
+						name = HRT_authority_infidels_var
+						add = 1
+					}
+				}
+			}
+			# 3.1 centralization
+			capital_county = {
+				title:c_aachen.var:HRT_emperor = {
+					change_variable = {
+						name = HRT_centralization_vassal_development
+						add = prev.development_level
+					}
+				}
+			}
+			if = {
+				limit = {
+					save_temporary_opinion_value_as = {
+						name = vopinion
+						target = prev
+					}
+					exists = scope:vopinion
+				}
+				prev = {
+					change_variable = {
+						name = HRT_vopinion
+						add = scope:vopinion
+					}
+				}
+			}
+		}
+		#Territory Bonus
+		every_realm_county = {
+			prev = {
+				change_variable = {
+					name = HRT_authority_territory
+					add = 1
+				}
+			}
+		}
+		#Unheld Heartlands Malus
+		every_county_in_region = {
+			region = HRT_core_territory
+			limit = {
+				holder.top_liege = {
+					NOT = { this = scope:story.story_owner }
+				}
+			}
+			prev = {
+				change_variable = {
+					name = HRT_authority_unheld_heartlands
+					add = 1
+				}
+			}
+		}
+		every_ally = {
+			save_temporary_scope_as = ally
+			prev = {
+				change_variable = {
+					name = HRT_authority_ally_military_strength
+					add = scope:ally.max_military_strength
+				}
+			}
+		}
+		#Artifact Bonus
+		every_character_artifact = {
+			limit = { rarity = illustrious }
+			prev = {
+				change_variable = {
+					name = HRT_authority_artifacts
+					add = 0.1
+				}
+			}
+		}
+		#Cardinals Bonus
+		if = {
+			limit = { exists = var:HRT_authority_cardinals }
+			every_living_cardinal = {
+				limit = { is_vassal_or_below_of = prev }
+				prev = {
+					change_variable = {
+						name = HRT_authority_cardinals
+						add = 1
+					}
+				}
+			}
+		}
+
+		# Unity Effect
+		HRT_unity_effect = yes
+
+		trigger_event = {
+			id = HRT.9101
+			days = 1
+		}
+	}
+}
+
+HRT.9101 = {
+	hidden = yes
+
+	immediate = {
+		set_variable = {
+			name = HRT_centralization_baseline
+			value = HRT_centralization_baseline_value
+		}
+		HRT_assign_centralization_character_modifier_effect = yes
+	}
 }

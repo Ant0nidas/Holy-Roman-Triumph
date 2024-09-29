@@ -1,4 +1,4 @@
-version="3.0"
+version="3.1"
 tags={
 	"Gameplay"
 	"Events"
@@ -9,5 +9,5 @@ tags={
 	"Warfare"
 }
 name="Holy Roman Triumph: Coronation Ceremonies"
-supported_version="1.12.*"
+supported_version="1.13.*"
 remote_file_id="3118461885"

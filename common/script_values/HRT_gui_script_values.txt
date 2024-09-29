@@ -25,7 +25,7 @@ HRT_era_value = {
 	}
 }
 
-HRT_is_emperor_value = {
+HRT_is_emperor_value = { #TODO make into sgui
 	value = 0
 	if = {
 		limit = { HRT_is_emperor_trigger = yes }
@@ -68,7 +68,7 @@ HRT_prestige_value = {
 	value = prestige
 }
 
-# Edicts
+# Edicts #TODO make sgui
 HRT_edict_legal_unification_value = {
 	value = 0
 	if = {

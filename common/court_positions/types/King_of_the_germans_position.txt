@@ -80,7 +80,7 @@ King_of_the_germans_court_position = {
 	modifier = {
 		monthly_prestige = King_of_the_germans_court_position_prestige_salary
 		fellow_vassal_opinion = 15
-		hostile_scheme_resistance_add = 20
+		enemy_hostile_scheme_phase_duration_add = medium_scheme_phase_duration_malus_value
 
 	}
 	

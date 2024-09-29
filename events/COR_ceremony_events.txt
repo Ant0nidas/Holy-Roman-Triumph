@@ -27,44 +27,6 @@ COR_ceremony.0001 = {
 	immediate = {
 		##Set up some scopes we'll need
 		save_scope_as = COR_ruler
-		#Child to take the vows
-		random_child = {
-			limit = {
-				age >= 10
-				is_available_ai = yes
-				faith = faith:catholic
-				is_ruler = no
-				is_married = no
-				is_betrothed = no
-				NOR = {
-					is_primary_heir_of = scope:COR_ruler
-					has_trait = devoted
-					has_trait = order_member
-					has_trait = excommunicated
-					has_character_flag = holy_order_member_requested_return_home
-				}
-			}
-			save_scope_as = COR_childofruler1
-		}
-		#Child to join holy order
-		random_child = {
-			limit = {
-				can_be_warrior_trigger = { ARMY_OWNER = scope:COR_ruler }
-				is_available_ai = yes
-				faith = faith:catholic
-				is_ruler = no
-				is_married = no
-				is_betrothed = no
-				NOR = {
-					is_primary_heir_of = scope:COR_ruler
-					has_trait = devoted
-					has_trait = order_member
-					has_trait = excommunicated
-					has_character_flag = holy_order_member_requested_return_home
-				}
-			}
-			save_scope_as = COR_childofruler2
-		}
 		##Fetch valid coronators
 		#Antipope
 		if = {
@@ -960,19 +922,7 @@ COR_ceremony.0101 = {
 				trigger = {
 					scope:COR_ruler = {
 						any_child = {
-							age >= 10
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_child_can_take_vows_trigger = yes
 						}
 					}
 				}
@@ -983,19 +933,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 3
-							age >= 10
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_child_can_take_vows_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1004,19 +942,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 4
-							age >= 10
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_child_can_take_vows_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1025,19 +951,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 5
-							age >= 10
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_child_can_take_vows_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1046,19 +960,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 6
-							age >= 10
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_child_can_take_vows_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1082,19 +984,7 @@ COR_ceremony.0101 = {
 					}
 					scope:COR_ruler = {
 						any_child = {
-							can_be_warrior_trigger = { ARMY_OWNER = scope:COR_ruler }
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_holy_order_child_trigger = yes
 						}
 					}
 				}
@@ -1105,19 +995,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 3
-							can_be_warrior_trigger = { ARMY_OWNER = scope:COR_ruler }
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_holy_order_child_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1126,19 +1004,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 4
-							can_be_warrior_trigger = { ARMY_OWNER = scope:COR_ruler }
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_holy_order_child_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1147,19 +1013,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 5
-							can_be_warrior_trigger = { ARMY_OWNER = scope:COR_ruler }
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_holy_order_child_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1168,19 +1022,7 @@ COR_ceremony.0101 = {
 					scope:COR_ruler = {
 						any_child = {
 							count >= 6
-							can_be_warrior_trigger = { ARMY_OWNER = scope:COR_ruler }
-							is_available_ai = yes
-							faith = faith:catholic
-							is_ruler = no
-							is_married = no
-							is_betrothed = no
-							NOR = {
-								is_primary_heir_of = scope:COR_ruler
-								has_trait = devoted
-								has_trait = order_member
-								has_trait = excommunicated
-								has_character_flag = holy_order_member_requested_return_home
-							}
+							COR_holy_order_child_trigger = yes
 						}
 					}
 					factor = 1.5
@@ -1194,7 +1036,7 @@ COR_ceremony.0101 = {
 					factor = 0.25
 				}
 			}
-			#10 = {
+			#10 = {  #NOTE place story cycle on COR_ruler that checks weekly if a feast is hosted
 			#	desc = COR_ceremony.0101.b.host_feast
 			#	scope:COR_ruler = {
 			#		trigger_event = COR_ceremony.0108 #Wishes to have a feast hosted.
@@ -1478,7 +1320,16 @@ COR_ceremony.0106 = {
 	desc = COR_ceremony.0106.desc
 	sender = scope:COR_coronator
 
-	immediate = { }
+	immediate = {
+		scope:COR_ruler = {
+			random_child = {
+				limit = {
+					COR_child_can_take_vows_trigger = yes
+				}
+				save_scope_as = COR_childofruler1
+			}
+		}
+	}
 
 	option = {
 		name = COR_ceremony.0106.a
@@ -1574,7 +1425,16 @@ COR_ceremony.0107 = {
 	desc = COR_ceremony.0107.desc
 	sender = scope:COR_coronator
 
-	immediate = { }
+	immediate = {
+		scope:COR_ruler = {
+			random_child = {
+				limit = {
+					COR_holy_order_child_trigger = yes
+				}
+				save_scope_as = COR_childofruler2
+			}
+		}
+	}
 
 	option = {
 		name = COR_ceremony.0107.a
@@ -2036,7 +1896,11 @@ COR_ceremony.0201 = {
 		custom_tooltip = COR_ceremony.0101.b.send_child_to_monastery
 
 		trigger = {
-			exists = scope:COR_childofruler1
+			scope:COR_ruler = {
+				any_child = {
+					COR_child_can_take_vows_trigger = yes
+				}
+			}
 		}
 
 		scope:COR_ruler = {
@@ -2052,19 +1916,7 @@ COR_ceremony.0201 = {
 				scope:COR_ruler = {
 					any_child = {
 						count >= 3
-						age >= 10
-						is_available_ai = yes
-						faith = faith:catholic
-						is_ruler = no
-						is_married = no
-						is_betrothed = no
-						NOR = {
-							is_primary_heir_of = scope:COR_ruler
-							has_trait = devoted
-							has_trait = order_member
-							has_trait = excommunicated
-							has_character_flag = holy_order_member_requested_return_home
-						}
+						COR_child_can_take_vows_trigger = yes
 					}
 				}
 				factor = 1.5
@@ -2073,19 +1925,7 @@ COR_ceremony.0201 = {
 				scope:COR_ruler = {
 					any_child = {
 						count >= 4
-						age >= 10
-						is_available_ai = yes
-						faith = faith:catholic
-						is_ruler = no
-						is_married = no
-						is_betrothed = no
-						NOR = {
-							is_primary_heir_of = scope:COR_ruler
-							has_trait = devoted
-							has_trait = order_member
-							has_trait = excommunicated
-							has_character_flag = holy_order_member_requested_return_home
-						}
+						COR_child_can_take_vows_trigger = yes
 					}
 				}
 				factor = 1.5
@@ -2094,19 +1934,7 @@ COR_ceremony.0201 = {
 				scope:COR_ruler = {
 					any_child = {
 						count >= 5
-						age >= 10
-						is_available_ai = yes
-						faith = faith:catholic
-						is_ruler = no
-						is_married = no
-						is_betrothed = no
-						NOR = {
-							is_primary_heir_of = scope:COR_ruler
-							has_trait = devoted
-							has_trait = order_member
-							has_trait = excommunicated
-							has_character_flag = holy_order_member_requested_return_home
-						}
+						COR_child_can_take_vows_trigger = yes
 					}
 				}
 				factor = 1.5
@@ -2115,19 +1943,7 @@ COR_ceremony.0201 = {
 				scope:COR_ruler = {
 					any_child = {
 						count >= 6
-						age >= 10
-						is_available_ai = yes
-						faith = faith:catholic
-						is_ruler = no
-						is_married = no
-						is_betrothed = no
-						NOR = {
-							is_primary_heir_of = scope:COR_ruler
-							has_trait = devoted
-							has_trait = order_member
-							has_trait = excommunicated
-							has_character_flag = holy_order_member_requested_return_home
-						}
+						COR_child_can_take_vows_trigger = yes
 					}
 				}
 				factor = 1.5
@@ -2147,7 +1963,11 @@ COR_ceremony.0201 = {
 		custom_tooltip = COR_ceremony.0101.b.send_child_to_holy_order
 
 		trigger = {
-			exists = scope:COR_childofruler2
+			scope:COR_ruler = {
+				any_child = {
+					COR_holy_order_child_trigger = yes
+				}
+			}
 		}
 
 		scope:COR_ruler = {
@@ -2563,7 +2383,7 @@ COR_ceremony.0305 = {
 		remove_character_flag = COR_flag_preparing_coronation
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
-		var:COR_coronator = {
+		var:COR_coronator ?= {
 			remove_list_variable = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
@@ -2643,11 +2463,11 @@ COR_ceremony.0307 = {
 				add_gold = var:COR_ceremony_gold_recoup_value
 			}
 		}
-		var:COR_coronator = { save_scope_as = COR_coronator }
+		var:COR_coronator ?= { save_scope_as = COR_coronator }
 		remove_character_flag = COR_flag_preparing_coronation
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
-		var:COR_coronator = {
+		var:COR_coronator ?= {
 			remove_list_variable = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
@@ -2786,7 +2606,7 @@ COR_ceremony.0311 = {
 		remove_character_flag = COR_flag_preparing_coronation
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
-		var:COR_coronator = {
+		var:COR_coronator ?= {
 			remove_list_variable = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
@@ -2902,11 +2722,11 @@ COR_ceremony.0315 = {
 				add_gold = var:COR_ceremony_gold_recoup_value
 			}
 		}
-		var:COR_coronator = { save_scope_as = COR_coronator }
+		var:COR_coronator ?= { save_scope_as = COR_coronator }
 		remove_character_flag = COR_flag_preparing_coronation
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
-		var:COR_coronator = {
+		var:COR_coronator ?= {
 			remove_list_variable = {
 				name = COR_coronation_targets
 				target = scope:COR_ruler
@@ -3341,15 +3161,16 @@ COR_ceremony.0322 = {
 		}
 		else_if = {
 			limit = {
-				var:COR_coronator_rank ?= 1
-				scope:officiant ?= faith:catholic.religious_head
+				OR = {
+					var:COR_coronator_rank ?= 1
+					scope:officiant ?= faith:catholic.religious_head
+					involved_activity ?= { has_activity_type = COR_activity_coronation_ceremony_hof }
+				}
 			}
 			add_trait = COR_crowned_by_pope
 		}
 		else_if = {
-			limit = {
-				var:COR_coronator_rank ?= 0
-			}
+			limit = { var:COR_coronator_rank ?= 0 }
 			add_trait = COR_crowned_by_bishop
 		}
 		else = {
@@ -7117,7 +6938,12 @@ COR_ceremony.0499 = {
 		show_as_tooltip = {
 			COR_tooltip_disburse_ceremony_host_activity_rewards = yes
 		}
-		base_legitimacy_intent_reward = yes
+		if = {
+			limit = { has_activity_intent = legitimacy_intent }
+			add_legitimacy = medium_legitimacy_gain
+			complete_activity_intent = yes
+		}
+		else = { base_legitimacy_intent_reward = yes }
 	}
 
 	option = {
@@ -7157,7 +6983,7 @@ COR_ceremony.7001 = {
 	title = COR_ceremony.0001.t
 	desc = COR_ceremony.7001.desc
 	theme = crown
-	override_background = { reference = temple }
+	override_background = { reference = ep3_hagia_sophia }
 	
 	left_portrait = scope:COR_coronator
 	
@@ -7265,7 +7091,7 @@ COR_ceremony.7320 = {
 	}
 
 	theme = crown
-	override_background = { reference = temple }
+	override_background = { reference = ep3_hagia_sophia }
 
 	right_portrait = {
 		character = root
@@ -7287,7 +7113,7 @@ COR_ceremony.7322 = {
 	title = COR_ceremony.0322.t
 	desc = COR_ceremony.7322.desc
 	theme = crown
-	override_background = { reference = temple }
+	override_background = { reference = ep3_hagia_sophia }
 	left_portrait = {
 		character = scope:COR_coronator
 		animation = wedding_priest
@@ -7370,14 +7196,14 @@ COR_ceremony.7323 = {
 	title = COR_ceremony.0322.t
 	desc = COR_ceremony.7323.desc
 	theme = crown
-	override_background = { reference = temple }
+	override_background = { reference = ep3_hagia_sophia }
 	left_portrait = {
 		character = scope:COR_coronator
 		animation = personality_zealous
 	}
 	right_portrait = {
 		character = root
-		animation = personality_honorable
+		animation = scepter
 	}
 
 	immediate = {
@@ -7430,7 +7256,7 @@ COR_ceremony.7324 = {
 	title = COR_ceremony.0322.t
 	desc = COR_ceremony.7324.desc
 	theme = crown
-	override_background = { reference = temple }
+	override_background = { reference = ep3_hagia_sophia }
 	left_portrait = {
 		character = scope:COR_coronator
 		animation = wedding_priest
@@ -7462,7 +7288,7 @@ COR_ceremony.7325 = {
 	title = COR_ceremony.0322.t
 	desc = COR_ceremony.7325.desc
 	theme = crown
-	override_background = { reference = temple }
+	override_background = { reference = ep3_hagia_sophia }
 	left_portrait = {
 		character = scope:COR_coronator
 		animation = personality_zealous

@@ -25,7 +25,18 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 			is_ai = yes
 			is_landed = yes
 			target_is_liege_or_above = scope:actor
-			#NOT = { government_has_flag = government_is_republic }
+			any_held_title = {
+				count = 1
+				tier = tier_county
+				title:c_aachen = {
+					NOT = {
+						is_target_in_variable_list = {
+							name = HRT_reichsstaedte
+							target = prev
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -42,19 +53,17 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 
 		custom_description = {
 			text = HRT_too_many_republics
-			scope:actor = {
-				any_vassal = {
-					has_government = free_imperial_city_government
+			title:c_aachen = {
+				has_variable_list = HRT_reichsstaedte
+				any_in_list = {
+					variable = HRT_reichsstaedte
 					count < 7
-					highest_held_title_tier >= tier_county
-					government_has_flag = government_is_republic
 				}
 			}
 		}
 		
 		scope:recipient = {
 			target_is_liege_or_above = scope:actor
-			#NOT = { government_has_flag = government_is_republic }
 			is_claimant = no
 
 			custom_description = {
@@ -69,7 +78,7 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 				text = must_not_have_landed_relatives
 				NOT = {
 					any_close_or_extended_family_member = {
-						is_landed = yes
+						is_landed_or_landless_administrative = yes
 					}
 				}
 			}
@@ -84,7 +93,7 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 				}
 			}
 
-			custom_description = {	#The county must be developed or have at least one city
+			custom_description = { #The county must be developed or have at least one city
 				text = county_must_have_city
 				any_held_title = {
 					count = 1
@@ -97,29 +106,27 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 					}
 				}
 			}
-			custom_description = { #County must be of a culture that has the tradition parameter
-				text = county_must_have_culture
-				any_held_title = {
-					count = 1
-					tier = tier_county
-					any_county_province = {
-						culture = {
-							has_innovation = innovation_HRT_imperial_charter
-						}
-					}
-				}
-			}
+
 			custom_description = {
 				text = HRT_is_elector_prince
-				NOT = {
-					title:e_hre = {
-						any_elector = {
-							this = scope:recipient
+				OR = {
+					NOT = {
+						title:e_hre = {
+							any_elector = {
+								this = scope:recipient
+							}
 						}
+					}
+					AND = {
+						title:e_hre = {
+							any_elector = {
+								this = scope:recipient
+							}
+						}
+						government_has_flag = government_is_theocracy
 					}
 				}
 			}
-			NOT = { government_has_flag = government_is_theocracy }
 		}
 
 		scope:recipient = { is_busy_in_events_localised = yes }
@@ -136,13 +143,14 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 	}
 
 	cost = { prestige = minor_prestige_value }
-	cooldown = { years = 5 }
+	cooldown = { months = 1 } #{ years = 5 }
 	cooldown_against_recipient = { years = 10 }
 
 	on_accept = {
 		scope:actor = {
 			hidden_effect = {
 				send_interface_toast = {
+					type = event_toast_effect_neutral
 					title = HRT_grant_imperial_city_status_interaction_notification
 
 					left_icon = scope:actor					
@@ -155,15 +163,33 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 								save_scope_as = change
 								add_claim_on_loss = no
 							}
-							every_vassal = {
+							if = {
 								limit = {
-									government_has_flag = government_is_republic
+									NOT = { government_has_flag = government_is_theocracy }
 								}
-								every_held_title = { 
-									change_title_holder = {
-										holder = scope:recipient
-										change = scope:change
-										take_baronies = yes
+								every_vassal = {
+									limit = {
+										government_has_flag = government_is_republic
+									}
+									every_held_title = { 
+										change_title_holder = {
+											holder = scope:recipient
+											change = scope:change
+											take_baronies = yes
+										}
+									}
+								}
+							}
+							if = {
+								limit = {
+									liege = {
+										NOT = { this = scope:actor }
+									}
+								}
+								liege = {
+									add_opinion = {
+										target = scope:actor
+										modifier = retracted_vassal
 									}
 								}
 							}
@@ -174,12 +200,19 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 							resolve_title_and_vassal_change = scope:change
 							if = {
 								limit = {
-									NOT = { has_government = free_imperial_city_government }
+									NOR = {
+										has_government = free_imperial_city_government
+										government_has_flag = government_is_theocracy
+									}
 								}
 								change_government = free_imperial_city_government
 							}
 						}
 					}
+				}
+				change_variable = {
+					name = HRT_authority
+					subtract = 80
 				}
 			}
 		}
@@ -189,14 +222,20 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 				save_scope_as = change
 				add_claim_on_loss = no
 			}
-			every_vassal = {
+			if = {
 				limit = {
-					government_has_flag = government_is_republic
+					NOT = { government_has_flag = government_is_theocracy }
 				}
-				every_held_title = { 
-					change_title_holder = {
-						holder = scope:recipient
-						change = scope:change
+				every_vassal = {
+					limit = {
+						government_has_flag = government_is_republic
+					}
+					every_held_title = { 
+						change_title_holder = {
+							holder = scope:recipient
+							change = scope:change
+							take_baronies = yes
+						}
 					}
 				}
 			}
@@ -209,7 +248,7 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 				liege = {
 					add_opinion = {
 						target = scope:actor
-						modifier = HRT_granted_vassal_independence_opinion
+						modifier = retracted_vassal
 					}
 				}
 			}
@@ -220,18 +259,21 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 			resolve_title_and_vassal_change = scope:change
 			if = {
 				limit = {
-					NOT = { has_government = free_imperial_city_government }
+					NOR = {
+						has_government = free_imperial_city_government
+						government_has_flag = government_is_theocracy
+					}
 				}
 				change_government = free_imperial_city_government
 			}
 			if = { # Set the appropriate Succession Law
 				limit = {
-					NOT = { has_realm_law = city_succession_law }
+					NOT = { government_has_flag = government_is_theocracy }
 				}
 				add_realm_law_skip_effects = city_succession_law
 			}
 			create_story = HRT_imperial_city_story
-			capital_province.county = {
+			capital_province.county = { # Why not capital_county?
 				add_county_modifier = HRT_reichsstadt_1
 				set_variable = {
 					name = HRT_reichsstadt_years

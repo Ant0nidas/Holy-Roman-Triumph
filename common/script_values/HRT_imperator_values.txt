@@ -45,8 +45,11 @@ HRT_imperator_score = {
 	value = 0
 	if = {
 		limit = {
-			exists = this # To not log errors when iterating through members of an empty list
-			is_alive = yes
+			any_HRT_candidati = {
+				count > 0
+			}
+			#exists = this # To not log errors when iterating through members of an empty list
+			#is_alive = yes
 		}
 		if = {
 			limit = {

@@ -33,8 +33,8 @@ HRTCOR_on_game_start = {
 		}
 
 		## Holy Roman Triumph
-		# Get total count of heartland counties
 		title:c_aachen = {
+			# Get total count of heartland counties
 			set_variable = {
 				name = HRT_core_territory
 				value = 0
@@ -47,6 +47,11 @@ HRTCOR_on_game_start = {
 						add = 1
 					}
 				}
+			}
+			# 3.1 Centralization
+			set_variable = {
+				name = HRT_centralization
+				value = 0
 			}
 		}
 
@@ -63,75 +68,82 @@ HRTCOR_on_game_start = {
 		if = {
 			limit = { game_start_date >= 1074.1.1 }
 			title:c_worms = {
-				create_character = {
-					template = merchant_template
-					location = title_province
-					save_scope_as = free_city_holder
+				holder = { create_story = HRT_imperial_city_story }
+				add_county_modifier = HRT_reichsstadt_1
+				set_variable = {
+					name = HRT_reichsstadt_years
+					value = 0
 				}
-			}
-			scope:free_city_holder = {
-				create_title_and_vassal_change = {
-					type = returned
-					save_scope_as = title_change
-					add_claim_on_loss = no
+				set_variable = {
+					name = HRT_reichsstadt_development
+					value = development_level
 				}
-				title:c_worms = {
-					change_title_holder = {
-						holder = scope:free_city_holder
-						change = scope:title_change
+				title:c_aachen = {
+					add_to_variable_list = {
+						name = HRT_reichsstaedte
+						target = prev
 					}
 				}
-				HRT_grant_imperial_city_effect = yes
+			}
+			every_culture_global = {
+				limit = {
+					OR = {
+						has_cultural_pillar = heritage_central_germanic
+						has_cultural_pillar = heritage_frankish
+						has_cultural_pillar = heritage_latin
+					}
+					culture_head ?= {
+						OR = {
+							this ?= title:e_hre.holder
+							is_vassal_or_below_of = title:e_hre.holder
+						}
+					}
+				}
+				add_innovation = innovation_HRT_imperial_charter
 			}
 		}
 		# Speyer
 		if = {
 			limit = { game_start_date >= 1076.1.1 }
 			title:c_speyer = {
-				create_character = {
-					template = merchant_template
-					location = title_province
-					save_scope_as = free_city_holder
+				holder = { create_story = HRT_imperial_city_story }
+				add_county_modifier = HRT_reichsstadt_1
+				set_variable = {
+					name = HRT_reichsstadt_years
+					value = 0
 				}
-			}
-			scope:free_city_holder = {
-				create_title_and_vassal_change = {
-					type = returned
-					save_scope_as = title_change
-					add_claim_on_loss = no
+				set_variable = {
+					name = HRT_reichsstadt_development
+					value = development_level
 				}
-				title:c_speyer = {
-					change_title_holder = {
-						holder = scope:free_city_holder
-						change = scope:title_change
+				title:c_aachen = {
+					add_to_variable_list = {
+						name = HRT_reichsstaedte
+						target = prev
 					}
 				}
-				HRT_grant_imperial_city_effect = yes
 			}
 		}
 		# Frankfurt
 		if = {
 			limit = { game_start_date >= 1151.1.1 }
 			title:c_frankfurt = {
-				create_character = {
-					template = merchant_template
-					location = title_province
-					save_scope_as = free_city_holder
+				holder = { create_story = HRT_imperial_city_story }
+				add_county_modifier = HRT_reichsstadt_1
+				set_variable = {
+					name = HRT_reichsstadt_years
+					value = 0
 				}
-			}
-			scope:free_city_holder = {
-				create_title_and_vassal_change = {
-					type = returned
-					save_scope_as = title_change
-					add_claim_on_loss = no
+				set_variable = {
+					name = HRT_reichsstadt_development
+					value = development_level
 				}
-				title:c_frankfurt = {
-					change_title_holder = {
-						holder = scope:free_city_holder
-						change = scope:title_change
+				title:c_aachen = {
+					add_to_variable_list = {
+						name = HRT_reichsstaedte
+						target = prev
 					}
 				}
-				HRT_grant_imperial_city_effect = yes
 			}
 		}
 		# Augsburg
@@ -139,8 +151,10 @@ HRTCOR_on_game_start = {
 			limit = { game_start_date >= 1156.1.1 }
 			title:c_augsburg = {
 				create_character = {
-					template = merchant_template
+					template = HRT_free_city_holder_template
 					location = title_province
+					faith = this.faith
+					culture = this.culture
 					save_scope_as = free_city_holder
 				}
 			}
@@ -156,57 +170,95 @@ HRTCOR_on_game_start = {
 						change = scope:title_change
 					}
 				}
-				HRT_grant_imperial_city_effect = yes
-			}
-		}
-		# Aachen
-		if = {
-			limit = { game_start_date >= 1167.1.1 }
-			title:c_aachen = {
-				create_character = {
-					template = merchant_template
-					location = title_province
-					save_scope_as = free_city_holder
-				}
-			}
-			scope:free_city_holder = {
-				create_title_and_vassal_change = {
-					type = returned
-					save_scope_as = title_change
-					add_claim_on_loss = no
-				}
-				title:c_aachen = {
-					change_title_holder = {
-						holder = scope:free_city_holder
-						change = scope:title_change
+				every_vassal = {
+					limit = {
+						government_has_flag = government_is_republic
+					}
+					every_held_title = { 
+						change_title_holder = {
+							holder = scope:free_city_holder
+							change = scope:title_change
+							take_baronies = yes
+						}
 					}
 				}
-				HRT_grant_imperial_city_effect = yes
+				change_liege = {
+					liege = title:e_hre.holder
+					change = scope:title_change
+				}
+				resolve_title_and_vassal_change = scope:title_change
+				change_government = free_imperial_city_government
+				if = {
+					limit = {
+						NOT = { has_realm_law = city_succession_law }
+					}
+					add_realm_law_skip_effects = city_succession_law
+				}
+				create_story = HRT_imperial_city_story
+				capital_province.county = {
+					add_county_modifier = HRT_reichsstadt_1
+					set_variable = {
+						name = HRT_reichsstadt_years
+						value = 0
+					}
+					set_variable = {
+						name = HRT_reichsstadt_development
+						value = development_level
+					}
+					title:c_aachen = {
+						add_to_variable_list = {
+							name = HRT_reichsstaedte
+							target = prev
+						}
+					}
+				}
 			}
 		}
+		# Aachen disabled because its the capital of Barbarossa
+		#if = {
+		#	limit = { game_start_date >= 1167.1.1 }
+		#	title:c_aachen = {
+		#		create_character = {
+		#			template = HRT_free_city_holder_template
+		#			location = title_province
+		#			save_scope_as = free_city_holder
+		#		}
+		#	}
+		#	scope:free_city_holder = {
+		#		create_title_and_vassal_change = {
+		#			type = returned
+		#			save_scope_as = title_change
+		#			add_claim_on_loss = no
+		#		}
+		#		title:c_aachen = {
+		#			change_title_holder = {
+		#				holder = scope:free_city_holder
+		#				change = scope:title_change
+		#			}
+		#		}
+		#		HRT_grant_imperial_city_effect = yes
+		#	}
+		#}
 		# Regensburg
 		if = {
 			limit = { game_start_date >= 1180.1.1 }
 			title:c_regensburg = {
-				create_character = {
-					template = merchant_template
-					location = title_province
-					save_scope_as = free_city_holder
+				holder = { create_story = HRT_imperial_city_story }
+				add_county_modifier = HRT_reichsstadt_1
+				set_variable = {
+					name = HRT_reichsstadt_years
+					value = 0
 				}
-			}
-			scope:free_city_holder = {
-				create_title_and_vassal_change = {
-					type = returned
-					save_scope_as = title_change
-					add_claim_on_loss = no
+				set_variable = {
+					name = HRT_reichsstadt_development
+					value = development_level
 				}
-				title:c_regensburg = {
-					change_title_holder = {
-						holder = scope:free_city_holder
-						change = scope:title_change
+				title:c_aachen = {
+					add_to_variable_list = {
+						name = HRT_reichsstaedte
+						target = prev
 					}
 				}
-				HRT_grant_imperial_city_effect = yes
 			}
 		}
 		# Ulm
@@ -214,8 +266,10 @@ HRTCOR_on_game_start = {
 			limit = { game_start_date >= 1184.1.1 }
 			title:c_ulm = {
 				create_character = {
-					template = merchant_template
+					template = HRT_free_city_holder_template
 					location = title_province
+					faith = this.faith
+					culture = this.culture
 					save_scope_as = free_city_holder
 				}
 			}
@@ -262,7 +316,10 @@ HRTCOR_on_game_start = {
 				NOR = {
 					this = character:30228 # Louis II of Italy
 					this = character:1316 # Heinrich IV
+					this = character:212501 # Friedrich "Barbarossa"
+
 					this = character:762 # Boleslaw I Chrobry of Poland
+					this = character:221520 # Kazimierz of Poland
 				}
 				is_alive = yes
 				is_adult = yes
@@ -299,7 +356,16 @@ HRTCOR_on_game_start = {
 				}
 			}
 		}
-		#TODO Byz DLC new DLC bookmark
+		character:215530 ?= { # Manuel
+			add_trait = COR_byz_crowned_by_patriarch
+			if = {
+				limit = { is_alive = yes }
+				set_variable = {
+					name = COR_coronator
+					value = character:145002 # Patriarch Michael II Kourkouas
+				}
+			}
+		}
 
 		# Set COR_years_reigned variable
 		every_ruler = {
@@ -377,19 +443,21 @@ HRTCOR_on_game_start_after_lobby = {
 					add_character_flag = HRT_italienzug
 					trigger_event = HRT.0002 # Heinrich IV Introduction Event
 				}
-				#else_if = { #TODO Byz DLC barbarossa
-				#	limit = {
-				#		this = character:Barbarossa # Barbarossa
-				#	}
-				#	trigger_event = HRT.0003 # Barbarossa Introduction Event
-				#}
+				else_if = {
+					limit = {
+						this = character:212501 # Friedrich "Barbarossa"
+					}
+					trigger_event = HRT.0003 # Barbarossa Introduction Event
+					# Move Friedrich's son, Heinrich IV (King of the Romans) back to his mother's court
+					character:212507 = { set_location = title:c_besancon.title_province }
+				}
 				else = {
 					create_story = HRT_emperor_story
 					#trigger_event = HRT.0010 # TODO Generic Introduction Event
 				}
 
-				## 2.2 Unity
-				#HRT_unity_effect = yes #moved to story
+				# 2.2 Unity
+				HRT_unity_effect = yes
 			}
 		}
 
@@ -447,6 +515,7 @@ HRT_yearly_global_pulse = {
 							OR = {
 								government_has_flag = government_is_feudal
 								government_has_flag = government_is_clan
+								government_has_flag = government_is_administrative
 							}
 						}
 						create_story = HRT_emperor_story
@@ -462,7 +531,12 @@ HRT_yearly_global_pulse = {
 					}
 				}
 			}
-			else = {
+			else_if = {
+				limit = {
+					any_HRT_candidati = {
+						count > 0
+					}
+				}
 				ordered_HRT_candidati = {
 					order_by = HRT_imperator_score
 					position = 0
@@ -532,8 +606,17 @@ COR_yearly_playable_pulse = {
 					has_primary_title = title:e_roman_empire
 				}
 				faith = faith:orthodox
-				government_has_flag = government_is_feudal
+				OR = {
+					government_has_flag = government_is_feudal
+					government_has_flag = government_is_administrative
+				}
 				NOT = { has_trait = COR_byz_crowned_by_patriarch }
+				# 1.13 Roads to Power Compat
+				NOT = {
+					any_memory = {
+						has_memory_type = deposed_liege_memory
+					}
+				}
 			}
 		}
 	}
@@ -573,8 +656,17 @@ COR_yearly_playable_pulse = {
 							has_primary_title = title:e_roman_empire
 						}
 						faith = faith:orthodox
-						government_has_flag = government_is_feudal
+						OR = {
+							government_has_flag = government_is_feudal
+							government_has_flag = government_is_administrative
+						}
 						NOT = { has_trait = COR_byz_crowned_by_patriarch }
+						# 1.13 Roads to Power Compat
+						NOT = {
+							any_memory = {
+								has_memory_type = deposed_liege_memory
+							}
+						}
 					}
 				}
 			}
@@ -627,6 +719,10 @@ COR_yearly_playable_pulse = {
 							add_character_modifier = {
 								modifier = COR_uncrowned_modifier
 							}
+						}
+						if = {
+							limit = { is_ai = no }
+							COR_uncrowned_legitimacy_effect = yes
 						}
 					}
 				}
@@ -736,7 +832,10 @@ COR_yearly_playable_pulse = {
 								faith = faith:orthodox
 							}
 						}
-						government_has_flag = government_is_feudal
+						OR = {
+							government_has_flag = government_is_feudal
+							government_has_flag = government_is_administrative
+						}
 					}
 					AND = {
 						HRT_is_emperor_trigger = no
@@ -757,6 +856,10 @@ COR_yearly_playable_pulse = {
 					AND = {
 						faith = faith:orthodox
 						has_trait = COR_byz_crowned_by_patriarch
+					}
+					# 1.13 Roads to Power Compat
+					any_memory = {
+						has_memory_type = deposed_liege_memory
 					}
 				}
 			}
@@ -934,58 +1037,23 @@ KOH_on_war_started = {
 	}
 }
 
-## character just about to die in root scope
-#on_death = {
-#	on_actions = {
-#		#HRT_on_death
-#		#COR_on_death
-#		#on_kotr_death
-#	}
-#}
-#
+# character just about to die in root scope
+on_death = {
+	on_actions = {
+		HRT_on_death
+	}
+}
+
 ##Close HRT window if open and you die
-#HRT_on_death = {
-#	trigger = {
-#		is_ai = no
-#		exists = global_var:HRT_window_is_open
-#	}
-#	effect = {
-#		HRT_close_window = yes
-#	}
-#}
-
-## Notify ruler of coronator's death
-#COR_on_death = {
-##TODO create a story for the coronator instead to save performance
-#	trigger = {
-#		has_variable_list = COR_coronation_targets
-#	}
-#	effect = {
-#		every_in_list = {
-#			variable = COR_coronation_targets
-#			limit = {
-#				is_alive = yes
-#			}
-#			trigger_event = COR_ceremony.0003
-#		}
-#	}
-#}
-
-##by Uber (KOH)
-#on_kotr_death = {
-#	trigger = {
-#		has_court_position = King_of_the_germans_court_position
-#	}	
-#	effect = {		
-#		if = {			
-#			limit = {		
-#				exists = title:k_king_of_the_germans.holder			
-#				scope:employee = title:k_king_of_the_germans.holder
-#			}		
-#			destroy_title = title:k_king_of_the_germans		
-#		}
-#	}
-#}
+HRT_on_death = {
+	trigger = {
+		is_ai = no
+		exists = global_var:HRT_window_is_open
+	}
+	effect = {
+		HRT_close_window = yes
+	}
+}
 
 # A title is destroyed
 # root = the holder before destruction
@@ -1230,8 +1298,17 @@ COR_on_title_gain = {
 			AND = {
 				scope:title = title:e_byzantium
 				faith = faith:orthodox
-				government_has_flag = government_is_feudal
+				OR = {
+					government_has_flag = government_is_feudal
+					government_has_flag = government_is_administrative
+				}
 				NOT = { has_trait = COR_byz_crowned_by_patriarch }
+				# 1.13 Roads to Power Compat
+				NOT = {
+					any_memory = {
+						has_memory_type = deposed_liege_memory
+					}
+				}
 			}
 		}
 	}
@@ -1384,6 +1461,15 @@ COR_ceremony_ongoing_event_pulse = {
 }
 
 COR_ceremony_ending_event_pulse = {
+	#trigger = {
+	#	scope:activity = {
+	#		OR = {
+	#			has_activity_type = activity_HRT_italienzug
+	#			has_activity_type = COR_activity_coronation_ceremony
+	#			has_activity_type = COR_activity_coronation_ceremony_hof
+	#		}
+	#	}
+	#}
 	on_actions = { }
 	events = {
 		COR_ceremony.0322
@@ -1393,6 +1479,11 @@ COR_ceremony_ending_event_pulse = {
 
 # 2.4 Jewel of Byzantium
 COR_byz_ceremony_ending_event_pulse = {
+	trigger = {
+		scope:activity = {
+			has_activity_type = COR_byz_activity_coronation_ceremony
+		}
+	}
 	on_actions = { }
 	events = {
 		COR_ceremony.7322
