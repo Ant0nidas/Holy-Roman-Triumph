@@ -1693,6 +1693,7 @@ HRT_hoftag.0031 = {
 				remove_variable = HRT_hoftag_score
 				remove_variable = HRT_hoftag_score_yay
 				remove_variable = HRT_hoftag_score_nay
+				remove_character_flag ?= HRT_preparing_hoftag
 			}
 		}
 

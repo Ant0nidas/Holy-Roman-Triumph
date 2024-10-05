@@ -427,9 +427,17 @@ HRTCOR_on_game_start_after_lobby = {
 	effect = {
 		if = {
 			limit = { game_start_date = 867.1.1 }
-			character:30228 ?= { # Louis II of Italy
+			title:k_italy.holder ?= {
 				create_story = HRT_emperor_story
-				trigger_event = HRT.0001 # Louis Introduction Event
+				if = {
+					limit = {
+						this = character:30228 # Louis II of Italy
+					}
+					trigger_event = HRT.0001 # Louis Introduction Event
+				}
+				#else = {
+				#	trigger_event = HRT.0008 #TODO generic introduction pre restoration
+				#}
 			}
 		}
 		else_if = {
@@ -448,14 +456,16 @@ HRTCOR_on_game_start_after_lobby = {
 						this = character:212501 # Friedrich "Barbarossa"
 					}
 					trigger_event = HRT.0003 # Barbarossa Introduction Event
-					# Move Friedrich's son, Heinrich IV (King of the Romans) back to his mother's court
-					character:212507 = { set_location = title:c_besancon.title_province }
 				}
 				else = {
-					create_story = HRT_emperor_story
-					#trigger_event = HRT.0010 # TODO Generic Introduction Event
+					title:c_aachen.culture = {
+						trigger_event = {
+							id = HRT.0010
+							days = 1
+						}
+					}
 				}
-
+				character:212507 ?= { set_location = title:c_besancon.title_province } # Move Friedrich's son, Heinrich IV (King of the Romans) back to his mother's court
 				# 2.2 Unity
 				HRT_unity_effect = yes
 			}
@@ -751,7 +761,7 @@ COR_yearly_playable_pulse = {
 					limit = {
 						NOT = { has_nickname = nick_the_crownless }
 					}
-					remove_character_flag = sold_crown_charmod
+					remove_character_flag ?= sold_crown_charmod
 				}
 				every_spouse = {
 					limit = {
@@ -796,9 +806,9 @@ COR_yearly_playable_pulse = {
 					title = COR_officiant_invalidated.toast.t
 					custom_tooltip = COR_officiant_invalidated.toast
 				}
-				remove_character_flag = COR_flag_preparing_coronation
-				remove_variable = COR_coronation_request_cooldown
-				remove_variable = COR_coronator_rank
+				remove_character_flag ?= COR_flag_preparing_coronation
+				remove_variable ?= COR_coronation_request_cooldown
+				remove_variable ?= COR_coronator_rank
 				var:COR_coronator = {
 					remove_list_variable = {
 						name = COR_coronation_targets
@@ -863,7 +873,7 @@ COR_yearly_playable_pulse = {
 					}
 				}
 			}
-			remove_character_flag = COR_flag_preparing_coronation
+			remove_character_flag ?= COR_flag_preparing_coronation
 			remove_variable = COR_years_reigned
 			remove_variable = COR_coronation_request_cooldown
 			remove_variable = COR_coronator_rank
@@ -889,13 +899,13 @@ COR_yearly_playable_pulse = {
 						has_trait = COR_byz_crowned_by_patriarch
 					}
 				}
-				remove_variable = COR_coronator
+				remove_variable ?= COR_coronator
 			}
 			if = {
 				limit = {
 					NOT = { has_nickname = nick_the_crownless }
 				}
-				remove_character_flag = sold_crown_charmod
+				remove_character_flag ?= sold_crown_charmod
 			}
 			every_spouse = {
 				limit = {

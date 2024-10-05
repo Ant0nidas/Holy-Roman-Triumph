@@ -222,11 +222,12 @@
  
  game_concept_HRT_reisekoenigtum: "Reisekönigtum"
  game_concept_HRT_itinerant_court: "Itinerant Court"
- game_concept_HRT_reisekoenigtum_desc: "An Itinerant Court was a migratory form of government shared in European kingdoms during the Early Middle Ages. It was an alternative to having a capital city, a permanent political center governed by a kingdom. The itinerant court system of ruling a country is strongly associated with German history, where the emergence of a capital city took an unusually long time. The Holy Roman Emperors constantly traveled, with their family and court, through the empire.\n\nThe Holy Roman Empire did not have a capital city. The emperors owned their varying dynastic lands, including castles, but could not limit themselves to these if they wanted to keep control of their large empire, including its often-rebellious regional princes. Therefore, the emperor and other princes ruled by constantly changing their residences. The Merovingian kings of the Frankish Empire already practiced this system, and the subsequent Carolingian dynasty adopted both the custom and its associated palaces (#italic Kaiserpfalz#!).\n\n#help Hold a [GetActivityType('activity_tour').GetName] or obtain the #V $itinerant_liege_modifier$#! [character_modifier|E] after a successful Tour to receive this bonus.#!"
+ game_concept_HRT_reisekoenigtum_desc: "An Itinerant Court was a migratory form of government shared in European kingdoms during the Early Middle Ages. It was an alternative to having a capital city, a permanent political center governed by a kingdom. The itinerant court system of ruling a country is strongly associated with German history, where the emergence of a capital city took an unusually long time. The Holy Roman Emperors constantly traveled, with their family and court, through the empire.\n\nThe Holy Roman Empire did not have a capital city. The emperors owned their varying dynastic lands, including castles, but could not limit themselves to these if they wanted to keep control of their large empire, including its often-rebellious regional princes. Therefore, the emperor and other princes ruled by constantly changing their residences. The Merovingian kings of the Frankish Empire already practiced this system, and the subsequent Carolingian dynasty adopted both the custom and its associated palaces (#italic [Glossary('Kaiserpfalz','KAISERPFALZ_GLOSS')]#!)."
  
  ############
  # Glossary #
  ############
+ KAISERPFALZ_GLOSS: "The term Kaiserpfalz (German: "imperial palace") refers to a number of palaces and castles across the Holy Roman Empire that served as temporary seats of power for the Holy Roman Emperor"
  
  #############
  # Artifacts #
@@ -563,7 +564,7 @@
  HRT_activity_invite_rule_nobles: "Nobles"
  
  NOT_HRT_activity_hoftag_req: "You need to prepare the Hoftag's agenda first"
- HRT_activity_hoftag_province_desc: "Convene a Hoftag in this #italic Kaiserpfalz#!; a palace that serves as a temporary seat of power in an itinerant kingship.\n" 
+ HRT_activity_hoftag_province_desc: "Convene a [Glossary('Hoftag','game_concept_HRT_hoftag_desc')] in this #italic [Glossary('Kaiserpfalz','KAISERPFALZ_GLOSS')]#!; a palace that serves as a temporary seat of power in a [Glossary('Reisekönigtum','game_concept_HRT_reisekoenigtum_desc')].\n" 
  
  HRT_hoftag_parlamentum_phase: "Parlamentum"
  HRT_hoftag_parlamentum_phase_desc: "Deliberate, debate, negotiate, resolve, ..."
@@ -677,12 +678,12 @@
  HRT_grant_imperial_city_status_interaction_notification: "Granted Imperial City Status"
  
  #Modifiers
- HRT_reichsstadt_1: "Imperial City (Level 1)"
- HRT_reichsstadt_2: "Imperial City (Level 2)"
- HRT_reichsstadt_3: "Imperial City (Level 3)"
+ HRT_reichsstadt_1: "Imperial City #weak (I/III)#!"
+ HRT_reichsstadt_2: "Imperial City #weak (II/III)#!"
+ HRT_reichsstadt_3: "Imperial City #weak (III/III)#!"
  
  #Flavorization (by Uber - KoH)
- free_imperial_city_government:"Free Imperial City"
+ free_imperial_city_government: "Free Imperial City"
  free_imperial_city_government_adjective:0 "Imperial City"
  free_imperial_city_government_realm:0 "Free Imperial City"
  free_imperial_city_government_desc:0 "This is a Free Imperial City that has been granted special rights and privileges by the Emperor himself!"

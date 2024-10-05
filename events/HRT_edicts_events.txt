@@ -19,7 +19,7 @@ HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -54,53 +54,24 @@ HRT_edicts.0001 = { # Edict of Legal Unification (Era 2)
 	option = {
 		name = HRT_edicts.0001.a
 		add_internal_flag = special
-
-		if = {
-			limit = { HRT_has_centralization_0_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_legal_unification_0
-				years = 5
-			}
+		add_character_modifier = {
+			modifier = HRT_edict_legal_unification
+			years = 5
 		}
-		else_if = {
-			limit = { HRT_has_centralization_1_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_legal_unification_1
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_2_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_legal_unification_2
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_3_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_legal_unification_3
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_4_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_legal_unification_4
-				years = 5
-			}
-		}
-		else = { # Backup, just in case
-			add_character_modifier = {
-				modifier = HRT_edict_legal_unification_3
-				years = 5
-			}
-		}
-
-		every_vassal = {
-			trigger_event = HRT_edicts.0011 # Notification Event
-		}
+		custom_tooltip = HRT_edicts.0001.tt
 		hidden_effect = {
+			every_vassal = {
+				send_interface_toast = {
+					type = event_toast_effect_good
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0001.tt
+					add_character_modifier = {
+						modifier = HRT_edict_legal_unification_vassal
+						years = 5
+					}
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 40
@@ -140,7 +111,7 @@ HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -176,50 +147,20 @@ HRT_edicts.0002 = { # Imperial Decree of Chivalric Excellence (Era 3)
 	option = {
 		name = HRT_edicts.0002.a
 		add_internal_flag = special
-
-		if = {
-			limit = { HRT_has_centralization_0_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_chivalric_excellence_0
-				years = 5
-			}
+		add_character_modifier = {
+			modifier = HRT_edict_chivalric_excellence
+			years = 5
 		}
-		else_if = {
-			limit = { HRT_has_centralization_1_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_chivalric_excellence_1
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_2_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_chivalric_excellence_2
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_3_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_chivalric_excellence_3
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_4_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_chivalric_excellence_4
-				years = 5
-			}
-		}
-		else = { # Backup, just in case
-			add_character_modifier = {
-				modifier = HRT_edict_consular_taxation_3
-				years = 5
-			}
-		}
-
 		hidden_effect = {
+			every_vassal = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0002.tt
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 100
@@ -259,7 +200,7 @@ HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -296,84 +237,79 @@ HRT_edicts.0003 = { # Diplomatic Corps Activation Edict (Era 4)
 		name = HRT_edicts.0003.a
 		add_internal_flag = special
 
+		add_character_modifier = {
+			modifier = HRT_edict_diplomatic_corps
+			years = 5
+		}
 		if = {
 			limit = { HRT_has_centralization_0_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_diplomatic_corps_0
-				years = 5
-			}
 			faith:catholic.religious_head = {
 				add_opinion = {
-					target = root
-					modifier = HRT_edict_diplomatic_corps_opinion_0
+					target = scope:emperor
+					modifier = HRT_edict_diplomatic_corps_opinion
+					opinion = 5
 				}
 			}
 		}
 		else_if = {
 			limit = { HRT_has_centralization_1_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_diplomatic_corps_1
-				years = 5
-			}
 			faith:catholic.religious_head = {
 				add_opinion = {
-					target = root
-					modifier = HRT_edict_diplomatic_corps_opinion_1
+					target = scope:emperor
+					modifier = HRT_edict_diplomatic_corps_opinion
+					opinion = 10
 				}
 			}
 		}
 		else_if = {
 			limit = { HRT_has_centralization_2_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_diplomatic_corps_2
-				years = 5
-			}
 			faith:catholic.religious_head = {
 				add_opinion = {
-					target = root
-					modifier = HRT_edict_diplomatic_corps_opinion_2
+					target = scope:emperor
+					modifier = HRT_edict_diplomatic_corps_opinion
+					opinion = 15
 				}
 			}
 		}
 		else_if = {
 			limit = { HRT_has_centralization_3_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_diplomatic_corps_3
-				years = 5
-			}
 			faith:catholic.religious_head = {
 				add_opinion = {
-					target = root
-					modifier = HRT_edict_diplomatic_corps_opinion_3
+					target = scope:emperor
+					modifier = HRT_edict_diplomatic_corps_opinion
+					opinion = 20
 				}
 			}
 		}
 		else_if = {
 			limit = { HRT_has_centralization_4_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_diplomatic_corps_4
-				years = 5
-			}
 			faith:catholic.religious_head = {
 				add_opinion = {
-					target = root
-					modifier = HRT_edict_diplomatic_corps_opinion_4
+					target = scope:emperor
+					modifier = HRT_edict_diplomatic_corps_opinion
+					opinion = 25
 				}
 			}
 		}
 		else = { # Backup, just in case
-			add_character_modifier = {
-				modifier = HRT_edict_diplomatic_corps_3
-				years = 5
-			}
 			faith:catholic.religious_head = {
 				add_opinion = {
-					target = root
-					modifier = HRT_edict_diplomatic_corps_opinion_3
+					target = scope:emperor
+					modifier = HRT_edict_diplomatic_corps_opinion
+					opinion = 10
 				}
 			}
 		}
 		hidden_effect = {
+			every_vassal = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0003.tt
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 60
@@ -414,13 +350,13 @@ HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
 	trigger = {
 		HRT_is_emperor_trigger = yes
-		var:HRT_authority >= 80
+		var:HRT_authority >= 60
 		NOR = {
 			has_character_flag = HRT_edict_open
 			title:c_aachen = { has_variable = HRT_edict_consular_taxation_var }
@@ -449,53 +385,23 @@ HRT_edicts.0004 = { # Consular Taxation Directive (Era 2)
 	option = {
 		name = HRT_edicts.0004.a
 		add_internal_flag = special
-		
-		if = {
-			limit = { HRT_has_centralization_0_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_consular_taxation_0
-				years = 5
-			}
+		add_character_modifier = {
+			modifier = HRT_edict_consular_taxation
+			years = 5
 		}
-		else_if = {
-			limit = { HRT_has_centralization_1_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_consular_taxation_1
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_2_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_consular_taxation_2
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_3_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_consular_taxation_3
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_4_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_consular_taxation_4
-				years = 5
-			}
-		}
-		else = { # Backup, just in case
-			add_character_modifier = {
-				modifier = HRT_edict_consular_taxation_3
-				years = 5
-			}
-		}
-
 		hidden_effect = {
+			every_vassal = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0004.tt
+				}
+			}
 			change_variable = {
 				name = HRT_authority
-				subtract = 80
+				subtract = 60
 			}
 			title:c_aachen = {
 				set_variable = {
@@ -532,7 +438,7 @@ HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -567,50 +473,21 @@ HRT_edicts.0005 = { # Imperial Levy Conscription Order (Era 4)
 	option = {
 		name = HRT_edicts.0005.a
 		add_internal_flag = special
-
-		if = {
-			limit = { HRT_has_centralization_0_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_levy_conscription_0
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_1_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_levy_conscription_1
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_2_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_levy_conscription_2
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_3_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_levy_conscription_3
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_4_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_levy_conscription_4
-				years = 5
-			}
-		}
-		else = { # Backup, just in case
-			add_character_modifier = {
-				modifier = HRT_edict_levy_conscription_3
-				years = 5
-			}
+		add_character_modifier = {
+			modifier = HRT_edict_levy_conscription
+			years = 5
 		}
 
 		hidden_effect = {
+			every_vassal = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0005.tt
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 100
@@ -650,7 +527,7 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -689,61 +566,28 @@ HRT_edicts.0006 = { # Edict of Urban Rights and Privileges (Era 4)
 			modifier = HRT_edict_urban_rights
 			years = 5
 		}
-		every_realm_county = {
-			limit = {
-				tier = county
-				any_county_province = {
-					has_holding_type = city_holding
-				}
-			}
-			if = {
-				limit = { HRT_has_centralization_0_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_urban_rights_county_0
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_1_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_urban_rights_county_1
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_2_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_urban_rights_county_2
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_3_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_urban_rights_county_3
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_4_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_urban_rights_county_4
-					years = 5
-				}
-			}
-			else = { # Backup, just in case
-				add_county_modifier = {
-					modifier = HRT_edict_urban_rights_county_3
-					years = 5
-				}
-			}
-			change_county_control = -5
-		}
-		every_vassal = {
-			limit = { is_ai = no }
-			trigger_event = HRT_edicts.0012
-		}
+		custom_tooltip = HRT_edicts.0006.tt
 		hidden_effect = {
+			every_realm_county = {
+				limit = {
+					tier = county
+					any_county_province = { has_holding_type = city_holding }
+				}
+				add_county_modifier = {
+					modifier = HRT_edict_urban_rights_county
+					years = 5
+				}
+				change_county_control = -5
+			}
+			every_vassal = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0006.tt
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 75
@@ -783,7 +627,7 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -822,63 +666,38 @@ HRT_edicts.0007 = { # Border Defense Temporary Directive (Era 4)
 			modifier = HRT_edict_border_defense
 			years = 5
 		}
-		every_realm_county = {
-			limit = {
-				tier = county
-				any_neighboring_county = {
-					holder = {
-						NOT = { this = root }
-						liege = { NOT = { this = root } }
+		custom_tooltip = HRT_edicts.0007.tt
+		hidden_effect = {
+			every_realm_county = {
+				limit = {
+					tier = county
+					any_neighboring_county = {
+						exists = holder
+						holder = {
+							NOT = { this = scope:emperor }
+							liege ?= {
+								NOT = { this = scope:emperor }
+							}
+							top_liege ?= {
+								NOT = { this = scope:emperor }
+							}
+						}
 					}
 				}
-			}
-			if = {
-				limit = { HRT_has_centralization_0_trigger = yes } 
 				add_county_modifier = {
-					modifier = HRT_edict_border_defense_county_0
+					modifier = HRT_edict_border_defense_county
 					years = 5
 				}
 			}
-			else_if = {
-				limit = { HRT_has_centralization_1_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_border_defense_county_1
-					years = 5
+			every_vassal = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0007.tt
 				}
 			}
-			else_if = {
-				limit = { HRT_has_centralization_2_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_border_defense_county_2
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_3_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_border_defense_county_3
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_4_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_border_defense_county_4
-					years = 5
-				}
-			}
-			else = { # Backup, just in case
-				add_county_modifier = {
-					modifier = HRT_edict_border_defense_county_3
-					years = 5
-				}
-			}
-		}
-		every_vassal = {
-			limit = { is_ai = no }
-			trigger_event = HRT_edicts.0013
-		}
-		hidden_effect = {
 			change_variable = {
 				name = HRT_authority
 				subtract = 100
@@ -918,7 +737,7 @@ HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -953,53 +772,24 @@ HRT_edicts.0008 = { # Edict of Scholastic Advancement (Era 3)
 	option = {
 		name = HRT_edicts.0008.a
 		add_internal_flag = special
-
-		if = {
-			limit = { HRT_has_centralization_0_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_scholastic_advancement_0
-				years = 5
-			}
+		add_character_modifier = {
+			modifier = HRT_edict_scholastic_advancement
+			years = 5
 		}
-		else_if = {
-			limit = { HRT_has_centralization_1_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_scholastic_advancement_1
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_2_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_scholastic_advancement_2
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_3_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_scholastic_advancement_3
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_4_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_scholastic_advancement_4
-				years = 5
-			}
-		}
-		else = { # Backup, just in case
-			add_character_modifier = {
-				modifier = HRT_edict_scholastic_advancement_3
-				years = 5
-			}
-		}
-
-		every_vassal = {
-			trigger_event = HRT_edicts.0014
-		}
+		custom_tooltip = HRT_edicts.0008.tt
 		hidden_effect = {
+			every_vassal = {
+				send_interface_toast = {
+					type = event_toast_effect_good
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0008.tt
+					add_character_modifier = {
+						modifier = HRT_edict_scholastic_advancement_vassal
+						years = 5
+					}
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 50
@@ -1039,7 +829,7 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -1078,53 +868,27 @@ HRT_edicts.0009 = { # Edict of Imperial Works (Era 3)
 			modifier = HRT_edict_imperial_works
 			years = 5
 		}
-		every_realm_county = {
-			if = {
-				limit = { HRT_has_centralization_0_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_imperial_works_county_0
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_1_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_imperial_works_county_1
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_2_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_imperial_works_county_2
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_3_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_imperial_works_county_3
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_4_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_imperial_works_county_4
-					years = 5
-				}
-			}
-			else = { # Backup, just in case
-				add_county_modifier = {
-					modifier = HRT_edict_imperial_works_county_3
-					years = 5
-				}
-			}
-		}
-		every_vassal = {
-			trigger_event = HRT_edicts.0015
-		}
+		custom_tooltip = HRT_edicts.0009.tt.1
+		custom_tooltip = HRT_edicts.0009.tt.2
 		hidden_effect = {
+			every_realm_county = {
+				add_county_modifier = {
+					modifier = HRT_edict_imperial_works_county
+					years = 5
+				}
+			}
+			every_vassal = {
+				send_interface_toast = {
+					type = event_toast_effect_good
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0009.tt
+					add_character_modifier = {
+						modifier = HRT_edict_imperial_works_vassal
+						years = 5
+					}
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 50
@@ -1164,7 +928,7 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 		animation = throne_room_conversation_2
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 
@@ -1199,96 +963,26 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 	option = {
 		name = HRT_edicts.0010.a
 		add_internal_flag = special
-
-		if = {
-			limit = { HRT_has_centralization_0_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_ecclesiastical_patronage_0
-				years = 5
-			}
+		add_character_modifier = {
+			modifier = HRT_edict_ecclesiastical_patronage
+			years = 5
 		}
-		else_if = {
-			limit = { HRT_has_centralization_1_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_ecclesiastical_patronage_1
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_2_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_ecclesiastical_patronage_2
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_3_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_ecclesiastical_patronage_3
-				years = 5
-			}
-		}
-		else_if = {
-			limit = { HRT_has_centralization_4_trigger = yes } 
-			add_character_modifier = {
-				modifier = HRT_edict_ecclesiastical_patronage_4
-				years = 5
-			}
-		}
-		else = { # Backup, just in case
-			add_character_modifier = {
-				modifier = HRT_edict_ecclesiastical_patronage_3
-				years = 5
-			}
-		}
-
-		every_realm_county = {
-			if = {
-				limit = { HRT_has_centralization_0_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_ecclesiastical_patronage_county_0
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_1_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_ecclesiastical_patronage_county_1
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_2_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_ecclesiastical_patronage_county_2
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_3_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_ecclesiastical_patronage_county_3
-					years = 5
-				}
-			}
-			else_if = {
-				limit = { HRT_has_centralization_4_trigger = yes } 
-				add_county_modifier = {
-					modifier = HRT_edict_ecclesiastical_patronage_county_4
-					years = 5
-				}
-			}
-			else = { # Backup, just in case
-				add_county_modifier = {
-					modifier = HRT_edict_ecclesiastical_patronage_county_3
-					years = 5
-				}
-			}
-		}
-		every_vassal = {
-			trigger_event = HRT_edicts.0016
-		}
+		custom_tooltip = HRT_edicts.0010.tt
 		hidden_effect = {
+			every_realm_county = {
+				add_county_modifier = {
+					modifier = HRT_edict_ecclesiastical_patronage_county
+					years = 5
+				}
+			}
+			every_vassal = {
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					left_icon = scope:emperor
+					title = HRT_edict_issued.toast.t
+					custom_tooltip = HRT_edict_issued.0010.tt
+				}
+			}
 			change_variable = {
 				name = HRT_authority
 				subtract = 40
@@ -1319,109 +1013,6 @@ HRT_edicts.0010 = { # Edict of Ecclesiastical Patronage (Era 3)
 	}
 }
 
-# Notification Events
-HRT_edicts.0011 = { # Edict of Legal Unification
-	title = HRT_edict_legal_unification
-	desc = HRT_edicts.0011.desc
-	theme = crown
-
-	right_portrait = {
-		character = scope:emperor
-		animation = idle
-	}
-
-	option = {
-		name = HRT_edicts.ok # ok
-		add_character_modifier = {
-			modifier = HRT_edict_legal_unification_vassal
-			years = 5
-		}
-	}
-}
-
-HRT_edicts.0012 = { # Edict of Urban Rights and Privileges
-	title = HRT_edict_urban_rights
-	desc = HRT_edicts.0012.desc
-	theme = crown
-
-	right_portrait = {
-		character = scope:emperor
-		animation = idle
-	}
-
-	option = {
-		name = HRT_edicts.ok
-	}
-}
-
-HRT_edicts.0013 = { # Border Defense Temporary Directive
-	title = HRT_edict_border_defense
-	desc = HRT_edicts.0013.desc
-	theme = crown
-
-	right_portrait = {
-		character = scope:emperor
-		animation = idle
-	}
-
-	option = {
-		name = HRT_edicts.ok
-	}
-}
-
-HRT_edicts.0014 = { # Edict of Scholastic Advancement
-	title = HRT_edict_scholastic_advancement
-	desc = HRT_edicts.0014.desc
-	theme = crown
-
-	right_portrait = {
-		character = scope:emperor
-		animation = idle
-	}
-
-	option = {
-		name = HRT_edicts.ok
-		add_character_modifier = {
-			modifier = HRT_edict_scholastic_advancement_vassal
-			years = 5
-		}
-	}
-}
-
-HRT_edicts.0015 = { # Edict of Imperial Works
-	title = HRT_edict_imperial_works
-	desc = HRT_edicts.0015.desc
-	theme = crown
-
-	right_portrait = {
-		character = scope:emperor
-		animation = idle
-	}
-
-	option = {
-		name = HRT_edicts.ok
-		add_character_modifier = {
-			modifier = HRT_edict_imperial_works_vassal
-			years = 5
-		}
-	}
-}
-
-HRT_edicts.0016 = { # Edict of Ecclesiastical Patronage
-	title = HRT_edict_ecclesiastical_patronage
-	desc = HRT_edicts.0016.desc
-	theme = crown
-
-	right_portrait = {
-		character = scope:emperor
-		animation = idle
-	}
-
-	option = {
-		name = HRT_edicts.ok
-	}
-}
-
 # Proclaim Imperial Directive
 HRT_edicts.1001 = {
 	type = character_event
@@ -1434,7 +1025,7 @@ HRT_edicts.1001 = {
 		animation = throne_room_conversation_1
 	}
 	right_portrait = {
-		character = root
+		character = scope:emperor
 		animation = thinking
 	}
 

@@ -77,18 +77,11 @@
 						has_trait = COR_crowned_by_myself
 					}
 				}
-				if = {
-					limit = { has_variable = COR_coronator }
-					remove_variable = COR_coronator
-				}
-				if = {
-					limit = {
-						NOT = { has_variable = COR_years_reigned }
-					}
-					set_variable = {
-						name = COR_years_reigned
-						value = 0
-					}
+				remove_character_flag ?= COR_flag_preparing_coronation
+				remove_variable ?= COR_coronation_request_cooldown
+				set_variable = {
+					name = COR_years_reigned
+					value = 0
 				}
 				if = {
 					limit = { has_game_rule = COR_crowns_taketh }
@@ -140,15 +133,25 @@
 			}
 
 			#2.5 Reichsstadt
-			title:c_aachen = {
-				if = {
-					limit = { has_variable_list = HRT_reichsstaedte }
+			if = {
+				limit = {
+					title:c_aachen = { has_variable_list = HRT_reichsstaedte }
+				}
+				title:c_aachen = {
 					every_in_list = {
 						variable = HRT_reichsstaedte
 						set_variable = {
 							name = HRT_reichsstadt_development
 							value = development_level
 						}
+					}
+				}
+				culture = {
+					if = {
+						limit = {
+							NOT = { has_innovation = innovation_HRT_imperial_charter }
+						}
+						add_innovation = innovation_HRT_imperial_charter
 					}
 				}
 			}
@@ -229,15 +232,15 @@
 				remove_variable = HRT_vopinion
 				remove_variable = HRT_centralization_baseline
 
-				#remove_character_modifier ?= HRT_edict_legal_unification
-				#remove_character_modifier ?= HRT_edict_chivalric_excellence
-				#remove_character_modifier ?= HRT_edict_diplomatic_corps
-				#remove_character_modifier ?= HRT_edict_consular_taxation
-				#remove_character_modifier ?= HRT_edict_urban_rights
-				#remove_character_modifier ?= HRT_edict_border_defense
-				#remove_character_modifier ?= HRT_edict_scholastic_advancement
-				#remove_character_modifier ?= HRT_edict_imperial_works
-				#remove_character_modifier ?= HRT_edict_ecclesiastical_patronage
+				remove_character_modifier ?= HRT_edict_legal_unification
+				remove_character_modifier ?= HRT_edict_chivalric_excellence
+				remove_character_modifier ?= HRT_edict_diplomatic_corps
+				remove_character_modifier ?= HRT_edict_consular_taxation
+				remove_character_modifier ?= HRT_edict_urban_rights
+				remove_character_modifier ?= HRT_edict_border_defense
+				remove_character_modifier ?= HRT_edict_scholastic_advancement
+				remove_character_modifier ?= HRT_edict_imperial_works
+				remove_character_modifier ?= HRT_edict_ecclesiastical_patronage
 
 				remove_character_modifier ?= HRT_edict_proclaim_directive_diplomacy
 				remove_character_modifier ?= HRT_edict_proclaim_directive_martial
@@ -659,7 +662,7 @@
 										}
 									}
 								}
-								HRT_assign_centralization_character_modifier_effect = yes
+								HRT_assign_centralization_modifier_effect = yes
 								send_interface_toast = {
 									type = event_toast_effect_bad
 									left_icon = this
@@ -787,7 +790,7 @@
 									}
 								}
 							}
-							HRT_assign_centralization_character_modifier_effect = yes
+							HRT_assign_centralization_modifier_effect = yes
 							send_interface_toast = {
 								type = event_toast_effect_bad
 								left_icon = this
@@ -816,7 +819,7 @@
 									}
 								}
 							}
-							HRT_assign_centralization_character_modifier_effect = yes
+							HRT_assign_centralization_modifier_effect = yes
 							send_interface_toast = {
 								type = event_toast_effect_good
 								left_icon = this
@@ -1172,6 +1175,7 @@
 						}
 					}
 					else = { remove_variable = HRT_authority_years_without_tour }
+
 					# 3.1 Centralization
 					set_variable = {
 						name = HRT_centralization_baseline
@@ -1344,22 +1348,6 @@
 						}
 						location = { save_scope_as = location }
 						trigger_event = HRT.1102
-					}
-				}
-			}
-		}
-	}
-	effect_group = {
-		weeks = 1
-		triggered_effect = {
-			trigger = {
-				always = yes
-			}
-			effect = {
-				title:c_aachen = {
-					change_variable = {
-						name = HRT_centralization
-						add = 20
 					}
 				}
 			}

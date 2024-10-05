@@ -734,8 +734,8 @@ COR_ceremony.0003 = {
 			}
 			remove_variable = COR_coronator
 		}
-		remove_variable = COR_coronation_request_cooldown
-		remove_character_flag = COR_flag_preparing_coronation
+		remove_variable ?= COR_coronation_request_cooldown
+		remove_character_flag ?= COR_flag_preparing_coronation
 	}
 }
 
@@ -2603,7 +2603,7 @@ COR_ceremony.0311 = {
 	}
 
 	immediate = {
-		remove_character_flag = COR_flag_preparing_coronation
+		remove_character_flag ?= COR_flag_preparing_coronation
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
 		var:COR_coronator ?= {

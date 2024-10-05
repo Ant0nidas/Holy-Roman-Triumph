@@ -362,7 +362,7 @@ COR_uncrowned_legitimacy_effect = {
 			is_valid_for_legitimacy_change = yes
 		}
 		if = {
-			limit = { var:COR_years_reigned = 1 }
+			limit = { var:COR_years_reigned = 5 }
 			send_interface_toast = {
 				type = event_toast_effect_bad
 				title = legitimacy_loss_toast
@@ -374,7 +374,7 @@ COR_uncrowned_legitimacy_effect = {
 		else_if = {
 			limit = {
 				OR = {
-					var:COR_years_reigned = 2
+					var:COR_years_reigned = 10
 					var:COR_years_reigned = 15
 				}
 			}
@@ -389,7 +389,7 @@ COR_uncrowned_legitimacy_effect = {
 		else_if = {
 			limit = {
 				OR = {
-					var:COR_years_reigned = 3
+					var:COR_years_reigned = 20
 					var:COR_years_reigned = 25
 				}
 			}
@@ -402,7 +402,7 @@ COR_uncrowned_legitimacy_effect = {
 			}
 		}
 		else_if = {
-			limit = { var:COR_years_reigned = 4 }
+			limit = { var:COR_years_reigned = 30 }
 			send_interface_toast = {
 				type = event_toast_effect_bad
 				title = legitimacy_loss_toast

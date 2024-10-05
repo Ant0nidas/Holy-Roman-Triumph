@@ -146,7 +146,7 @@ HRT.0003 = { # Barbarossa
 	}
 }
 
-#HRT.0010 = { # Generic
+#HRT.0009 = { # Generic
 #	type = character_event
 #	title = HRT.0001.t
 #	desc = HRT.0010.desc
@@ -159,6 +159,26 @@ HRT.0003 = { # Barbarossa
 #		name = HRT.0001.a
 #	}
 #}
+
+HRT.0010 = { # Maintenance Pulse
+	scope = culture
+	hidden = yes
+
+	immediate = {
+		title:e_hre.holder ?= {
+			create_story = HRT_emperor_story
+			if = {
+				limit = {
+					NOT = { has_character_flag = HRT_italienzug }
+				}
+				trigger_event = {
+					id = HRT.1001
+					days = { 7 14 }
+				}
+			}
+		}
+	}
+}
 
 ##on_title_destroyed
 #HRT.0006 = { # HRE title is destroyed
@@ -1939,6 +1959,6 @@ HRT.9101 = {
 			name = HRT_centralization_baseline
 			value = HRT_centralization_baseline_value
 		}
-		HRT_assign_centralization_character_modifier_effect = yes
+		HRT_assign_centralization_modifier_effect = yes
 	}
 }

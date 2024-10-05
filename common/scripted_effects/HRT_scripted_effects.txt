@@ -833,45 +833,30 @@ HRT_disable_effect = {
 }
 
 # 3.1 Centralization
-HRT_assign_centralization_character_modifier_effect = {
+HRT_assign_centralization_modifier_effect = {
+	remove_character_modifier ?= HRT_centralization_0_mod
+	remove_character_modifier ?= HRT_centralization_1_mod
+	remove_character_modifier ?= HRT_centralization_2_mod
+	remove_character_modifier ?= HRT_centralization_3_mod
+	remove_character_modifier ?= HRT_centralization_4_mod
 	if = {
 		limit = { HRT_has_centralization_0_trigger = yes }
 		add_character_modifier = HRT_centralization_0_mod
-		remove_character_modifier ?= HRT_centralization_1_mod
-		remove_character_modifier ?= HRT_centralization_2_mod
-		remove_character_modifier ?= HRT_centralization_3_mod
-		remove_character_modifier ?= HRT_centralization_4_mod
 	}
 	else_if = {
 		limit = { HRT_has_centralization_1_trigger = yes }
 		add_character_modifier = HRT_centralization_1_mod
-		remove_character_modifier ?= HRT_centralization_0_mod
-		remove_character_modifier ?= HRT_centralization_2_mod
-		remove_character_modifier ?= HRT_centralization_3_mod
-		remove_character_modifier ?= HRT_centralization_4_mod
 	}
 	else_if = {
 		limit = { HRT_has_centralization_2_trigger = yes }
 		add_character_modifier = HRT_centralization_2_mod
-		remove_character_modifier ?= HRT_centralization_1_mod
-		remove_character_modifier ?= HRT_centralization_0_mod
-		remove_character_modifier ?= HRT_centralization_3_mod
-		remove_character_modifier ?= HRT_centralization_4_mod
 	}
 	else_if = {
 		limit = { HRT_has_centralization_3_trigger = yes }
 		add_character_modifier = HRT_centralization_3_mod
-		remove_character_modifier ?= HRT_centralization_1_mod
-		remove_character_modifier ?= HRT_centralization_2_mod
-		remove_character_modifier ?= HRT_centralization_0_mod
-		remove_character_modifier ?= HRT_centralization_4_mod
 	}
 	else_if = {
 		limit = { HRT_has_centralization_4_trigger = yes }
 		add_character_modifier = HRT_centralization_4_mod
-		remove_character_modifier ?= HRT_centralization_1_mod
-		remove_character_modifier ?= HRT_centralization_2_mod
-		remove_character_modifier ?= HRT_centralization_3_mod
-		remove_character_modifier ?= HRT_centralization_0_mod
 	}
 }

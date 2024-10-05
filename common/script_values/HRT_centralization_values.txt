@@ -260,15 +260,21 @@ HRT_centralization_baseline_difference = {
 }
 
 HRT_centralization_progressbar_max_value = {
-	value = 200 #80
+	value = 80
 	if = {
 		limit = {
 			title:c_aachen.var:HRT_emperor ?= {
-				culture = { has_innovation = innovation_baliffs }
 				OR = {
-					has_realm_law = crown_authority_1
-					has_realm_law = crown_authority_2
-					has_realm_law = crown_authority_3
+					AND = {
+						culture = { has_innovation = innovation_baliffs }
+						OR = {
+							has_realm_law = crown_authority_1
+							has_realm_law = crown_authority_2
+							has_realm_law = crown_authority_3
+						}
+					}
+					this = character:1316 # Heinrich IV
+					this = character:212501 # Friedrich "Barbarossa"
 				}
 			}
 		}
@@ -277,12 +283,15 @@ HRT_centralization_progressbar_max_value = {
 	if = {
 		limit = {
 			title:c_aachen.var:HRT_emperor ?= {
-				AND = {
-					culture = { has_innovation = innovation_baliffs }
-					OR = {
-						has_realm_law = crown_authority_2
-						has_realm_law = crown_authority_3
+				OR = {
+					AND = {
+						culture = { has_innovation = innovation_baliffs }
+						OR = {
+							has_realm_law = crown_authority_2
+							has_realm_law = crown_authority_3
+						}
 					}
+					this = character:212501 # Friedrich "Barbarossa"
 				}
 			}
 		}
@@ -291,17 +300,14 @@ HRT_centralization_progressbar_max_value = {
 	if = {
 		limit = {
 			title:c_aachen.var:HRT_emperor ?= {
-				OR = {
-					AND = {
-						culture = {
-							AND = {
-								has_innovation = innovation_baliffs
-								has_innovation = innovation_court_officials
-							}
+				AND = {
+					culture = {
+						AND = {
+							has_innovation = innovation_baliffs
+							has_innovation = innovation_court_officials
 						}
-						has_realm_law = crown_authority_3
 					}
-					this = character:212501 # Friedrich "Barbarossa"
+					has_realm_law = crown_authority_3
 				}
 			}
 		}
@@ -321,6 +327,15 @@ HRT_centralization_baseline_difference_limit = {
 HRT_centralization_reduction_months_left = {
 	value = 6
 	subtract = title:c_aachen.var:HRT_emperor.var:HRT_centralization_reduction_imminent
+}
+
+HRT_edict_centralization_scale_value = {
+	value = 0
+	if =		{ limit = { HRT_has_centralization_0_trigger = yes } add = 1 }
+	else_if =	{ limit = { HRT_has_centralization_1_trigger = yes } add = 2 }
+	else_if =	{ limit = { HRT_has_centralization_2_trigger = yes } add = 3 }
+	else_if = 	{ limit = { HRT_has_centralization_3_trigger = yes } add = 4 }
+	else_if =	{ limit = { HRT_has_centralization_4_trigger = yes } add = 5 }
 }
 
 # GUI

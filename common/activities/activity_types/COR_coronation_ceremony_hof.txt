@@ -308,7 +308,12 @@
 		}
 
 		# Remove flag to re-enable Organize a Coronation Ceremony Decision
-		scope:host = { remove_character_flag = COR_flag_preparing_coronation }
+		scope:host = {
+			if = {
+				limit = { is_alive = yes}
+				remove_character_flag ?= COR_flag_preparing_coronation
+			}
+		}
 
 		#Accolades' modifiers' removal
 		if = {
@@ -506,33 +511,33 @@
 					desc = activity_cost_scale_by_era_desc
 				}
 				# OPTIONS
-				add = { # Splendor Option
+				add = { # Expedition Option
 					value = 0
-					add = 0 # Private Cost
-					add = minor_gold_value # Dignified Cost
-					add = major_gold_value # Extravagant Cost
-					divide = 3
+					#add = tiny_gold_value # Small Cost
+					add = medium_gold_value # Normal Cost
+					#add = major_gold_value # Grand Cost
+					#divide = 3
 				}
 				add = { # Entertainment
 					value = 0
-					add = 0 # Bad Option Cost
+					#add = 0 # Bad Option Cost
 					add = minor_gold_value # Normal Option Cost Cost
-					add = major_gold_value # Good Option Cost
-					divide = 3
+					#add = major_gold_value # Good Option Cost
+					#divide = 3
 				}
 				add = { # Food
 					value = 0
-					add = 0 # Bad Option Cost
+					#add = 0 # Bad Option Cost
 					add = tiny_gold_value # Normal Option Cost
-					add = medium_gold_value # Good Option Cost
-					divide = 3
+					#add = medium_gold_value # Good Option Cost
+					#divide = 3
 				}
 				add = { # Decoration
-					value = 0
+					#value = 0
 					add = tiny_gold_value # Bad Option Cost
-					add = medium_gold_value # Normal Option Cost
-					add = major_gold_value # Good Option Cost
-					divide = 3
+					#add = medium_gold_value # Normal Option Cost
+					#add = major_gold_value # Good Option Cost
+					#divide = 3
 				}
 				# Make it a multiple of 5 (rounded up)
 				divide = 5
