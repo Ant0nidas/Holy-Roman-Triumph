@@ -1451,7 +1451,24 @@
 		}
 	}
 
-	on_leave_travel_state = {
+	on_enter_travel_state = {
+		scope:host.current_travel_plan = {
+			set_variable = {
+				name = HRT_italienzug
+				value = yes
+			}
+			every_entourage_character = {
+				limit = {
+					can_be_knight_trigger = {
+						ARMY_OWNER = scope:host
+					}
+				}
+				add_character_flag = wear_armor
+			}
+		}
+	}
+
+	on_enter_active_state = {
 		scope:host.current_travel_plan = {
 			every_entourage_character = {
 				if = {
@@ -1463,23 +1480,6 @@
 				}
 			}
 		}
-	}
-
-	on_enter_travel_state = {
-			scope:host.current_travel_plan = {
-				set_variable = {
-					name = HRT_italienzug
-					value = yes
-				}
-				every_entourage_character = {
-					limit = {
-						can_be_knight_trigger = {
-							ARMY_OWNER = scope:host
-						}
-					}
-					add_character_flag = wear_armor
-				}
-			}
 	}
 
 	on_complete = {
@@ -1994,7 +1994,7 @@
 		}
 
 		retainer = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {
@@ -2050,7 +2050,7 @@
 		}
 
 		retainer = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {
@@ -2125,7 +2125,7 @@
 		}
 		
 		travel_host = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {
@@ -2151,7 +2151,7 @@
 		}
 
 		officiant_traveling = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {
@@ -2216,7 +2216,7 @@
 		}
 
 		retainer = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {
@@ -2268,7 +2268,7 @@
 		}
 
 		retainer = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {

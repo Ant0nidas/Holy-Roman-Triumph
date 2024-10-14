@@ -3330,10 +3330,7 @@ COR_ceremony.0322 = {
 		remove_variable = COR_years_reigned
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
-		if = {
-			limit = { has_character_modifier = COR_uncrowned_modifier }
-			remove_all_character_modifier_instances = COR_uncrowned_modifier
-		}
+		remove_character_modifier ?= COR_uncrowned_modifier
 		scope:COR_coronator = {
 			remove_list_variable = {
 				name = COR_coronation_targets
@@ -3566,7 +3563,13 @@ COR_ceremony.0326 = {
 	}
 	right_portrait = {
 		character = root
-		animation = personality_honorable
+		triggered_animation = {
+			trigger = {
+				exists = global_var:cfp_is_loaded
+			}
+			animation = cfp_globus
+		}
+		animation = scepter
 	}
 
 	immediate = {
@@ -3720,7 +3723,13 @@ COR_ceremony.0327 = {
 	}
 	right_portrait = {
 		character = scope:COR_ruler
-		animation = personality_honorable
+		triggered_animation = {
+			trigger = {
+				exists = global_var:cfp_is_loaded
+			}
+			animation = cfp_globus
+		}
+		animation = scepter
 	}
 
 	immediate = {
@@ -7165,10 +7174,7 @@ COR_ceremony.7322 = {
 		remove_character_flag = COR_flag_preparing_coronation
 		remove_variable = COR_years_reigned
 		remove_variable = COR_coronation_request_cooldown
-		if = {
-			limit = { has_character_modifier = COR_uncrowned_modifier }
-			remove_all_character_modifier_instances = COR_uncrowned_modifier
-		}
+		remove_character_modifier ?= COR_uncrowned_modifier
 		scope:COR_coronator = {
 			remove_list_variable = {
 				name = COR_coronation_targets

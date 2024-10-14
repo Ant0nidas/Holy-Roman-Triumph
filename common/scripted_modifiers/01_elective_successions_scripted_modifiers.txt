@@ -418,6 +418,7 @@ elector_voting_pattern_circumstances_feudal_elective_modifier = {
 		OR = {
 			government_has_flag = government_is_feudal
 			government_has_flag = government_is_republic
+			government_has_flag = government_is_administrative
 		}
 		scope:candidate = {
 			OR = {

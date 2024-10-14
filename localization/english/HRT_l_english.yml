@@ -142,7 +142,7 @@
  game_concept_HRT_imperial_authority_desc: "Imperial Authority represents the amount of control the Emperor exerts over his [vassals|E] and is an extension to his [legitimacy|E]. Authority is needed to perform various actions, such as issuing [HRT_imperial_edicts|E] and proclaiming [HRT_imperial_directives|E] within the Roman Empire. The rate at which you gain or lose Imperial Authority is displayed as [HRT_imperial_authority_change|E] on the dynamic coat of arms in the Imperial Succession window, which is accessed by pressing the Reichskrone that appears above the Realm icon (F2) after opening it."
  
  game_concept_HRT_imperial_authority_change: "Monthly Authority Change"
- game_concept_HRT_imperial_authority_change_desc: "The rate at which you gain or lose [HRT_imperial_authority|E]. Capped at +5 and -5 per month before [HRT_imperial_edict|E] effects. In addition to the factors displayed in the tooltip, you gain Imperial Authority by winning [wars|E] depending on the opponent's military strength and lose a portion by losing wars respectively."
+ game_concept_HRT_imperial_authority_change_desc: "The rate at which you gain or lose [HRT_imperial_authority|E]. Capped at +5 and -5 per month. In addition to the factors displayed in the tooltip, you gain Imperial Authority by winning [wars|E] depending on the opponent's military strength and lose a portion by losing wars respectively."
  
  game_concept_HRT_imperial_territory: "Imperial Territory"
  game_concept_HRT_imperial_territory_desc: "The Imperial Core Territories include the [kingdoms|E] of #V East Francia/Germany#!, #V Bavaria#!, #V Lotharingia#! and #V Frisia#!."
@@ -208,7 +208,7 @@
  
  game_concept_HRT_centralization_level: "Centralization Level"
  game_concept_HRT_centralization_levels: "Centralization Levels"
- game_concept_HRT_centralization_level_desc: "$game_concept_HRT_centralization_level$ is the current state of [HRT_centralization|E]. Active level changes as Centralization increases or decreases, and each level increases the effectiveness of [HRT_imperial_edicts|E]."
+ game_concept_HRT_centralization_level_desc: "$game_concept_HRT_centralization_level$ is the current state of [HRT_centralization|E]. Active level changes as Centralization increases or decreases, and each level increases the effectiveness of [HRT_imperial_edicts|E].\n\nIt cannot fall below the currently active [imperial_bureaucracy|E] [law|E] after the Empire has adopted an [administrative|E] [government|E]."
  
  game_concept_HRT_centralization_baseline: "Centralization Baseline"
  game_concept_HRT_baseline: "Baseline"
@@ -670,7 +670,7 @@
  
  #Character Interaction
  HRT_grant_imperial_city_status_interaction: "Grant Imperial City Status"
- HRT_grant_imperial_city_status_desc: "Promote [recipient.GetCapitalLocation.GetTitle.GetNameNoTierNoTooltip] to a [Glossary('Reichsstadt','game_concept_HRT_reichsstadt_desc')] and appoint [recipient.GetShortUINameNoTooltip] as its governor, granting [recipient.GetHerHim] autonomy and direct vassalage under you"
+ HRT_grant_imperial_city_status_desc: "Promote [recipient.GetCapitalLocation.GetTitle.GetNameNoTierNoTooltip] to a [Glossary('Reichsstadt','game_concept_HRT_reichsstadt_desc')] and appoint [recipient.GetShortUINameNoTooltip] as its governor, granting [recipient.GetHerHim] autonomy and direct vassalage under you."
  HRT_grant_imperial_city_status_interaction_authority_req: "You need #V [EmptyScope.ScriptValue('HRT_maximum_authority_value')|0]#! [HRT_imperial_authority|E]"
  HRT_county_must_have_culture_tt: "[CHARACTER.GetPrimaryTitle.GetNameNoTooltip] must be of a [culture|E] that has the $innovation_HRT_imperial_charter$ innovation."
  NOT_HRT_too_many_republics_tt: "You already have 7 Free Imperial Cities"
@@ -684,9 +684,10 @@
  
  #Flavorization (by Uber - KoH)
  free_imperial_city_government: "Free Imperial City"
+ free_imperial_city_government_with_icon: "@government_type_republic! $free_imperial_city_government$"
  free_imperial_city_government_adjective:0 "Imperial City"
  free_imperial_city_government_realm:0 "Free Imperial City"
- free_imperial_city_government_desc:0 "This is a Free Imperial City that has been granted special rights and privileges by the Emperor himself!"
+ free_imperial_city_government_desc:0 "\nThis is a Free Imperial City that has been granted special rights and privileges by the Emperor himself!"
  baron_free_city_republic_male:0 "$baron_republic_male$"
  baron_free_city_republic_female:0 "$baron_republic_female$"
  barony_free_city_republic:0 "Free City"
@@ -723,10 +724,15 @@
  # 3.1 centralization
  #Modifiers
  HRT_centralization_0_mod: "Centralization: $HRT_centralization_0$"
+ HRT_centralization_0_mod_desc: "$HRT_centralization_0_desc$"
  HRT_centralization_1_mod: "Centralization: $HRT_centralization_1$"
+ HRT_centralization_1_mod_desc: "$HRT_centralization_1_desc$"
  HRT_centralization_2_mod: "Centralization: $HRT_centralization_2$"
+ HRT_centralization_2_mod_desc: "$HRT_centralization_2_desc$"
  HRT_centralization_3_mod: "Centralization: $HRT_centralization_3$"
+ HRT_centralization_3_mod_desc: "$HRT_centralization_3_desc$"
  HRT_centralization_4_mod: "Centralization: $HRT_centralization_4$"
+ HRT_centralization_4_mod_desc: "$HRT_centralization_4_desc$"
  
  #Council Tasks
  #chancellor

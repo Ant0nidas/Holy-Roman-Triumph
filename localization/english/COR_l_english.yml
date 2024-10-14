@@ -48,7 +48,8 @@
  
  #Modifiers
  COR_uncrowned_modifier: "Uncrowned"
- COR_uncrowned_modifier_desc: "A Catholic ruler who has not been officially crowned by a member of the Church will never be fully accepted by his vassals as legitimate.\nThe more years he wastes before being anointed, the more likely his vassals will be to doubt the validity of his divine right to rule."
+ COR_uncrowned_modifier_desc: "A Catholic ruler who has not been officially crowned by a member of the Church will never be fully accepted by his vassals as legitimate.\nThe more years they waste before being anointed, the more likely their vassals will be to doubt the validity of their divine right to rule."
+ COR_MODIFIER_DEFINITION_VALUE_PER_UNCROWNED_YEAR: " \t#weak Increase per year#!"
  
  COR_ceremony_gracious_host_modifier: "$gwedding_gracious_host_modifier$"
  COR_ceremony_gracious_host_modifier_desc: "This character has hosted a successful [GetActivityType( 'COR_activity_coronation_ceremony' ).GetName]."

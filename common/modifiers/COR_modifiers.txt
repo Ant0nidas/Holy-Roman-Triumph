@@ -1,8 +1,18 @@
 ﻿COR_uncrowned_modifier = {
 	icon = prestige_negative
 	vassal_opinion = -1
-	stacking = yes
+	scale = {
+		value = COR_uncrowned_scale_value
+		desc = COR_MODIFIER_DEFINITION_VALUE_PER_UNCROWNED_YEAR
+		display_mode = scaled
+	}
 }
+
+#COR_uncrowned_modifier = {
+#	icon = prestige_negative
+#	vassal_opinion = -1
+#	stacking = yes
+#}
 
 # Ceremony
 COR_ceremony_gracious_host_modifier = {

@@ -69,7 +69,7 @@
  #HRT_edicts.0001.t: "Edict of Legal Unification"
  HRT_edicts.0001.desc: "As I sit upon my throne, the weight of the Empire's disparate laws and customs weighs heavily upon my mind. It is clear to me that to forge a stronger, more united Empire, these fractured systems must be melded into one.\n\nToday, I resolve to issue the #bold $HRT_edict_legal_unification$#!. This decree will standardize legal practices across the Empire, bringing consistency and fairness to all my subjects.\n\nSome may view this as an overreach of my imperial authority, a challenge to local autonomy. But I see it as a necessity for the greater good of the Empire.\n\nLet this edict be the cornerstone of a more just and unified Empire. Let it be known that from this day forth, the law of the land is one law, under my guidance, for all."
  HRT_edicts.0001.a: "By Imperial Decree, let it be so!"
- HRT_edicts.0001.tt: "Every [vassal|E]:\n$EFFECT_LIST_BULLET$Gains the [GetModifier('HRT_edict_legal_unification_vassal').GetNameWithTooltip] [character|E] [modifier|E] for #V 5 years#!"
+ HRT_edicts.0001.tt: "Every [vassal|E]:\n$EFFECT_LIST_BULLET$Gains [GetModifier('HRT_edict_legal_unification_vassal').GetNameWithTooltip] for #V 5 years#!"
  HRT_edicts.0001.b: "On second thought, this might not be the appropiate time."
  
  #HRT_edicts.0002.t: "Imperial Decree of Chivalric Excellence"
@@ -95,13 +95,13 @@
  #HRT_edicts.0006.t: "Edict of Urban Rights and Privileges"
  HRT_edicts.0006.desc: "Recognizing the burgeoning importance of our cities and towns, I hereby issue the #bold $HRT_edict_urban_rights$#!. This proclamation will empower urban centers, granting them greater autonomy and fostering their development.\n\nThrough this edict, our towns and cities shall thrive as centers of commerce, culture, and innovation. We shall see an era of unprecedented growth and prosperity within our urban landscapes.\n\nWhile granting these privileges may temporarily reduce direct imperial oversight, the long-term benefits of a flourishing urban society will undoubtedly strengthen the fabric of the Empire.\n\nLet our cities be beacons of progress and prosperity, under the wise guidance of our rule."
  HRT_edicts.0006.a: "Elevate our cities to new heights!"
- HRT_edicts.0006.tt: "Every Imperial [county|E]:\n$EFFECT_LIST_BULLET$Gains the [GetModifier('HRT_edict_urban_rights_county').GetNameWithTooltip] [modifier|E] for #V 5 years#!\n$EFFECT_LIST_BULLET$[control|E]: #N -5#!"
+ HRT_edicts.0006.tt: "Every Imperial [county|E]:\n$EFFECT_LIST_BULLET$Gains [GetModifier('HRT_edict_urban_rights_county').GetNameWithTooltip] for #V 5 years#!\n$EFFECT_LIST_BULLET$[control|E]: #N -5#!"
  HRT_edicts.0006.b: "Are we ready for such a change?"
  
  #HRT_edicts.0007.t: "Border Defense Temporary Directive"
  HRT_edicts.0007.desc: "In these times of uncertainty and external threats, the fortification of our borders is imperative. I thus proclaim the #bold $HRT_edict_border_defense$#!, focusing our resources on the security of the Empire's frontiers.\n\nThis directive will strengthen our garrisons and bolster defenses along our borders. We must be vigilant and prepared to repel any incursions that seek to disrupt the peace and order of our realm.\n\nThough this heightened state of readiness demands significant effort and resources, the protection of our people and lands justifies this noble endeavor.\n\nUnder this directive, let our borders stand unyielding, a testament to the strength and resolve of our Empire."
  HRT_edicts.0007.a: "Secure every inch of our territory!"
- HRT_edicts.0007.tt: "Every Imperial border [county|E]:\n$EFFECT_LIST_BULLET$Gains the [GetModifier('HRT_edict_border_defense_county').GetNameWithTooltip] [modifier|E] for #V 5 years#!"
+ HRT_edicts.0007.tt: "Every Imperial border [county|E]:\n$EFFECT_LIST_BULLET$Gains [GetModifier('HRT_edict_border_defense_county').GetNameWithTooltip] for #V 5 years#!"
  HRT_edicts.0007.b: "We must consider our resources carefully."
 
  #HRT_edicts.0008.t: "Edict of Scholastic Advancement"
@@ -113,14 +113,14 @@
  #HRT_edicts.0009.t: "Edict of Imperial Works"
  HRT_edicts.0009.desc: "To fortify the sinews of our great Empire, I proclaim the #bold $HRT_edict_imperial_works$#! This ambitious initiative calls for widespread construction and improvement of our critical infrastructure – roads, bridges, and fortifications.\n\nThis edict will enhance the connectivity and defense of our realm, facilitating trade and troop movement while securing our people against external threats. Our cities and towns shall also witness a surge in development, becoming bastions of prosperity and safety.\n\nThough this grand undertaking requires substantial investment and may slightly burden our treasuries, the enhanced infrastructure will be a lasting testament to our foresight and dedication to the Empire's future.\n\nLet us build a legacy in stone and mortar, a foundation for an enduring and prosperous realm."
  HRT_edicts.0009.a: "Let us build for a stronger future!"
- HRT_edicts.0009.tt.1: "Every [vassal|E]:\n$EFFECT_LIST_BULLET$Gains the [GetModifier('HRT_edict_imperial_works_vassal').GetNameWithTooltip] [character|E] [modifier|E] for #V 5 years#!"
- HRT_edicts.0009.tt.2: "Every Imperial [county|E]:\n$EFFECT_LIST_BULLET$Gains the [GetModifier('HRT_edict_imperial_works_county').GetNameWithTooltip] [modifier|E] for #V 5 years#!"
+ HRT_edicts.0009.tt.1: "Every [vassal|E]:\n$EFFECT_LIST_BULLET$Gains [GetModifier('HRT_edict_imperial_works_vassal').GetNameWithTooltip] for #V 5 years#!"
+ HRT_edicts.0009.tt.2: "Every Imperial [county|E]:\n$EFFECT_LIST_BULLET$Gains [GetModifier('HRT_edict_imperial_works_county').GetNameWithTooltip] for #V 5 years#!"
  HRT_edicts.0009.b: "Is the Empire ready for such a commitment?"
  
  #HRT_edicts.0010.t: "Edict of Ecclesiastical Patronage"
  HRT_edicts.0010.desc: "In recognition of the profound role the Church plays in the spiritual and cultural life of our Empire, I hereby enact the #bold $HRT_edict_ecclesiastical_patronage$#! This decree commits our resources to the flourishing of the Church's presence in our lands.\n\nWe shall see the construction and enhancement of churches and monasteries, the commissioning of sacred artworks, and the establishment of institutions for religious learning. Such patronage will not only elevate our piety but also reinforce the moral foundation of our rule.\n\nLet this edict be a testament to our devotion and a blessing upon our reign."
  HRT_edicts.0010.a: "Let faith and culture prosper under our guidance!"
- HRT_edicts.0010.tt: "Every Imperial [county|E]:\n$EFFECT_LIST_BULLET$Gains the [GetModifier('HRT_edict_ecclesiastical_patronage_county').GetNameWithTooltip] [modifier|E] for #V 5 years#!"
+ HRT_edicts.0010.tt: "Every Imperial [county|E]:\n$EFFECT_LIST_BULLET$Gains [GetModifier('HRT_edict_ecclesiastical_patronage_county').GetNameWithTooltip] for #V 5 years#!"
  HRT_edicts.0010.b: "Perhaps our focus should lie elsewhere."
  
  #Notification Toasts, formerly Events

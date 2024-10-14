@@ -388,7 +388,10 @@ demand_imperial_subjugation_interaction = {
 			sub_realm_size < scope:actor.sub_realm_size
 			# they are catholic and feudal
 			faith = faith:catholic
-			government_has_flag = government_is_feudal
+			OR = {
+				government_has_flag = government_is_feudal
+				government_has_flag = government_is_administrative
+			}
 			NOR = {
 				this = scope:actor
 				government_has_flag = can_not_be_vassal_or_liege

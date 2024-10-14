@@ -577,7 +577,7 @@
 	window_characters = {
 
 		treasure_hunter = {
-			camera = camera_body
+			camera = camera_event_right
 			
 			effect = {
 				every_attending_character = {
@@ -615,7 +615,7 @@
 		}
 
 		treasure_hunter = {
-			camera = camera_body
+			camera = camera_event_center
 			
 			effect = {
 				every_attending_character = {
@@ -653,7 +653,7 @@
 		}
 		
 		host = {
-			camera = camera_body
+			camera = camera_event_center
 			
 			effect = {
 				if = {
@@ -672,7 +672,7 @@
 		}
 		
 		travel_host = {
-			camera = camera_body
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {
@@ -693,7 +693,7 @@
 		}
 
 		treasure_hunter = {
-			camera = camera_body
+			camera = camera_event_center
 			
 			effect = {
 				every_attending_character = {
@@ -731,7 +731,7 @@
 		}
 
 		treasure_hunter = {
-			camera = camera_body
+			camera = camera_event_left
 			
 			effect = {
 				every_attending_character = {

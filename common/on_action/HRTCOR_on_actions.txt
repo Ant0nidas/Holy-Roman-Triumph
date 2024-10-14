@@ -327,7 +327,10 @@ HRTCOR_on_game_start = {
 				exists = capital_province
 				highest_held_title_tier >= tier_kingdom
 				faith = faith:catholic
-				government_has_flag = government_is_feudal
+				OR = {
+					government_has_flag = government_is_feudal
+					government_has_flag = government_is_administrative
+				}
 			}
 			add_trait = COR_crowned_by_bishop
 		}
@@ -372,7 +375,10 @@ HRTCOR_on_game_start = {
 			limit = {
 				highest_held_title_tier >= tier_kingdom
 				faith = faith:catholic
-				government_has_flag = government_is_feudal
+				OR = {
+					government_has_flag = government_is_feudal
+					government_has_flag = government_is_administrative
+				}
 				NOR = {
 					has_trait = COR_crowned_by_priest
 					has_trait = COR_crowned_by_bishop
@@ -524,7 +530,6 @@ HRT_yearly_global_pulse = {
 							faith = { religion_tag = christianity_religion }
 							OR = {
 								government_has_flag = government_is_feudal
-								government_has_flag = government_is_clan
 								government_has_flag = government_is_administrative
 							}
 						}
@@ -590,7 +595,10 @@ COR_yearly_playable_pulse = {
 					highest_held_title_tier >= tier_kingdom
 				}
 				faith = faith:catholic
-				government_has_flag = government_is_feudal
+				OR = {
+					government_has_flag = government_is_feudal
+					government_has_flag = government_is_administrative
+				}
 				OR = {
 					AND = {
 						HRT_is_emperor_trigger = no
@@ -640,7 +648,10 @@ COR_yearly_playable_pulse = {
 							highest_held_title_tier >= tier_kingdom
 						}
 						faith = faith:catholic
-						government_has_flag = government_is_feudal
+						OR = {
+							government_has_flag = government_is_feudal
+							government_has_flag = government_is_administrative
+						}
 						OR = {
 							AND = {
 								HRT_is_emperor_trigger = no
@@ -722,13 +733,12 @@ COR_yearly_playable_pulse = {
 						if = {
 							limit = {
 								NOR = {
-									faith = faith:orthodox # you have hard mode already
+									faith = faith:orthodox
 									has_court_position = King_of_the_germans_court_position
 								}
 							}
-							add_character_modifier = {
-								modifier = COR_uncrowned_modifier
-							}
+							remove_character_modifier ?= COR_uncrowned_modifier
+							add_character_modifier = COR_uncrowned_modifier
 						}
 						if = {
 							limit = { is_ai = no }
@@ -752,11 +762,8 @@ COR_yearly_playable_pulse = {
 					add_character_flag = sold_crown_charmod
 				}
 			}
-			else = {
-				if = {
-					limit = { has_character_modifier = COR_uncrowned_modifier }
-					remove_all_character_modifier_instances = COR_uncrowned_modifier
-				}
+			else = { # Remove uncrowned modifier and return crown
+				remove_character_modifier ?= COR_uncrowned_modifier
 				if = {
 					limit = {
 						NOT = { has_nickname = nick_the_crownless }
@@ -877,10 +884,7 @@ COR_yearly_playable_pulse = {
 			remove_variable = COR_years_reigned
 			remove_variable = COR_coronation_request_cooldown
 			remove_variable = COR_coronator_rank
-			if = {
-				limit = { has_character_modifier = COR_uncrowned_modifier }
-				remove_all_character_modifier_instances = COR_uncrowned_modifier
-			}
+			remove_character_modifier ?= COR_uncrowned_modifier
 			var:COR_coronator ?= {
 				remove_list_variable = {
 					name = COR_coronation_targets
@@ -1100,25 +1104,6 @@ on_title_lost = {
 	}
 }
 
-#HRT_on_title_lost = {
-#	trigger = {
-#		#HRT_is_emperor_trigger = yes
-#		OR = {
-#			AND = {
-#				scope:title = { tier = tier_kingdom }
-#				NAND = {
-#					exists = title:e_hre.holder
-#					highest_held_title_tier >= tier_kingdom
-#				}
-#			}
-#			scope:title = title:e_hre
-#		}
-#	}
-#	events = {
-#		HRT.0008 # Emperor holds no kingdom pre HRE-formation
-#	}
-#}
-
 HRT_on_title_lost = {
 	trigger = {
 		OR = {
@@ -1152,45 +1137,7 @@ on_title_gain = {
 		HRT_on_title_gain
 		COR_on_title_gain
 	}
-	#events = {
-	#	COR_ceremony.9000
-	#	COR_ceremony.9001
-	#}
 }
-
-#HRT_on_title_gain = { #test with effect
-#	trigger = {
-#		scope:title = title:e_hre
-#	}
-#	effect = {
-#		if = {
-#			limit = {
-#				exists = title:k_king_of_the_germans.holder
-#				this = title:k_king_of_the_germans.holder
-#			}
-#			trigger_event = {
-#				days = 1
-#				id = KOH_diets.1
-#			}
-#		}
-#		title:c_aachen = {
-#			set_variable = {
-#				name = HRT_unity_module
-#				value = yes
-#			}
-#			if = {
-#				limit = {
-#					has_variable = HRT_dismantled
-#				}
-#				remove_variable = HRT_dismantled
-#			}
-#		}
-#	}
-#
-#	events = {
-#		HRT.0007 # HRE restored but not by current emperor
-#	}
-#}
 
 # A title is transferred to a new character
 # root = the new holder
@@ -1237,7 +1184,10 @@ HRT_on_title_gain = {
 			if = {
 				limit = {
 					faith = faith:catholic
-					government_has_flag = government_is_feudal
+					OR = {
+						government_has_flag = government_is_feudal
+						government_has_flag = government_is_administrative
+					}
 				}
 				create_story = HRT_emperor_story
 				if = {
@@ -1296,7 +1246,10 @@ COR_on_title_gain = {
 			AND = {
 				scope:title = { tier >= tier_kingdom }
 				faith = faith:catholic
-				government_has_flag = government_is_feudal
+				OR = {
+					government_has_flag = government_is_feudal
+					government_has_flag = government_is_administrative
+				}
 				NOR = {
 					has_trait = COR_crowned_by_priest
 					has_trait = COR_crowned_by_bishop
@@ -1353,78 +1306,6 @@ COR_on_title_gain = {
 	}
 }
 
-
-
-##############
-# Italienzug #
-##############
-
-#on_travel_plan_complete = {
-#	on_actions = {
-#		HRT_on_travel_plan_complete
-#	}
-#}
-#
-#HRT_on_travel_plan_complete = {
-#	trigger = {
-#		current_travel_plan = { has_variable = HRT_italienzug }
-#	}
-#	effect = {
-#		current_travel_plan = {
-#			every_entourage_character = {
-#				if = {
-#					limit = {
-#						is_alive = yes
-#						has_variable = wear_armor
-#					}
-#					remove_character_flag = wear_armor
-#				}
-#			}
-#		}
-#	}
-#}
-
-
-#on_travel_plan_abort = {
-#	on_actions = {
-#		HRT_on_travel_plan_abort
-#	}
-#}
-#
-#HRT_on_travel_plan_abort = {
-#	trigger = {
-#		current_travel_plan = { has_variable = HRT_italienzug }
-#	}
-#	effect = {
-#		current_travel_plan = {
-#			every_entourage_character = {
-#				if = {
-#					limit = {
-#						is_alive = yes
-#						has_variable = wear_armor
-#					}
-#					remove_character_flag = wear_armor
-#				}
-#			}
-#		}
-#	}
-#}
-
-# called for armies whenever they enter a province
-# root is the owner of the army
-# scope:army is the army
-#on_army_enter_province = {
-#	on_actions = {
-#		HRT_on_army_enter_province
-#	}
-#}
-#
-#HRT_on_army_enter_province = {
-#	events = {
-#		HRT.1101
-#	}
-#}
-
 # Coronation Ceremony
 COR_ceremony_ongoing_event_pulse = {
 	trigger = {
@@ -1471,15 +1352,6 @@ COR_ceremony_ongoing_event_pulse = {
 }
 
 COR_ceremony_ending_event_pulse = {
-	#trigger = {
-	#	scope:activity = {
-	#		OR = {
-	#			has_activity_type = activity_HRT_italienzug
-	#			has_activity_type = COR_activity_coronation_ceremony
-	#			has_activity_type = COR_activity_coronation_ceremony_hof
-	#		}
-	#	}
-	#}
 	on_actions = { }
 	events = {
 		COR_ceremony.0322

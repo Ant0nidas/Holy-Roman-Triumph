@@ -288,236 +288,10 @@
 			}
 			effect = {
 				story_owner = {
-					#Reset Variables
-					change_variable = {
-						name = HRT_authority_vassals_var
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_authority_vassals_bonus_var
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_authority_vassals_war_var
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_authority_infidels_var
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_authority_territory
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_authority_unheld_heartlands
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_authority_ally_military_strength
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_authority_artifacts
-						multiply = 0
-					}
-					if = {
-						limit = { exists = var:HRT_authority_cardinals }
-						change_variable = {
-							name = HRT_authority_cardinals
-							multiply = 0
-						}
-					}
-					# 3.1 centralization
-					change_variable = {
-						name = HRT_centralization_vassal_development
-						multiply = 0
-					}
-					change_variable = {
-						name = HRT_vopinion
-						multiply = 0
-					}
-
-					#Prestige Bonus
-					set_variable = {
-						name = HRT_authority_prestige
-						value = prestige
-					}
-					#Dread Bonus
-					set_variable = {
-						name = HRT_authority_dread
-						value = dread
-					}
-					#Vassal Values
-					every_vassal = {
-						#Total Vassal Count
-						prev = {
-							change_variable = {
-								name = HRT_authority_vassals_var
-								add = 1
-							}
-						}
-						#Vassal Bonus per Tier
-						if = {
-							limit = { highest_held_title_tier = tier_kingdom }
-							prev = {
-								change_variable = {
-									name = HRT_authority_vassals_bonus_var
-									add = authority_gain_per_vassal_kingdom_bonus
-								}
-							}
-						}
-						else_if = {
-							limit = { highest_held_title_tier = tier_duchy }
-							prev = {
-								change_variable = {
-									name = HRT_authority_vassals_bonus_var
-									add = authority_gain_per_vassal_duchy_bonus
-								}
-							}
-						}
-						#Vassals Waging War Malus
-						if = {
-							limit = { is_at_war = yes }
-							prev = {
-								change_variable = {
-									name = HRT_authority_vassals_war_var
-									add = authority_loss_per_waged_vassal_war
-								}
-							}
-						}
-						#Infidel Vassal Malus
-						if = {
-							limit = { NOT = { faith = prev.faith } }
-							prev = {
-								change_variable = {
-									name = HRT_authority_infidels_var
-									add = 1
-								}
-							}
-						}
-
-						# 3.1 centralization
-						capital_county = {
-							title:c_aachen.var:HRT_emperor = {
-								change_variable = {
-									name = HRT_centralization_vassal_development
-									add = prev.development_level
-								}
-							}
-						}
-						if = {
-							limit = {
-								save_temporary_opinion_value_as = {
-									name = vopinion
-									target = prev
-								}
-								exists = scope:vopinion
-							}
-							prev = {
-								change_variable = {
-									name = HRT_vopinion
-									add = scope:vopinion
-								}
-							}
-						}
-					}
-					#Territory Bonus
-					every_realm_county = {
-						prev = {
-							change_variable = {
-								name = HRT_authority_territory
-								add = 1
-							}
-						}
-					}
-					#Unheld Heartlands Malus
-					every_county_in_region = {
-						region = HRT_core_territory
-						limit = {
-							holder.top_liege = {
-								NOT = { this = scope:story.story_owner }
-							}
-						}
-						prev = {
-							change_variable = {
-								name = HRT_authority_unheld_heartlands
-								add = 1
-							}
-						}
-					}
-					#Ally Bonus
-					set_variable = {
-						name = HRT_authority_military_strength
-						value = max_military_strength
-					}
-					every_ally = {
-						save_temporary_scope_as = ally
-						prev = {
-							change_variable = {
-								name = HRT_authority_ally_military_strength
-								add = scope:ally.max_military_strength
-							}
-						}
-					}
-					#Artifact Bonus
-					every_character_artifact = {
-						limit = { rarity = illustrious }
-						prev = {
-							change_variable = {
-								name = HRT_authority_artifacts
-								add = 0.1
-							}
-						}
-					}
-					#Cardinals Bonus
-					if = {
-						limit = { exists = var:HRT_authority_cardinals }
-						every_living_cardinal = {
-							limit = { is_vassal_or_below_of = prev }
-							prev = {
-								change_variable = {
-									name = HRT_authority_cardinals
-									add = 1
-								}
-							}
-						}
-					}
-
-					# Unity Effect
-					HRT_unity_effect = yes
-
-					#2.5 Reichsstadt
-					title:c_aachen = {
-						if = {
-							limit = { has_variable_list = HRT_reichsstaedte }
-							every_in_list = {
-								variable = HRT_reichsstaedte
-								set_variable = {
-									name = HRT_reichsstadt_development
-									value = development_level
-								}
-							}
-						}
-					}
-					
-					#3.1 centralization
-					faith:catholic.religious_head ?= {
-						if = {
-							limit = {
-								save_temporary_opinion_value_as = {
-									name = popinion
-									target = prev
-								}
-								exists = scope:popinion
-							}
-							prev = {
-								set_variable = {
-									name = HRT_popinion
-									value = scope:popinion
-								}
-							}
-						}
+					# Unity, Centralization Baseline, Vassal variables
+					trigger_event = {
+						id = HRT.9100
+						days = 1
 					}
 
 					#Prevent exceeding authority range (0-100)
@@ -732,6 +506,17 @@
 
 						#Prevent exceeding centralization limit
 						if = {
+							limit = {
+								HRT_centralization_progressbar_limiter_value <= HRT_centralization_progressbar_min_value
+							}
+							title:c_aachen = {
+								set_variable = {
+									name = HRT_centralization
+									value = HRT_centralization_progressbar_min_value
+								}
+							}
+						}
+						else_if = {
 							limit = {
 								HRT_centralization_progressbar_limiter_value >= HRT_centralization_progressbar_max_value
 							}
@@ -1239,7 +1024,6 @@
 									#Government conditions.
 									NOR = {
 										government_has_flag = government_is_feudal
-										government_has_flag = government_is_clan
 										government_allows = administrative
 									}
 								}
@@ -1267,7 +1051,7 @@
 											faith = { religion_tag = christianity_religion }
 											OR = {
 												government_has_flag = government_is_feudal
-												government_has_flag = government_is_clan
+												government_has_flag = government_is_administrative
 											}
 										}
 										create_story = HRT_emperor_story

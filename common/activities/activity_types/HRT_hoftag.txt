@@ -572,7 +572,7 @@
 		}
 		
 		travel_host = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {

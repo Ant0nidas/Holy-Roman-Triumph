@@ -25,10 +25,7 @@ HRT.0001 = { # Louis II of Italy (867)
 				name = COR_coronator
 				value = character:7855 # Pope Leo IV
 			}
-			if = {
-				limit = { has_character_modifier = COR_uncrowned_modifier }
-				remove_all_character_modifier_instances = COR_uncrowned_modifier
-			}
+			remove_character_modifier ?= COR_uncrowned_modifier
 			remove_variable = COR_years_reigned
 			if = {
 				limit = {
@@ -105,10 +102,7 @@ HRT.0003 = { # Barbarossa
 				name = COR_coronator
 				value = character:71809 # Pope Hadrianus IV
 			}
-			if = {
-				limit = { has_character_modifier = COR_uncrowned_modifier }
-				remove_all_character_modifier_instances = COR_uncrowned_modifier
-			}
+			remove_character_modifier ?= COR_uncrowned_modifier
 			remove_variable = COR_years_reigned
 			if = {
 				limit = {
@@ -179,121 +173,6 @@ HRT.0010 = { # Maintenance Pulse
 		}
 	}
 }
-
-##on_title_destroyed
-#HRT.0006 = { # HRE title is destroyed
-#	hidden = yes
-#	
-#	immediate = {
-#		HRT_disable_effect = yes
-#		title:c_aachen = {
-#			set_variable = {
-#				name = HRT_dismantled
-#				value = yes
-#			}
-#		}
-#	}
-#}
-
-##on_title_gain
-#HRT.0007 = { # HRE restored but not by current emperor
-#	hidden = yes
-#	
-#	trigger = {
-#		HRT_is_emperor_trigger = no
-#		OR = {
-#			AND = {
-#				title:c_aachen = {
-#					NOT = { has_variable = HRT_CF_apostate_active } #CF Compat
-#				}
-#			}
-#			AND = {
-#				title:c_aachen = {
-#					has_variable = HRT_CF_apostate_active
-#				}
-#				faith = faith:catholic
-#			}
-#		}
-#	}
-#	
-#	immediate = {
-#		HRT_close_window = yes
-#		title:c_aachen = {
-#			var:HRT_emperor = { # Dethroned Emperor
-#				#add_character_flag = { #TODO For Antagonist Event & rival relation
-#				#	flag = HRT_usurper
-#				#	days = 7
-#				#}
-#				if = {
-#					limit = {
-#						NOT = { this = root }
-#					}
-#					random_owned_story = {
-#						limit = { story_type = HRT_emperor_story }
-#						end_story = yes
-#					}
-#				}
-#			}
-#			if = {
-#				limit = { has_variable = HRT_dismantled }
-#				remove_variable = HRT_dismantled
-#			}
-#			if = {
-#				limit = { has_variable = HRT_CF_apostate_active } #CF Compat
-#				remove_variable = HRT_CF_apostate_active
-#			}
-#		}
-#		if = {
-#			limit = {
-#				NOT = { this ?= title:c_aachen.var:HRT_emperor }
-#			}
-#			save_scope_as = HRT_new_emperor
-#			create_story = HRT_emperor_story
-#			if = {
-#				limit = {
-#					NOR = {
-#						has_trait = HRT_emperor
-#						has_trait = COR_crowned_by_myself
-#					}
-#				}
-#				add_character_flag = HRT_italienzug
-#			}
-#		}
-#	}
-#}
-
-#on_title_lost
-#HRT.0008 = {
-#	hidden = yes
-#	
-#	immediate = {
-#		HRT_close_window = yes
-#
-#		random_owned_story = {
-#			limit = { story_type = HRT_emperor_story }
-#			end_story = yes
-#		}
-#		trigger_event = HRT.9003 # Notification Event
-#
-#		if = {
-#			limit = {
-#				NOR = {
-#					AND = {
-#						exists = title:e_hre.holder
-#						highest_held_title_tier >= tier_kingdom
-#					}
-#					title:c_aachen = {
-#						OR = {
-#							has_variable = HRT_dismantled
-#							has_variable = HRT_CF_apostate_active #CF Compat
-#						}
-#					}
-#				}
-#			}
-#			HRT_initialize_succession = yes
-#		}
-#	}
-#}
 
 #Decisions
 HRT.0011 = { # Prepare for Unification War
@@ -387,46 +266,6 @@ HRT.1001 = {
 	}
 }
 
-#####################
-#Fired on_army_enter_province
-#Hidden first event fires for the owner of the army.
-#root = owner of the army
-#scope:army = the army itself.
-#HRT.1101 = {
-#	hidden = yes
-#	
-#	trigger = {
-#		exists = scope:army
-#		scope:army = {
-#			exists = army_commander
-#			army_commander = {
-#				is_ai = no
-#				HRT_is_emperor_trigger = yes
-#				NOR = {
-#					has_trait = COR_crowned_by_myself
-#					has_trait = HRT_emperor
-#					has_variable = HRT_declined_travel_coronation
-#				}
-#				OR = {
-#					has_character_flag = HRT_italienzug
-#					has_variable = COR_years_reigned
-#				}
-#				has_variable = COR_coronator
-#				var:COR_coronator = faith:catholic.religious_head
-#			}
-#		}
-#		exists = faith:catholic.religious_head.capital_province
-#		location = faith:catholic.religious_head.capital_province
-#	}
-#
-#	immediate = {
-#		location = { save_scope_as = location }
-#		scope:army = {
-#			army_commander = { trigger_event = HRT.1102 }
-#		}
-#	}
-#}
-
 #Arrival
 HRT.1102 = {
 	title = HRT.1102.t
@@ -514,10 +353,7 @@ HRT.1103 = {
 		remove_variable = COR_years_reigned
 		remove_variable = COR_coronation_request_cooldown
 		remove_variable = COR_coronator_rank
-		if = {
-			limit = { has_character_modifier = COR_uncrowned_modifier }
-			remove_all_character_modifier_instances = COR_uncrowned_modifier
-		}
+		remove_character_modifier ?= COR_uncrowned_modifier
 		scope:COR_coronator = {
 			remove_list_variable = {
 				name = COR_coronation_targets
@@ -1811,6 +1647,66 @@ HRT.9100 = {
 	hidden = yes
 
 	immediate = {
+		#Reset Variables
+		change_variable = {
+			name = HRT_authority_vassals_var
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_authority_vassals_bonus_var
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_authority_vassals_war_var
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_authority_infidels_var
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_authority_territory
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_authority_unheld_heartlands
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_authority_ally_military_strength
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_authority_artifacts
+			multiply = 0
+		}
+		if = {
+			limit = { exists = var:HRT_authority_cardinals }
+			change_variable = {
+				name = HRT_authority_cardinals
+				multiply = 0
+			}
+		}
+		# 3.1 centralization
+		change_variable = {
+			name = HRT_centralization_vassal_development
+			multiply = 0
+		}
+		change_variable = {
+			name = HRT_vopinion
+			multiply = 0
+		}
+
+		#Prestige Bonus
+		set_variable = {
+			name = HRT_authority_prestige
+			value = prestige
+		}
+		#Dread Bonus
+		set_variable = {
+			name = HRT_authority_dread
+			value = dread
+		}
 		#Vassal Values
 		every_vassal = {
 			#Total Vassal Count
@@ -1943,6 +1839,39 @@ HRT.9100 = {
 
 		# Unity Effect
 		HRT_unity_effect = yes
+
+		#2.5 Reichsstadt
+		title:c_aachen = {
+			if = {
+				limit = { has_variable_list = HRT_reichsstaedte }
+				every_in_list = {
+					variable = HRT_reichsstaedte
+					set_variable = {
+						name = HRT_reichsstadt_development
+						value = development_level
+					}
+				}
+			}
+		}
+		
+		#3.1 centralization
+		faith:catholic.religious_head ?= {
+			if = {
+				limit = {
+					save_temporary_opinion_value_as = {
+						name = popinion
+						target = prev
+					}
+					exists = scope:popinion
+				}
+				prev = {
+					set_variable = {
+						name = HRT_popinion
+						value = scope:popinion
+					}
+				}
+			}
+		}
 
 		trigger_event = {
 			id = HRT.9101

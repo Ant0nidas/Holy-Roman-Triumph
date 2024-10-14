@@ -1109,6 +1109,10 @@
 				{
 					visible = "[And(GetScriptedGui('HRT_has_centralization_1_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_centralization_increasing_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
 				}
+				blockoverride "wipe_right_animation_red"
+				{
+				visible = "[And(GetScriptedGui('HRT_has_centralization_1_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_max_centralization_reached').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+				}
 				tooltipwidget = {HRT_centralization_stage_1_tooltip = {}}
 			}
 			HRT_centralization_bar = {
@@ -1156,6 +1160,10 @@
 				{
 					visible = "[And(GetScriptedGui('HRT_has_centralization_2_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_centralization_increasing_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
 				}
+				blockoverride "wipe_right_animation_red"
+				{
+				visible = "[And(GetScriptedGui('HRT_has_centralization_2_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_max_centralization_reached').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+				}
 				tooltipwidget = {HRT_centralization_stage_2_tooltip = {}}
 			}
 			HRT_centralization_bar = {
@@ -1202,6 +1210,10 @@
 				blockoverride "wipe_right_animation"
 				{
 					visible = "[And(GetScriptedGui('HRT_has_centralization_3_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_centralization_increasing_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+				}
+				blockoverride "wipe_right_animation_red"
+				{
+				visible = "[And(GetScriptedGui('HRT_has_centralization_3_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_max_centralization_reached').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
 				}
 				tooltipwidget = {HRT_centralization_stage_3_tooltip = {}}
 			}
@@ -1253,6 +1265,10 @@
 				blockoverride "wipe_right_animation"
 				{
 					visible = "[And(GetScriptedGui('HRT_has_centralization_4_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_centralization_increasing_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
+				}
+				blockoverride "wipe_right_animation_red"
+				{
+				visible = "[And(GetScriptedGui('HRT_has_centralization_4_sgui').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End),GetScriptedGui('HRT_max_centralization_reached').IsShown(GuiScope.SetRoot(GetPlayer.MakeScope).End))]"
 				}
 				tooltipwidget = {HRT_centralization_stage_4_tooltip = {}}
 			}

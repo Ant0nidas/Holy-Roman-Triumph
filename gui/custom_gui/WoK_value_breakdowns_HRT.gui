@@ -397,6 +397,11 @@ types WOKValueBreakdown_HRT  {
                     blockoverride "value"    {text = "HRT_centralization_baseline_value"}
 				}
 				wok_cardinal_breakdown_box_HRT  = {
+					visible = "[GreaterThan_CFixedPoint(TopScope.ScriptValue('HRT_centralization_government_value'),'(CFixedPoint)0')]"
+                    blockoverride "text"     {text = "HRT_baseline_government"} 
+                    blockoverride "value"    {text = "HRT_baseline_government_value"}
+				}
+				wok_cardinal_breakdown_box_HRT  = {
                     blockoverride "text"     {text = "HRT_baseline_development"} 
                     blockoverride "value"    {text = "HRT_baseline_development_value"}
 				}

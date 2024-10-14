@@ -472,3 +472,11 @@ HRT_centralization_reduction_imminent_sgui = {
 		HRT_centralization_reduction_imminent_trigger = yes
 	}
 }
+
+HRT_max_centralization_reached = {
+	scope = character
+
+	is_shown = {
+		HRT_centralization_progressbar_limiter_value >= HRT_centralization_progressbar_max_value
+	}
+}

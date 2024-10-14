@@ -10,7 +10,10 @@
 		has_character_flag = COR_flag_preparing_coronation
 		exists = var:COR_coronator
 		highest_held_title_tier >= tier_kingdom
-		government_has_flag = government_is_feudal
+		OR = {
+			government_has_flag = government_is_feudal
+			government_has_flag = government_is_administrative
+		}
 		faith = faith:catholic
 		is_landed = yes
 		NOR = {
@@ -1799,7 +1802,7 @@
 		}
 		
 		travel_host = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {
@@ -1829,7 +1832,7 @@
 		}
 
 		officiant_traveling = {
-			camera = camera_event_center
+			camera = camera_activity_horse
 			
 			effect = {
 				if = {

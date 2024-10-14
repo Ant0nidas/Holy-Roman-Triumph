@@ -471,6 +471,58 @@ type HRT_centralization_bar = button_standard
 					delay = 1.5
 				}
 			}
+
+			### Horizontal Wipe Animation Right (Red)
+			icon = {
+				block "wipe_right_animation_red"
+				{
+				visible = no
+				}
+				size = { 100% 90% }
+				parentanchor = vcenter
+				texture = "gfx/interface/colors/red.dds"
+				alpha = 0
+
+				modify_texture = {
+					name = "horizontal_wipe"
+					texture = "gfx/interface/progressbars/progressbar_center_glow_white_increase.dds"
+					blend_mode = alphamultiply
+				}
+
+				state = {
+					name = a
+					next = b
+					trigger_on_create = yes
+					duration = 0
+					alpha = 0
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { 0.5 0 }
+					}
+				}
+
+				state = {
+					name = b
+					next = c
+					duration = 1
+					alpha = 1
+					on_finish = "[PdxGuiTriggerAllAnimations('grandeur_bar_glow')]"
+
+					modify_texture = {
+						name = "horizontal_wipe"
+						translate_uv = { -1 0 }
+					}
+				}
+
+				state = {
+					name = c
+					next = a
+					duration = 0.5
+					alpha = 0
+					delay = 1.5
+				}
+			}
 		}
 	}
 }

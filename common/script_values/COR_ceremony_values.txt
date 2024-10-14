@@ -15,3 +15,8 @@
 		multiply = 0
 	}
 }
+
+COR_uncrowned_scale_value = {
+	value = 0
+	add = var:COR_years_reigned
+}

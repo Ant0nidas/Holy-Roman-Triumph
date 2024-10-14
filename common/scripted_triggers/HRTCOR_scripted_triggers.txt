@@ -30,7 +30,7 @@
 			any_realm_province = { geographical_region = HRT_core_territory }
 			OR = {
 				government_has_flag = government_is_feudal
-				government_has_flag = government_is_clan
+				government_has_flag = government_is_administrative
 			}
 		}
 	}
@@ -98,6 +98,7 @@ HRT_has_centralization_4_trigger = {
 }
 
 HRT_centralization_reduction_imminent_trigger = {
+	HRT_centralization_progressbar_limiter_value > HRT_centralization_progressbar_min_value
 	OR = {
 		HRT_centralization_reduction_imminent_1_to_0_trigger = yes
 		HRT_centralization_reduction_imminent_2_to_1_trigger = yes
