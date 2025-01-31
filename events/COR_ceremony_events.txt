@@ -3065,7 +3065,10 @@ COR_ceremony.0322 = {
 				has_trait = eccentric
 				AND = {
 					has_trait = ambitious
-					has_realm_law = crown_authority_3
+					OR = {
+						has_realm_law = crown_authority_3
+						has_realm_law = imperial_bureaucracy_3
+					}
 				}
 			}
 		}

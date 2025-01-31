@@ -154,11 +154,7 @@
  HRT_edict_proclaim_directive_intrigue: "Directing the Imperial Espionage Network"
  HRT_edict_proclaim_directive_learning: "Imperial Scholarly Council"
  #Opinion Modifiers
- HRT_edict_diplomatic_corps_opinion_0: "$HRT_edict_diplomatic_corps$"
- HRT_edict_diplomatic_corps_opinion_1: "$HRT_edict_diplomatic_corps$"
- HRT_edict_diplomatic_corps_opinion_2: "$HRT_edict_diplomatic_corps$"
- HRT_edict_diplomatic_corps_opinion_3: "$HRT_edict_diplomatic_corps$"
- HRT_edict_diplomatic_corps_opinion_4: "$HRT_edict_diplomatic_corps$"
+ HRT_edict_diplomatic_corps_opinion: "$HRT_edict_diplomatic_corps$"
  HRT_dismantled_hre_opinion: "Dismantled the Holy Roman Empire"
  
  ##Enact Resolution

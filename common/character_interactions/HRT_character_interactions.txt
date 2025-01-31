@@ -49,7 +49,12 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 		}
 		scope:recipient = { can_be_granted_titles_by = { RULER = scope:actor } }
 		NOT = { scope:actor = { is_at_war_with = scope:recipient } }
-		scope:actor = { has_realm_law = crown_authority_2 }
+		scope:actor = {
+			OR = {
+				has_realm_law = crown_authority_2
+				has_realm_law = imperial_bureaucracy_2
+			}
+		}
 
 		custom_description = {
 			text = HRT_too_many_republics
