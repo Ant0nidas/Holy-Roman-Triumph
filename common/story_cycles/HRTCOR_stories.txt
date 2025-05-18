@@ -45,13 +45,6 @@ HRT_King_of_the_germans_story = {
 		story_owner = {
 			if = {
 				limit = {
-					exists = title:k_king_of_the_germans.holder
-					this = title:k_king_of_the_germans.holder
-				}
-				destroy_title = title:k_king_of_the_germans
-			}
-			if = {
-				limit = {
 					has_nickname = HRT_in_romanorum_regem_electus
 				}
 				remove_nickname = yes

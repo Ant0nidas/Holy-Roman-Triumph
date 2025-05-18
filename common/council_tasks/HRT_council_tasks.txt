@@ -3,6 +3,13 @@
 	task_type = task_type_general
 	task_progress = task_progress_infinite
 
+	asset = {
+		icon = "gfx/interface/icons/council_task_types/HRT_task_centralization_efforts.dds"
+		background = "gfx/interface/buttons/button_round_bg.dds"
+		frame = "gfx/interface/buttons/button_round_frame.dds"
+		glow = "gfx/particles/halo.dds"
+	}
+
 	effect_desc = {
 		desc = HRT_task_centralization_efforts_effect_desc
 		# Bureaucrats tooltip
@@ -119,6 +126,13 @@ HRT_steward_task_centralization_efforts = {
 	position = councillor_steward
 	task_type = task_type_general
 	task_progress = task_progress_infinite
+
+	asset = {
+		icon = "gfx/interface/icons/council_task_types/HRT_task_centralization_efforts.dds"
+		background = "gfx/interface/buttons/button_round_bg.dds"
+		frame = "gfx/interface/buttons/button_round_frame.dds"
+		glow = "gfx/particles/halo.dds"
+	}
 
 	effect_desc = {
 		desc = HRT_task_centralization_efforts_effect_desc

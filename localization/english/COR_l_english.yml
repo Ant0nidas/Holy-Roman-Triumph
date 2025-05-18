@@ -103,9 +103,9 @@
  COR_ceremony.0001.c.tt: "Write a letter to an influential and powerful Bishop in your realm, asking him to crown you [COR_ruler.GetTitleAsNameNoTooltip] of [COR_ruler.GetPrimaryTitle.GetNameNoTierNoTooltip]."
  COR_ceremony.0001.c.offended_the_pope: "#N By not seeking legitimacy directly from the Holy See, your coronation will offend the Pope.#!"
  COR_ceremony.0001.d: "[COR_priest.GetTitledFirstName] will do."
- COR_ceremony.0001.d.tt: "Write a letter to a minor Bishop, asking him to crown you [COR_ruler.GetTitleAsNameNoTooltip] of [COR_ruler.GetPrimaryTitle.GetNameNoTierNoTooltip]. Though a less prestigious choice than others, doing so will at least placate your vassals and will be less likely to bankrupt your realm."
+ COR_ceremony.0001.d.tt: "Write a letter to a minor Bishop, asking him to crown you [COR_ruler.GetTitleAsNameNoTooltip] of [COR_ruler.GetPrimaryTitle.GetNameNoTierNoTooltip]. Though a less prestigious choice than others, doing so will at least placate your vassals and will be less likely to bankrupt your realm. #V #italic This option will skip the activity.#!#!"
  COR_ceremony.0001.d.offended_everyone: "#N By not seeking legitimacy directly from the Holy See and choosing a minor prelate to perform the ceremony, your coronation will offend the Pope and powerful Bishops in your realm.#!"
- COR_ceremony.0001.d.offended_powerful_theocrats: "#N By not seeking legitimacy directly from the Holy See and choosing a minor prelate to perform the ceremony, your coronation will offend powerful Bishops in your realm.#!"
+ COR_ceremony.0001.d.offended_powerful_theocrats: "By not seeking legitimacy directly from the Holy See and choosing a minor prelate to perform the ceremony, your coronation will offend powerful Bishops in your realm.#!"
  COR_ceremony.0001.e: "Maybe this is not the right time..."
  COR_ceremony.0001.e.tt: "The Coronation Ceremony will be canceled."
  

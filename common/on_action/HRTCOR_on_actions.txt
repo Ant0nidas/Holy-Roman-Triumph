@@ -471,7 +471,7 @@ HRTCOR_on_game_start_after_lobby = {
 						}
 					}
 				}
-				character:212507 ?= { set_location = title:c_besancon.title_province } # Move Friedrich's son, Heinrich IV (King of the Romans) back to his mother's court
+				#character:212507 ?= { set_location = title:c_besancon.title_province } # Move Friedrich's son, Heinrich IV (King of the Romans) back to his mother's court
 				# 2.2 Unity
 				HRT_unity_effect = yes
 			}
@@ -1220,19 +1220,12 @@ HRT_on_title_gain = {
 			}
 			remove_global_variable = HRT_disabled
 		}
-
-		#KOH by Uber
 		if = {
 			limit = {
-				exists = title:k_king_of_the_germans.holder
-				this = title:k_king_of_the_germans.holder
+				has_nickname = HRT_in_romanorum_regem_electus
 			}
-			trigger_event = {
-				days = 1
-				id = KOH_diets.1
-			}
+			remove_nickname = yes
 		}
-
 		#2.2 Unity
 		title:c_aachen = {
 			remove_variable ?= HRT_dismantled

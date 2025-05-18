@@ -37,3 +37,13 @@ HRT_demand_fealty_interaction_authority_req = {
 	global_not = HRT_demand_fealty_interaction_authority_req_tt
 	third_not = HRT_demand_fealty_interaction_authority_req_tt
 }
+
+HRT_requires_crown_authority = {
+	global = HRT_requires_crown_authority
+	global_not = HRT_requires_crown_authority
+}
+
+HRT_requires_imperial_administration = {
+	global = HRT_requires_imperial_administration
+	global_not = HRT_requires_crown_authority
+}

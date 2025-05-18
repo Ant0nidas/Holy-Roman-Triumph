@@ -5,8 +5,13 @@
 King_of_the_germans_court_position = {
 	skill = martial
 	max_available_positions = 1
-	category = court_position_category_special
+	sort_order = 333
 	minimum_rank = empire
+
+	court_position_asset = {
+		animation = marshal
+		background = "gfx/interface/illustrations/event_scenes/throneroom_west.dds"
+	}
 
 	opinion = {
 		value = King_of_the_germans_court_position_opinion 
@@ -63,7 +68,7 @@ King_of_the_germans_court_position = {
 		}
 		average = {
 			vassal_opinion = 0
-			stress_gain_mult = 0
+			#stress_gain_mult = 0
 		}
 		good = {
 			vassal_opinion = 5
@@ -89,6 +94,7 @@ King_of_the_germans_court_position = {
 		King_of_the_germans_gained_court_position_effect = yes
 	}
 	on_court_position_revoked = {
+		basic_revoked_court_position_effect = yes
 		King_of_the_germans_revoked_court_position_effect = yes
 	}
 	on_court_position_invalidated = {

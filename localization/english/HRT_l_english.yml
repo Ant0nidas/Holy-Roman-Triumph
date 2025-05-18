@@ -672,7 +672,9 @@
  HRT_grant_imperial_city_status_interaction: "Grant Imperial City Status"
  HRT_grant_imperial_city_status_desc: "Promote [recipient.GetCapitalLocation.GetTitle.GetNameNoTierNoTooltip] to a [Glossary('Reichsstadt','game_concept_HRT_reichsstadt_desc')] and appoint [recipient.GetShortUINameNoTooltip] as its governor, granting [recipient.GetHerHim] autonomy and direct vassalage under you."
  HRT_grant_imperial_city_status_interaction_authority_req: "You need #V [EmptyScope.ScriptValue('HRT_maximum_authority_value')|0]#! [HRT_imperial_authority|E]"
- HRT_county_must_have_culture_tt: "[CHARACTER.GetPrimaryTitle.GetNameNoTooltip] must be of a [culture|E] that has the $innovation_HRT_imperial_charter$ innovation."
+ HRT_requires_crown_authority: "You need [GetLaw('crown_authority_2').GetName] or better"
+ HRT_requires_imperial_administration: "You need [GetLaw('imperial_bureaucracy_2').GetName] or better"
+ HRT_county_must_have_culture_tt: "[CHARACTER.GetPrimaryTitle.GetNameNoTooltip] must be of a [culture|E] that has the $innovation_HRT_imperial_charter$ innovation"
  NOT_HRT_too_many_republics_tt: "You already have 7 Free Imperial Cities"
  HRT_is_elector_prince_tt: "[CHARACTER.GetNameNoTooltip] is an Elector-Prince!"
  HRT_grant_imperial_city_status_interaction_notification: "Granted Imperial City Status"
@@ -718,7 +720,7 @@
  KoH_FreeCity.2.a.toast_custom_tooltip: "[FreeCityAttacker.GetTitledFirstName] backed down, and ended the war"
  failedtoprotectfreecity: "Failed to Protect Free City"
  
- HRT_in_romanorum_regem_electus: "in Romanorum regem electus"
+ HRT_in_romanorum_regem_electus: "Romanorum Rex"
  HRT_in_romanorum_regem_electus_desc: "[CHARACTER.GetShortUINameNoTooltipNoFormat|U] has been elected King of the Romans and is expected to ascend to emperorship."
  
  # 3.1 centralization
@@ -750,3 +752,9 @@
  HRT_on_centralization_level_lost.toast: "Your have lost a [HRT_centralization_level|E]!\nAnother step back toward the familiar chaos."
  HRT_on_centralization_level_gained.toast.t: "Centralized"
  HRT_on_centralization_level_gained.toast: "Your have gained a [HRT_centralization_level|E]!\nThe Empire draws closer to unity."
+
+#King of the Germans
+ King_of_the_germans_mod: "[candidate.GetSheHe|U] is the King of The Romans: $VALUE|=+0$"
+ King_of_the_germans_court_position: "King of the Romans"
+ King_of_the_germans_court_position_desc: "The King of the Romans is the position held by the heir-designate to the Holy Roman Empire, appointed by the current Emperor and confirmed via election by the Prince-Electors. The title brings with it all the privileges of the the rank of King within the realm along with its associated royal duties. This position is the most prestigious office a person can hold within the Empire, as it symbolizes to all that its holder is the most likely inheritor of the imperial throne."
+ King_of_the_germans_employer_custom_effect_description: "$BULLET$Designated [heir|E] to the #V Holy Roman Empire#!#!"

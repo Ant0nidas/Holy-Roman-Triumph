@@ -512,6 +512,7 @@ COR_ceremony.0001 = {
 		}
 	}
 	option = { #Invested by random priest
+		add_internal_flag = dangerous
 		name = COR_ceremony.0001.d
 		trigger = {
 			OR = {
@@ -562,10 +563,15 @@ COR_ceremony.0001 = {
 				}
 			}
 			cp:councillor_court_chaplain = {
-				add_opinion = {
-					target = root
-					modifier = angry_opinion
-					opinion = -10
+				if = {
+					limit = {
+						NOT = { this = scope:COR_priest }
+					}
+					add_opinion = {
+						target = root
+						modifier = angry_opinion
+						opinion = -10
+					}
 				}
 			}
 		}
@@ -592,17 +598,74 @@ COR_ceremony.0001 = {
 				}
 			}
 			cp:councillor_court_chaplain = {
-				add_opinion = {
-					target = root
-					modifier = angry_opinion
-					opinion = -10
+				if = {
+					limit = {
+						NOT = { this = scope:COR_priest }
+					}
+					add_opinion = {
+						target = root
+						modifier = angry_opinion
+						opinion = -10
+					}
 				}
 			}
 		}
-		scope:COR_priest = {
-			trigger_event = {
-				id = COR_ceremony.0101
-				days = 30
+		#scope:COR_priest = {
+		#	trigger_event = {
+		#		id = COR_ceremony.0101
+		#		days = 30
+		#	}
+		#}
+
+		remove_short_term_gold = COR_skip_activity_cost
+
+		switch = {
+			trigger = has_trait
+			COR_crowned_by_priest = { remove_trait = COR_crowned_by_priest }
+			COR_crowned_by_bishop = { remove_trait = COR_crowned_by_bishop }
+			COR_crowned_by_pope = { remove_trait = COR_crowned_by_pope }
+			COR_crowned_by_myself = { remove_trait = COR_crowned_by_myself }
+			HRT_emperor = { remove_trait = HRT_emperor }
+			COR_byz_crowned_by_patriarch = { remove_trait = COR_byz_crowned_by_patriarch }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_title = title:e_hre
+					HRT_is_emperor_trigger = yes
+				}
+			}
+			add_trait = HRT_emperor
+		}
+		else = {
+			add_trait = COR_crowned_by_priest
+		}
+
+		hidden_effect = {
+			remove_character_flag = HRT_italienzug
+			remove_character_flag = COR_flag_preparing_coronation
+			remove_variable = COR_years_reigned
+			remove_variable = COR_coronation_request_cooldown
+			remove_variable = COR_coronator_rank
+			remove_character_modifier ?= COR_uncrowned_modifier
+			scope:COR_coronator ?= {
+				remove_list_variable = {
+					name = COR_coronation_targets
+					target = scope:COR_ruler
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+				}
+				remove_character_flag = sold_crown_charmod
+			}
+			every_spouse = {
+				limit = {
+					NOT = { has_nickname = nick_the_crownless }
+					has_character_flag = sold_crown_charmod
+				}
+				remove_character_flag = sold_crown_charmod
 			}
 		}
 
@@ -2919,7 +2982,7 @@ COR_ceremony.0322 = {
 			}
 			triggered_desc = {
 				trigger = {
-					has_title = title:k_king_of_the_germans
+					has_nickname = HRT_in_romanorum_regem_electus
 				}
 				desc = COR_ceremony.0322.desc_king_of_the_germans.1
 			}
@@ -3185,7 +3248,7 @@ COR_ceremony.0322 = {
 				NOR = {
 					has_title = title:e_hre
 					HRT_is_emperor_trigger = yes
-					has_title = title:k_king_of_the_germans
+					has_nickname = HRT_in_romanorum_regem_electus
 				}
 			}		
 			if = {
@@ -3307,7 +3370,7 @@ COR_ceremony.0322 = {
 				OR = {
 					has_title = title:e_hre
 					HRT_is_emperor_trigger = yes
-					has_title = title:k_king_of_the_germans
+					has_nickname = HRT_in_romanorum_regem_electus
 				}
 			}
 			if = {
@@ -3376,7 +3439,7 @@ COR_ceremony.0323 = {
 			triggered_desc = {
 				trigger = {
 					scope:host = {
-						has_title = title:k_king_of_the_germans
+						has_nickname = HRT_in_romanorum_regem_electus
 					}
 				}
 				desc = COR_ceremony.0323.desc_king_of_the_germans.1
@@ -3421,7 +3484,7 @@ COR_ceremony.0323 = {
 				NOR = {
 					has_title = title:e_hre
 					HRT_is_emperor_trigger = yes
-					has_title = title:k_king_of_the_germans
+					has_nickname = HRT_in_romanorum_regem_electus
 				}
 			}
 		}
@@ -3433,7 +3496,7 @@ COR_ceremony.0323 = {
 				OR = {
 					has_title = title:e_hre
 					HRT_is_emperor_trigger = yes
-					has_title = title:k_king_of_the_germans
+					has_nickname = HRT_in_romanorum_regem_electus
 				}
 			}
 		}
@@ -3552,7 +3615,7 @@ COR_ceremony.0326 = {
 			}
 			triggered_desc = {
 				trigger = {
-					has_title = title:k_king_of_the_germans
+					has_nickname = HRT_in_romanorum_regem_electus
 				}
 				desc = COR_ceremony.0322.desc_king_of_the_germans.2
 			}
@@ -3711,7 +3774,7 @@ COR_ceremony.0327 = {
 			triggered_desc = {
 				trigger = {
 					scope:host = {
-						has_title = title:k_king_of_the_germans
+						has_nickname = HRT_in_romanorum_regem_electus
 					}
 				}
 				desc = COR_ceremony.0323.desc_king_of_the_germans.2

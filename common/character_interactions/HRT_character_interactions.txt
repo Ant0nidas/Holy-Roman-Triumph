@@ -20,6 +20,7 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 				has_innovation = innovation_HRT_imperial_charter
 			}
 			has_primary_title = title:e_hre
+			NOT = { is_at_war_with = scope:recipient }
 		}
 		scope:recipient = {
 			is_ai = yes
@@ -37,6 +38,7 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 					}
 				}
 			}
+			can_be_granted_titles_by = { RULER = scope:actor }
 		}
 	}
 
@@ -47,22 +49,36 @@ HRT_grant_imperial_city_status_interaction = { #modified appoint_podesta_interac
 				scope:actor.var:HRT_authority >= HRT_demand_fealty_interaction_authority_value
 			}
 		}
-		scope:recipient = { can_be_granted_titles_by = { RULER = scope:actor } }
-		NOT = { scope:actor = { is_at_war_with = scope:recipient } }
-		scope:actor = {
-			OR = {
-				has_realm_law = crown_authority_2
-				has_realm_law = imperial_bureaucracy_2
+
+		custom_description = {
+			text = HRT_requires_crown_authority
+			scope:actor = {
+				trigger_if = {
+					limit = { government_has_flag = government_is_feudal }
+					has_realm_law = crown_authority_2
+				}
+			}
+		}
+
+		custom_description = {
+			text = HRT_requires_imperial_administration
+			scope:actor = {
+				trigger_if = {
+					limit = { government_has_flag = government_is_administrative }
+					has_realm_law = imperial_bureaucracy_2
+				}
 			}
 		}
 
 		custom_description = {
 			text = HRT_too_many_republics
 			title:c_aachen = {
-				has_variable_list = HRT_reichsstaedte
-				any_in_list = {
-					variable = HRT_reichsstaedte
-					count < 7
+				trigger_if = {
+					limit = { has_variable_list = HRT_reichsstaedte }
+					any_in_list = {
+						variable = HRT_reichsstaedte
+						count < 7
+					}
 				}
 			}
 		}

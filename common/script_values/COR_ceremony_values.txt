@@ -7,16 +7,15 @@
 		}
 		multiply = 2
 	}
-	multiply = activity_cost_scale_by_era
-	if = {
-		limit = {
-			is_ai = yes
-		}
-		multiply = 0
-	}
 }
 
 COR_uncrowned_scale_value = {
 	value = 0
 	add = var:COR_years_reigned
+}
+
+COR_skip_activity_cost = {
+	value = COR_base_ceremony_cost
+	add = major_gold_value
+	multiply = activity_cost_scale_by_era
 }

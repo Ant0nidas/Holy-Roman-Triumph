@@ -43,7 +43,7 @@
 				onclick = "[GetVariableSystem.Set('HRT_unity_window_open', 'no')]"
 			}
 		}
-		container = {
+		widget = {
 			layoutpolicy_vertical = expanding
 			layoutpolicy_horizontal = expanding
 
