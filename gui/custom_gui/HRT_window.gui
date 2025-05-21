@@ -540,7 +540,7 @@
 					### For Non-Emperor:
 					# Close Button
 					button_standard = {
-						raw_text = Close
+						raw_text = HRT_Close
 						visible = "[LessThan_CFixedPoint(GetPlayer.MakeScope.ScriptValue('HRT_is_emperor_value'), '(CFixedPoint)1')]"
 						onclick = "[GetVariableSystem.Set('HRT_window_open', 'no')]"
 					}
